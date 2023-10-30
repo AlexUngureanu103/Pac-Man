@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Pac-Man.Domain\Pac-Man.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
