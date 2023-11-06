@@ -11,6 +11,6 @@ namespace Pac_Man.Domain
         public bool canMove { get => true; }
         public bool canBeEaten { get => false; }
         public bool canMoveIn { get => false; }
-        public string icon { get => throw new NotImplementedException(); }
+        public string icon { get ; set; } => string.Empty;
     }
 }
