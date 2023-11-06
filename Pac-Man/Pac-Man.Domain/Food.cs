@@ -8,24 +8,9 @@ namespace Pac_Man.Domain
 {
     internal class Food : IPiece
     {
-        public bool canBeEatan()
-        {
-            return true;
-        }
-
-        public bool canMove()
-        {
-            return false;
-        }
-
-        public bool canMoveIn()
-        {
-            return true;
-        }
-
-        public string icon()
-        {
-            throw new NotImplementedException();
-        }
+        public bool canMove { get => false; }
+        public bool canBeEaten { get => true; }
+        public bool canMoveIn { get => true; }
+        public string icon { get => throw new NotImplementedException(); }
     }
 }

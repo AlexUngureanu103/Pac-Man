@@ -8,24 +8,9 @@ namespace Pac_Man.Domain
 {
     internal class Ghost : IPiece
     {
-        public bool canBeEatan()
-        {
-            return false;
-        }
-
-        public bool canMove()
-        {
-            return true;
-        }
-
-        public bool canMoveIn()
-        {
-            return true;
-        }
-
-        public string icon()
-        {
-            throw new NotImplementedException();
-        }
+        public bool canMove { get => true; }
+        public bool canBeEaten { get => false; }
+        public bool canMoveIn { get => false; }
+        public string icon { get => throw new NotImplementedException(); }
     }
 }

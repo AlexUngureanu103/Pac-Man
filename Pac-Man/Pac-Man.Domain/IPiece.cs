@@ -8,9 +8,9 @@ namespace Pac_Man.Domain
 {
     internal interface IPiece
     {
-        public bool canMove();
-        public bool canBeEatan();
-        public bool canMoveIn();
-        public string icon();
+        bool canMove { get; }
+        bool canBeEaten { get; }
+        bool canMoveIn { get; }
+        string icon { get; }
     }
 }
