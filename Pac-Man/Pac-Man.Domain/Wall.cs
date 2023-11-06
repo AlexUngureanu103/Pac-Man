@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Pac_Man.Domain
 {
-    internal class Wall : IPiece
+    public class Wall : Piece
     {
         public bool canMove { get => false; }
         public bool canBeEaten { get => false; }
         public bool canMoveIn { get => false; }
-        public string icon { get => throw new NotImplementedException(); }
     }
 }

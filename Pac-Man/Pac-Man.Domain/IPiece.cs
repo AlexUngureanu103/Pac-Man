@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 
 namespace Pac_Man.Domain
 {
-    internal interface IPiece
+    public abstract class Piece
     {
         bool canMove { get; }
         bool canBeEaten { get; }
         bool canMoveIn { get; }
-        string icon { get; }
+        private string icon { get; set; }
+        public string Icon
+        {
+            get => icon;
+            set => icon = value;
+        }
     }
 }
