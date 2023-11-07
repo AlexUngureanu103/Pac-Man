@@ -9,12 +9,13 @@ namespace Pac_Man.Domain.UnitTests.ModelsTests
         [TestMethod]
         public void Empty_ShouldHaveCorrectFlags_WhenCreated()
         {
-            var character = new Empty();
+            var emptySpace = new Empty();
 
-            character.canBeEaten.Should().BeFalse();
-            character.canMove.Should().BeFalse();
-            character.canMoveIn.Should().BeTrue();
-            character.Icon.Should().BeEmpty();
+            emptySpace.canBeEaten.Should().BeFalse();
+            emptySpace.canMove.Should().BeFalse();
+            emptySpace.canMoveIn.Should().BeTrue();
+            emptySpace.Icon.Should().BeEmpty();
+            emptySpace.Should().BeAssignableTo<Piece>();
         }
     }
 }

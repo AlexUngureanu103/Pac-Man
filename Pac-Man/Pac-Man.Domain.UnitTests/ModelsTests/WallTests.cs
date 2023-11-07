@@ -9,12 +9,13 @@ namespace Pac_Man.Domain.UnitTests.ModelsTests
         [TestMethod]
         public void Wall_ShouldHaveCorrectFlags_WhenCreated()
         {
-            var character = new Wall();
+            var wall = new Wall();
 
-            character.canBeEaten.Should().BeFalse();
-            character.canMove.Should().BeFalse();
-            character.canMoveIn.Should().BeFalse();
-            character.Icon.Should().BeEmpty();
+            wall.canBeEaten.Should().BeFalse();
+            wall.canMove.Should().BeFalse();
+            wall.canMoveIn.Should().BeFalse();
+            wall.Icon.Should().BeEmpty();
+            wall.Should().BeAssignableTo<Piece>();
         }
     }
 }

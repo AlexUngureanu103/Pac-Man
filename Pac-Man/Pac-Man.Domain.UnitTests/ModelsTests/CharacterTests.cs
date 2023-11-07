@@ -15,6 +15,7 @@ namespace Pac_Man.Domain.UnitTests.ModelsTests
             character.canMove.Should().BeTrue();
             character.canMoveIn.Should().BeTrue();
             character.Icon.Should().BeEmpty();
+            character.Should().BeAssignableTo<Piece>();
         }
     }
 }
