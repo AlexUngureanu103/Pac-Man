@@ -2,7 +2,7 @@
 {
     public class Wall : Piece
     {
-        private Wall() : base()
+        public Wall() : base()
         {
         }
     }
