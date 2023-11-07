@@ -2,9 +2,8 @@
 {
     public class Empty : Piece
     {
-        public Empty() 
+        public Empty() : base(canMoveIn: true)
         {
-            canMoveIn = true;
         }
     }
 }

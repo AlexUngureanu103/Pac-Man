@@ -2,9 +2,8 @@
 {
     public class Character : Piece
     {
-        public Character()
+        public Character() : base(canMove: true, canMoveIn: true)
         {
-            canMove = true;
         }
     }
 }

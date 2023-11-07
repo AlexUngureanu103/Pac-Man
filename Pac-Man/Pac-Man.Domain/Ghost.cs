@@ -2,9 +2,8 @@
 {
     public class Ghost : Piece
     {
-        public Ghost() 
+        public Ghost() : base(canMove: true)
         {
-            canMove = true;
         }
     }
 }

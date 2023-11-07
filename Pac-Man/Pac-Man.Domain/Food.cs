@@ -2,10 +2,8 @@
 {
     public class Food : Piece
     {
-        public Food()
+        public Food() : base(canBeEaten: true, canMoveIn: true)
         {
-            canBeEaten = true;
-            canMoveIn = true;
         }
     }
 }
