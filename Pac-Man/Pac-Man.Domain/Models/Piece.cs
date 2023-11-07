@@ -1,4 +1,4 @@
-﻿namespace Pac_Man.Domain
+﻿namespace Pac_Man.Domain.Models
 {
     public abstract class Piece
     {

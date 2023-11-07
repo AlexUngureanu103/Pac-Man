@@ -1,4 +1,4 @@
-﻿namespace Pac_Man.Domain
+﻿namespace Pac_Man.Domain.Models
 {
     public class Empty : Piece
     {
