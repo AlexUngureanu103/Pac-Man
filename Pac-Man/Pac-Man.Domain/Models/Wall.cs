@@ -5,5 +5,10 @@
         public Wall() : base()
         {
         }
+
+        public override string ToString()
+        {
+            return " W ";
+        }
     }
 }

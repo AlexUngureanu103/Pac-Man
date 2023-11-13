@@ -5,5 +5,10 @@
         public Ghost() : base(canMove: true)
         {
         }
+
+        public override string ToString()
+        {
+            return " G ";
+        }
     }
 }

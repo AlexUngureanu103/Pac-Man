@@ -12,14 +12,13 @@ namespace Pac_Man.Business
         public Board()
         {
             ClassicBoardGneration();
+            SpawnPlayerBasicBoard();
         }
 
         private void ClassicBoardGneration()
         {
             rows = 23;
             columns = 23;
-
-            var count = 23 * 23;
 
             boardConfiguration = new List<Piece>(rows * columns);
 
@@ -35,7 +34,7 @@ namespace Pac_Man.Business
             GenerateTenthRow();
             GenerateEleventhRow();
             GenerateTwelvethRow();
-            GenerateEleventhRow();
+            GenerateEleventhRowBack();
             GenerateTenthRow();
             GenerateNinethRow();
             GenerateEightRow();
@@ -46,6 +45,33 @@ namespace Pac_Man.Business
             GenerateThirdRow();
             GenerateSecondRow();
             GnerateFirstRow();
+        }
+
+        private void GenerateEleventhRowBack()
+        {
+            boardConfiguration.Add(new Wall());
+            boardConfiguration.Add(new Food());
+            for (int i = 0; i < 5; i++)
+            {
+                boardConfiguration.Add(new Wall());
+            }
+
+            boardConfiguration.Add(new Food());
+            boardConfiguration.Add(new Wall());
+            boardConfiguration.Add(new Wall());
+            boardConfiguration.Add(new Wall());
+            boardConfiguration.Add(new Wall());
+            boardConfiguration.Add(new Wall());
+            boardConfiguration.Add(new Wall());
+            boardConfiguration.Add(new Wall());
+            boardConfiguration.Add(new Food());
+
+            for (int i = 0; i < 5; i++)
+            {
+                boardConfiguration.Add(new Wall());
+            }
+            boardConfiguration.Add(new Food());
+            boardConfiguration.Add(new Wall());
         }
 
         private void GenerateTwelvethRow()
@@ -334,5 +360,34 @@ namespace Pac_Man.Business
             set { boardConfiguration[row * columns + column] = value; }
         }
 
+        public void PrintBoard()
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                Console.WriteLine();
+                for (int j = 0; j < columns; j++)
+                {
+                    Console.Write(this[i, j].ToString());
+                }
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+        }
+
+        private void SpawnPlayerBasicBoard()
+        {
+            List<KeyValuePair<int, int>> possibleSpawnPoints = new List<KeyValuePair<int, int>>
+            {
+                new KeyValuePair<int, int>(3, 3),
+                new KeyValuePair<int, int>(3, 19),
+                new KeyValuePair<int, int>(19, 3),
+                new KeyValuePair<int, int>(19, 19)
+            };
+
+            Random random = new Random();
+            int randomIndex = random.Next(0, possibleSpawnPoints.Count);
+            this[possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value] = new Character();
+        }
     }
 }
