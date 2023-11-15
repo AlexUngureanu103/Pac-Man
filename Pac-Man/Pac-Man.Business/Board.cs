@@ -7,7 +7,7 @@ namespace Pac_Man.Business
     {
         private List<Piece> boardConfiguration;
         Character character = new Character();
-        Dictionary<string, Ghost> actors = new Dictionary<string, Ghost> {
+        Dictionary<string, Ghost> ghosts = new Dictionary<string, Ghost> {
             {"Blinky", new Ghost()},
             {"Pinky", new Ghost()},
             {"Inky", new Ghost()},
@@ -91,11 +91,19 @@ namespace Pac_Man.Business
             }
 
             boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Ghost());
-            boardConfiguration.Add(new Ghost());
+            boardConfiguration.Add(ghosts["Blinky"]);
+            ghosts["Blinky"].position = new KeyValuePair<int, int>(12, 9);
+            
+            boardConfiguration.Add(ghosts["Pinky"]);
+            ghosts["Pinky"].position = new KeyValuePair<int, int>(12, 10);
+
             boardConfiguration.Add(new Empty());
-            boardConfiguration.Add(new Ghost());
-            boardConfiguration.Add(new Ghost());
+            boardConfiguration.Add(ghosts["Inky"]);
+            ghosts["Inky"].position = new KeyValuePair<int, int>(12, 12);
+
+            boardConfiguration.Add(ghosts["Clyde"]);
+            ghosts["Clyde"].position = new KeyValuePair<int, int>(12, 13);
+
             boardConfiguration.Add(new Wall());
 
             for (int i = 0; i < 7; i++)
