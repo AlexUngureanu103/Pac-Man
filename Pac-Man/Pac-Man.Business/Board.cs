@@ -1,10 +1,18 @@
 ﻿using Pac_Man.Domain.Models;
+using System.Collections;
 
 namespace Pac_Man.Business
 {
     public class Board
     {
         private List<Piece> boardConfiguration;
+        Character character = new Character();
+        Dictionary<string, Ghost> actors = new Dictionary<string, Ghost> {
+            {"Blinky", new Ghost()},
+            {"Pinky", new Ghost()},
+            {"Inky", new Ghost()},
+            {"Clyde", new Ghost()},
+        };
 
         private int rows;
         private int columns;
@@ -387,7 +395,8 @@ namespace Pac_Man.Business
 
             Random random = new Random();
             int randomIndex = random.Next(0, possibleSpawnPoints.Count);
-            this[possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value] = new Character();
+            this[possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value] = character;
+            character.position = new KeyValuePair<int, int>(possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value);
         }
     }
 }

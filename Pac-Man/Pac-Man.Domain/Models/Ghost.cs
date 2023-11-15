@@ -2,6 +2,8 @@
 {
     public class Ghost : Piece
     {
+        public KeyValuePair<int, int> position;
+
         public Ghost() : base(canMove: true)
         {
         }
