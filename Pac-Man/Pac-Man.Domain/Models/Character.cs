@@ -5,5 +5,10 @@
         public Character() : base(canMove: true, canMoveIn: true)
         {
         }
+
+        public override string ToString()
+        {
+            return " P ";
+        }
     }
 }
