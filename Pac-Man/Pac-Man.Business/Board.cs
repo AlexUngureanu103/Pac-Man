@@ -7,14 +7,13 @@ namespace Pac_Man.Business
     {
         private List<Piece> boardConfiguration;
 
-        Character character = new Character();
-        public KeyValuePair<int, int> characterPosition;
+        MoveablesContainer character = new MoveablesContainer(new Character());
 
-        Dictionary<string, Ghost> ghosts = new Dictionary<string, Ghost> {
-            {"Blinky", new Ghost()},
-            {"Pinky", new Ghost()},
-            {"Inky", new Ghost()},
-            {"Clyde", new Ghost()},
+        Dictionary<string, MoveablesContainer> ghosts = new Dictionary<string, MoveablesContainer> {
+            {"Blinky", new MoveablesContainer (new Ghost())},
+            {"Pinky", new MoveablesContainer (new Ghost())},
+            {"Inky", new MoveablesContainer (new Ghost())},
+            {"Clyde", new MoveablesContainer (new Ghost())},
         };
         
         Dictionary<string, KeyValuePair<int, int>> ghostsPositions = new Dictionary<string, KeyValuePair<int, int>> {
@@ -101,18 +100,18 @@ namespace Pac_Man.Business
             }
 
             boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(ghosts["Blinky"]);
-            ghostsPositions["Blinky"] = new KeyValuePair<int, int>(12, 9);
+            boardConfiguration.Add(ghosts["Blinky"].piece);
+            ghosts["Blinky"].position = new KeyValuePair<int, int>(12, 9);
             
-            boardConfiguration.Add(ghosts["Pinky"]);
-            ghostsPositions["Pinky"] = new KeyValuePair<int, int>(12, 10);
+            boardConfiguration.Add(ghosts["Pinky"].piece);
+            ghosts["Pinky"].position = new KeyValuePair<int, int>(12, 10);
 
             boardConfiguration.Add(new Empty());
-            boardConfiguration.Add(ghosts["Inky"]);
-            ghostsPositions["Inky"] = new KeyValuePair<int, int>(12, 12);
+            boardConfiguration.Add(ghosts["Inky"].piece);
+            ghosts["Inky"].position = new KeyValuePair<int, int>(12, 12);
 
-            boardConfiguration.Add(ghosts["Clyde"]);
-            ghostsPositions["Clyde"] = new KeyValuePair<int, int>(12, 13);
+            boardConfiguration.Add(ghosts["Clyde"].piece);
+            ghosts["Clyde"].position = new KeyValuePair<int, int>(12, 13);
 
             boardConfiguration.Add(new Wall());
 
@@ -413,8 +412,8 @@ namespace Pac_Man.Business
 
             Random random = new Random();
             int randomIndex = random.Next(0, possibleSpawnPoints.Count);
-            this[possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value] = character;
-            characterPosition = new KeyValuePair<int, int>(possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value);
+            this[possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value] = character.piece;
+            character.position = new KeyValuePair<int, int>(possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value);
         }
     }
 }
