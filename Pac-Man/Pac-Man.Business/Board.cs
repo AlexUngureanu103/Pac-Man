@@ -6,12 +6,22 @@ namespace Pac_Man.Business
     public class Board
     {
         private List<Piece> boardConfiguration;
+
         Character character = new Character();
+        public KeyValuePair<int, int> characterPosition;
+
         Dictionary<string, Ghost> ghosts = new Dictionary<string, Ghost> {
             {"Blinky", new Ghost()},
             {"Pinky", new Ghost()},
             {"Inky", new Ghost()},
             {"Clyde", new Ghost()},
+        };
+        
+        Dictionary<string, KeyValuePair<int, int>> ghostsPositions = new Dictionary<string, KeyValuePair<int, int>> {
+            {"Blinky", new KeyValuePair<int, int>() },
+            {"Pinky", new KeyValuePair<int, int>()},
+            {"Inky", new KeyValuePair<int, int>()},
+            {"Clyde", new KeyValuePair<int, int>()},
         };
 
         private int rows;
@@ -92,17 +102,17 @@ namespace Pac_Man.Business
 
             boardConfiguration.Add(new Wall());
             boardConfiguration.Add(ghosts["Blinky"]);
-            ghosts["Blinky"].position = new KeyValuePair<int, int>(12, 9);
+            ghostsPositions["Blinky"] = new KeyValuePair<int, int>(12, 9);
             
             boardConfiguration.Add(ghosts["Pinky"]);
-            ghosts["Pinky"].position = new KeyValuePair<int, int>(12, 10);
+            ghostsPositions["Pinky"] = new KeyValuePair<int, int>(12, 10);
 
             boardConfiguration.Add(new Empty());
             boardConfiguration.Add(ghosts["Inky"]);
-            ghosts["Inky"].position = new KeyValuePair<int, int>(12, 12);
+            ghostsPositions["Inky"] = new KeyValuePair<int, int>(12, 12);
 
             boardConfiguration.Add(ghosts["Clyde"]);
-            ghosts["Clyde"].position = new KeyValuePair<int, int>(12, 13);
+            ghostsPositions["Clyde"] = new KeyValuePair<int, int>(12, 13);
 
             boardConfiguration.Add(new Wall());
 
@@ -404,7 +414,7 @@ namespace Pac_Man.Business
             Random random = new Random();
             int randomIndex = random.Next(0, possibleSpawnPoints.Count);
             this[possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value] = character;
-            character.position = new KeyValuePair<int, int>(possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value);
+            characterPosition = new KeyValuePair<int, int>(possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value);
         }
     }
 }

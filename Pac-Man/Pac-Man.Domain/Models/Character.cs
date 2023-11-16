@@ -2,7 +2,6 @@
 {
     public class Character : Piece
     {
-        public KeyValuePair<int, int> position;
         public Character() : base(canMove: true, canMoveIn: true)
         {
         }
