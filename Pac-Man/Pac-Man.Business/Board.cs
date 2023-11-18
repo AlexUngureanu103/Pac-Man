@@ -1,10 +1,27 @@
 ﻿using Pac_Man.Domain.Models;
+using System.Collections;
 
 namespace Pac_Man.Business
 {
     public class Board
     {
         private List<Piece> boardConfiguration;
+
+        MoveablesContainer character = new MoveablesContainer(new Character());
+
+        Dictionary<string, MoveablesContainer> ghosts = new Dictionary<string, MoveablesContainer> {
+            {"Blinky", new MoveablesContainer (new Ghost())},
+            {"Pinky", new MoveablesContainer (new Ghost())},
+            {"Inky", new MoveablesContainer (new Ghost())},
+            {"Clyde", new MoveablesContainer (new Ghost())},
+        };
+        
+        Dictionary<string, KeyValuePair<int, int>> ghostsPositions = new Dictionary<string, KeyValuePair<int, int>> {
+            {"Blinky", new KeyValuePair<int, int>() },
+            {"Pinky", new KeyValuePair<int, int>()},
+            {"Inky", new KeyValuePair<int, int>()},
+            {"Clyde", new KeyValuePair<int, int>()},
+        };
 
         private int rows;
         private int columns;
@@ -83,11 +100,19 @@ namespace Pac_Man.Business
             }
 
             boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Ghost());
-            boardConfiguration.Add(new Ghost());
+            boardConfiguration.Add(ghosts["Blinky"].piece);
+            ghosts["Blinky"].position = new KeyValuePair<int, int>(12, 9);
+            
+            boardConfiguration.Add(ghosts["Pinky"].piece);
+            ghosts["Pinky"].position = new KeyValuePair<int, int>(12, 10);
+
             boardConfiguration.Add(new Empty());
-            boardConfiguration.Add(new Ghost());
-            boardConfiguration.Add(new Ghost());
+            boardConfiguration.Add(ghosts["Inky"].piece);
+            ghosts["Inky"].position = new KeyValuePair<int, int>(12, 12);
+
+            boardConfiguration.Add(ghosts["Clyde"].piece);
+            ghosts["Clyde"].position = new KeyValuePair<int, int>(12, 13);
+
             boardConfiguration.Add(new Wall());
 
             for (int i = 0; i < 7; i++)
@@ -387,7 +412,8 @@ namespace Pac_Man.Business
 
             Random random = new Random();
             int randomIndex = random.Next(0, possibleSpawnPoints.Count);
-            this[possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value] = new Character();
+            this[possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value] = character.piece;
+            character.position = new KeyValuePair<int, int>(possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value);
         }
     }
 }
