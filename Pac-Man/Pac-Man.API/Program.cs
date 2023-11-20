@@ -1,3 +1,6 @@
+using Pac_Man.Business;
+using Pac_Man.Business.GraphRepresentation;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+Board board = new Board();
+board.PrintBoard();
+
+Graph graph = new Graph(board);
+graph.PrintAdjacencyList();
 
 var app = builder.Build();
 

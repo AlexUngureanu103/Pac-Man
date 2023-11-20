@@ -1,5 +1,4 @@
 ﻿using Pac_Man.Domain.Models;
-using System.Collections;
 
 namespace Pac_Man.Business
 {
@@ -15,7 +14,7 @@ namespace Pac_Man.Business
             {"Inky", new MoveablesContainer (new Ghost())},
             {"Clyde", new MoveablesContainer (new Ghost())},
         };
-        
+
         Dictionary<string, KeyValuePair<int, int>> ghostsPositions = new Dictionary<string, KeyValuePair<int, int>> {
             {"Blinky", new KeyValuePair<int, int>() },
             {"Pinky", new KeyValuePair<int, int>()},
@@ -23,8 +22,8 @@ namespace Pac_Man.Business
             {"Clyde", new KeyValuePair<int, int>()},
         };
 
-        private int rows;
-        private int columns;
+        public int rows { get; private set; }
+        public int columns { get; private set; }
 
         public Board()
         {
@@ -102,7 +101,7 @@ namespace Pac_Man.Business
             boardConfiguration.Add(new Wall());
             boardConfiguration.Add(ghosts["Blinky"].piece);
             ghosts["Blinky"].position = new KeyValuePair<int, int>(12, 9);
-            
+
             boardConfiguration.Add(ghosts["Pinky"].piece);
             ghosts["Pinky"].position = new KeyValuePair<int, int>(12, 10);
 
