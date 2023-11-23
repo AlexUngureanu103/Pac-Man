@@ -17,6 +17,11 @@ board.PrintBoard();
 Graph graph = new Graph(board);
 graph.PrintAdjacencyList();
 
+DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
+var ghostPositions = graph.Ghosts["Inky"].position;
+var playerPositions = graph.Character.position;
+var distances = dijkstraAlgorithm.Execute($"({ghostPositions.Key}, {ghostPositions.Value})",$"({playerPositions.Key}, {playerPositions.Value})",500);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
