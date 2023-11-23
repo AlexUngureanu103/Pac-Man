@@ -5,9 +5,9 @@ namespace Pac_Man.Business.GraphRepresentation
     //TO DO : generate the graph based on the board configuration
     public class Graph
     {
-        private MoveablesContainer character;
+        public MoveablesContainer Character;
 
-        private Dictionary<string, MoveablesContainer> ghosts;
+        public Dictionary<string, MoveablesContainer> Ghosts;
 
         public Dictionary<string, Node> Nodes { get; set; } = new();
         public List<NodeConnection> NodeConnections { get; set; } = new List<NodeConnection>();
@@ -24,8 +24,8 @@ namespace Pac_Man.Business.GraphRepresentation
 
         public Graph(Board boardConfiguration)
         {
-            character = boardConfiguration.Character;
-            ghosts = boardConfiguration.Ghosts;
+            Character = boardConfiguration.Character;
+            Ghosts = boardConfiguration.Ghosts;
 
             CreateNodesBasedOnBoardConfiguration(boardConfiguration);
             GenerateNodeConnectionsBasedOnNodesPositions();
@@ -81,16 +81,18 @@ namespace Pac_Man.Business.GraphRepresentation
                     if (nodeI.RowPosition == nodeJ.RowPosition && Math.Abs(nodeI.ColumnPosition - nodeJ.ColumnPosition) == 1)
                     {
                         var nodeConnection = new NodeConnection(nodeI, nodeJ);
+                        var nodeConnectionReverse = new NodeConnection(nodeJ, nodeI);
                         NodeConnections.Add(nodeConnection);
                         AddToAdjacencyList(nodeI, nodeConnection);
-                        AddToAdjacencyList(nodeJ, nodeConnection);
+                        AddToAdjacencyList(nodeJ, nodeConnectionReverse);
                     }
                     else if (nodeI.ColumnPosition == nodeJ.ColumnPosition && Math.Abs(nodeI.RowPosition - nodeJ.RowPosition) == 1)
                     {
                         var nodeConnection = new NodeConnection(nodeI, nodeJ);
+                        var nodeConnectionReverse = new NodeConnection(nodeJ, nodeI);
                         NodeConnections.Add(nodeConnection);
                         AddToAdjacencyList(nodeI, nodeConnection);
-                        AddToAdjacencyList(nodeJ, nodeConnection);
+                        AddToAdjacencyList(nodeJ, nodeConnectionReverse);
                     }
                 }
             }

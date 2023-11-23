@@ -95,17 +95,17 @@ namespace Pac_Man.Business
 
             boardConfiguration.Add(new Wall());
             boardConfiguration.Add(Ghosts["Blinky"].piece);
-            Ghosts["Blinky"].position = new KeyValuePair<int, int>(12, 9);
+            Ghosts["Blinky"].position = new KeyValuePair<int, int>(11, 9);
 
             boardConfiguration.Add(Ghosts["Pinky"].piece);
-            Ghosts["Pinky"].position = new KeyValuePair<int, int>(12, 10);
+            Ghosts["Pinky"].position = new KeyValuePair<int, int>(11, 10);
 
             boardConfiguration.Add(new Empty());
             boardConfiguration.Add(Ghosts["Inky"].piece);
-            Ghosts["Inky"].position = new KeyValuePair<int, int>(12, 12);
+            Ghosts["Inky"].position = new KeyValuePair<int, int>(11, 12);
 
             boardConfiguration.Add(Ghosts["Clyde"].piece);
-            Ghosts["Clyde"].position = new KeyValuePair<int, int>(12, 13);
+            Ghosts["Clyde"].position = new KeyValuePair<int, int>(11, 13);
 
             boardConfiguration.Add(new Wall());
 
