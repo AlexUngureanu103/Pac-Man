@@ -13,5 +13,10 @@
             FirstNode = firstNode;
             SecondNode = secondNode;
         }
+
+        public override string ToString()
+        {
+            return "First node: " + FirstNode.ToString() + " Second node: " + SecondNode.ToString() + Environment.NewLine;
+        }
     }
 }

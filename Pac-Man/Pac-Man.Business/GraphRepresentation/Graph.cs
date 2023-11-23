@@ -32,10 +32,10 @@ namespace Pac_Man.Business.GraphRepresentation
 
             foreach (var node in AdjacencyList)
             {
-                Console.Write($"Node ({node.Key.RowPosition}, {node.Key.ColumnPosition}) is connected to: ");
+                Console.Write($"Node ({node.Key.RowPosition}, {node.Key.ColumnPosition}) is connected to: " + Environment.NewLine);
                 foreach (var connection in node.Value)
                 {
-                    Console.Write($"({connection.FirstNode.RowPosition}, {connection.FirstNode.ColumnPosition}) ");
+                    Console.Write(connection);
                 }
                 Console.WriteLine();
             }
@@ -47,9 +47,9 @@ namespace Pac_Man.Business.GraphRepresentation
 
         private void CreateNodesBasedOnBoardConfiguration(Board boardConfiguration)
         {
-            for (int i = 0; i < boardConfiguration.rows - 1; i++)
+            for (int i = 0; i < boardConfiguration.rows; i++)
             {
-                for (int j = i + 1; j < boardConfiguration.columns; j++)
+                for (int j = 0; j < boardConfiguration.columns; j++)
                 {
                     if (boardConfiguration[i, j] is not Wall)
                     {
@@ -70,40 +70,33 @@ namespace Pac_Man.Business.GraphRepresentation
                 {
                     if (Nodes[i].RowPosition == Nodes[j].RowPosition && Math.Abs(Nodes[i].ColumnPosition - Nodes[j].ColumnPosition) == 1)
                     {
-                        var nodeConnection1 = new NodeConnection(Nodes[i], Nodes[j]);
-                        var nodeConnectionReverse = new NodeConnection(Nodes[j], Nodes[i]);
-                        NodeConnections.Add(nodeConnection1);
-                        NodeConnections.Add(nodeConnectionReverse);
-
-                        AddConnectionToAdjList(i, j, nodeConnection1, nodeConnectionReverse);
+                        var nodeConnection = new NodeConnection(Nodes[i], Nodes[j]);
+                        NodeConnections.Add(nodeConnection);
+                        AddToAdjacencyList(Nodes[i], nodeConnection);
+                        AddToAdjacencyList(Nodes[j], nodeConnection);
                     }
                     else if (Nodes[i].ColumnPosition == Nodes[j].ColumnPosition && Math.Abs(Nodes[i].RowPosition - Nodes[j].RowPosition) == 1)
                     {
                         var nodeConnection = new NodeConnection(Nodes[i], Nodes[j]);
-                        var nodeConnectionReverse = new NodeConnection(Nodes[j], Nodes[i]);
-                        NodeConnections.Add(new NodeConnection(Nodes[i], Nodes[j]));
-
-                        AddConnectionToAdjList(i, j, nodeConnection, nodeConnectionReverse);
+                        NodeConnections.Add(nodeConnection);
+                        AddToAdjacencyList(Nodes[i], nodeConnection);
+                        AddToAdjacencyList(Nodes[j], nodeConnection);
                     }
                 }
             }
         }
 
-        private void AddConnectionToAdjList(int i, int j, NodeConnection nodeConnection1, NodeConnection nodeConnectionReverse)
+        private void AddToAdjacencyList(Node node, NodeConnection nodeConnection)
         {
-            if (!AdjacencyList.ContainsKey(Nodes[i]) || AdjacencyList[Nodes[i]] == null)
-                AdjacencyList.Add(Nodes[i], new List<NodeConnection>() { nodeConnection1 });
-            else
+            if (AdjacencyList.ContainsKey(node))
             {
-                AdjacencyList[Nodes[i]].Add(nodeConnection1);
+                AdjacencyList[node].Add(nodeConnection);
             }
-
-            if (!AdjacencyList.ContainsKey(Nodes[j]) || AdjacencyList[Nodes[j]] == null)
-                AdjacencyList.Add(Nodes[j], new List<NodeConnection>() { nodeConnectionReverse });
             else
             {
-                AdjacencyList[Nodes[j]].Add(nodeConnectionReverse);
+                AdjacencyList[node] = new List<NodeConnection> { nodeConnection };
             }
         }
+
     }
 }

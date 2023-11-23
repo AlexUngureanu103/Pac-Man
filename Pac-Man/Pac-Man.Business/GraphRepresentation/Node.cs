@@ -31,5 +31,10 @@
             IsGhost = isGhost;
             IsPacMan = isPacMan;
         }
+
+        public override string ToString()
+        {
+            return $"({RowPosition}, {ColumnPosition})";
+        }
     }
 }
