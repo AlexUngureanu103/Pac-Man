@@ -22,8 +22,8 @@ namespace Pac_Man.Business
             {"Clyde", new KeyValuePair<int, int>()},
         };
 
-        public int rows { get; private set; }
-        public int columns { get; private set; }
+        public int Rows { get; private set; }
+        public int Columns { get; private set; }
 
         public Board()
         {
@@ -33,10 +33,10 @@ namespace Pac_Man.Business
 
         private void ClassicBoardGneration()
         {
-            rows = 23;
-            columns = 23;
+            Rows = 23;
+            Columns = 23;
 
-            boardConfiguration = new List<Piece>(rows * columns);
+            boardConfiguration = new List<Piece>(Rows * Columns);
 
             GnerateFirstRow();
             GenerateSecondRow();
@@ -372,7 +372,7 @@ namespace Pac_Man.Business
 
         private void GnerateFirstRow()
         {
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < Rows; i++)
             {
                 boardConfiguration.Add(new Wall());
             }
@@ -380,16 +380,16 @@ namespace Pac_Man.Business
 
         public Piece this[int row, int column]
         {
-            get { return boardConfiguration[row * columns + column]; }
-            set { boardConfiguration[row * columns + column] = value; }
+            get { return boardConfiguration[row * Columns + column]; }
+            set { boardConfiguration[row * Columns + column] = value; }
         }
 
         public void PrintBoard()
         {
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < Rows; i++)
             {
                 Console.WriteLine();
-                for (int j = 0; j < columns; j++)
+                for (int j = 0; j < Columns; j++)
                 {
                     Console.Write(this[i, j].ToString());
                 }

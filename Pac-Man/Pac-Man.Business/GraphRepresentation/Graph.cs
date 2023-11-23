@@ -47,9 +47,9 @@ namespace Pac_Man.Business.GraphRepresentation
 
         private void CreateNodesBasedOnBoardConfiguration(Board boardConfiguration)
         {
-            for (int i = 0; i < boardConfiguration.rows; i++)
+            for (int i = 0; i < boardConfiguration.Rows; i++)
             {
-                for (int j = 0; j < boardConfiguration.columns; j++)
+                for (int j = 0; j < boardConfiguration.Columns; j++)
                 {
                     if (boardConfiguration[i, j] is not Wall)
                     {
