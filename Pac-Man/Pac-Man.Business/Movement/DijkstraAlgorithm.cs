@@ -9,11 +9,10 @@ public class DijkstraAlgorithm
         this.graph = graph;
     }
 
-    public Dictionary<string, string> Execute(string startNode, string endNode, int maxWeight)
+    public Dictionary<string, string> Execute(string startNode, string endNode)
     {
         var adjList = graph.AdjacencyList;
         var nodes = graph.Nodes;
-        var arches = graph.NodeConnections;
 
         var distances = new Dictionary<string, int>();
         var previous = new Dictionary<string, string>();
@@ -26,17 +25,17 @@ public class DijkstraAlgorithm
             previous.Add(node.Value.ToString(), string.Empty);
             visited.Add(node.Value.ToString(), false);
         }
-
         distances[startNode] = 0;
         queue.Enqueue(startNode, 0);
-        while(!queue.Count.Equals(0))
+
+        while (!queue.Count.Equals(0))
         {
             var currentNode = queue.Dequeue();
             if (visited[currentNode])
             {
                 continue;
             }
-            if(currentNode == endNode)
+            if (currentNode == endNode)
             {
                 break;
             }
@@ -44,7 +43,8 @@ public class DijkstraAlgorithm
 
             foreach (var neighbour in adjList[graph.Nodes[currentNode]])
             {
-                if (!visited[neighbour.SecondNode.ToString()])
+                // A Ghost cannot go through another Ghost
+                if (!visited[neighbour.SecondNode.ToString()] && !neighbour.SecondNode.IsGhost)
                 {
                     var newDistance = distances[currentNode] + 1;
                     if (newDistance < distances[neighbour.SecondNode.ToString()])
@@ -72,7 +72,7 @@ public class DijkstraAlgorithm
 
         while (currentNode != startNode)
         {
-            reconstructedPath.Add(path[currentNode], currentNode );
+            reconstructedPath.Add(path[currentNode], currentNode);
             currentNode = path[currentNode];
         }
 
