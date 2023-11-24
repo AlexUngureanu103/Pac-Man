@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Pac-Man.Business\Pac-Man.Business.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Movement\GhostAlgorithms\" />
+  </ItemGroup>
+
 </Project>
