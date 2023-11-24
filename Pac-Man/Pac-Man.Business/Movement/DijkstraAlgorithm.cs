@@ -11,55 +11,57 @@ public class DijkstraAlgorithm
 
     public Dictionary<string, string> Execute(string startNode, string endNode, int maxWeight)
     {
-        var adjacencyList = graph.AdjacencyList;
+        var adjList = graph.AdjacencyList;
+        var nodes = graph.Nodes;
+        var arches = graph.NodeConnections;
+
         var distances = new Dictionary<string, int>();
-        var buckets = new Queue<string>[maxWeight + 1];
-        var path = new Dictionary<string, string>();
+        var previous = new Dictionary<string, string>();
+        var visited = new Dictionary<string, bool>();
+        var queue = new PriorityQueue<string, int>();
 
-        for (int i = 0; i <= maxWeight; i++)
+        foreach (var node in nodes)
         {
-            buckets[i] = new Queue<string>();
-        }
-
-        foreach (var node in adjacencyList.Keys)
-        {
-            distances[node.ToString()] = maxWeight;
-            buckets[maxWeight].Enqueue(node.ToString());
+            distances.Add(node.Value.ToString(), int.MaxValue);
+            previous.Add(node.Value.ToString(), null);
+            visited.Add(node.Value.ToString(), false);
         }
 
         distances[startNode] = 0;
-        buckets[0].Enqueue(startNode);
-
-        for (int i = 0; i <= maxWeight; i++)
+        queue.Enqueue(startNode, 0);
+        while(!queue.Count.Equals(0))
         {
-            while (buckets[i].Count != 0)
+            var currentNode = queue.Dequeue();
+            if (visited[currentNode])
             {
-                var currentNode = buckets[i].Dequeue();
-                var currentDistance = distances[currentNode];
+                continue;
+            }
+            if(currentNode == endNode)
+            {
+                break;
+            }
+            visited[currentNode] = true;
 
-                if (currentNode == endNode)
+            foreach (var neighbour in adjList[graph.Nodes[currentNode]])
+            {
+                if (!visited[neighbour.SecondNode.ToString()])
                 {
-                    return ReconstructPath(path, startNode, endNode);
-                }
-                foreach (var neighbour in adjacencyList[graph.Nodes[currentNode]])
-                {
-                    var oldDistance = distances[neighbour.SecondNode.ToString()];
-                    var newDistance = currentDistance + 1;
-
-
-                    if (newDistance < oldDistance)
+                    var newDistance = distances[currentNode] + 1;
+                    if (newDistance < distances[neighbour.SecondNode.ToString()])
                     {
                         distances[neighbour.SecondNode.ToString()] = newDistance;
-                        buckets[oldDistance].Dequeue();
-                        buckets[newDistance].Enqueue(neighbour.SecondNode.ToString());
-
-                        path[currentNode] = neighbour.SecondNode.ToString();
+                        previous[neighbour.SecondNode.ToString()] = currentNode;
+                        queue.Enqueue(neighbour.SecondNode.ToString(), newDistance);
                     }
                 }
             }
         }
+        if (distances[endNode] == int.MaxValue)
+        {
+            return new Dictionary<string, string>();
+        }
 
-        return ReconstructPath(path, startNode, endNode);
+        return ReconstructPath(previous, startNode, endNode);
     }
 
     private Dictionary<string, string> ReconstructPath(Dictionary<string, string> path, string startNode, string endNode)
@@ -70,7 +72,7 @@ public class DijkstraAlgorithm
 
         while (currentNode != startNode)
         {
-            reconstructedPath.Add(currentNode, path[currentNode]);
+            reconstructedPath.Add(path[currentNode], currentNode );
             currentNode = path[currentNode];
         }
 
