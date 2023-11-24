@@ -1,5 +1,6 @@
 using Pac_Man.Business;
 using Pac_Man.Business.GraphRepresentation;
+using Pac_Man.Business.Movement.Ghost_Algorithms;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,9 +19,13 @@ Graph graph = new Graph(board);
 graph.PrintAdjacencyList();
 
 DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
-var ghostPositions = graph.Ghosts["Blinky"].position;
-var playerPositions = graph.Character.position;
-var distances = dijkstraAlgorithm.GetShortestPath($"({ghostPositions.Key}, {ghostPositions.Value})",$"({playerPositions.Key}, {playerPositions.Value})");
+
+GhostPathAlgorithms ghostPathAlgorithms = new GhostPathAlgorithms(dijkstraAlgorithm);
+GhostFleeAlgorithm ghostFleeAlgorithm = new GhostFleeAlgorithm(graph);
+
+var nextMove = ghostFleeAlgorithm.Flee(board.Ghosts["Pinky"], board.Character);
+
+var path = ghostPathAlgorithms.MainGhostMovements(board.Ghosts["Blinky"], board.Character);
 
 var app = builder.Build();
 
