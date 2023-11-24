@@ -24,5 +24,10 @@ namespace Pac_Man.Business.Movement
         {
             return $"({position.Key}, {position.Value})";
         }
+
+        public static string ConvertPositionsToString(int positionX, int positionY)
+        {
+            return $"({positionX}, {positionY})";
+        }
     }
 }

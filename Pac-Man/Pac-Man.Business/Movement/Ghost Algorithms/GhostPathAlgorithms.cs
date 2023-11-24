@@ -23,21 +23,20 @@
                 case "Blinky":
                     {
                         var distance = dijsktraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(playerPositions));
-                        return PositionConverter.ConvertPositionsFromString(distance[$"({ghostPositions.Key}, {ghostPositions.Value})"]);
-
+                        return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                     }
                 case "Pinky":
                     {
                         var newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value + 2);
-                        var distance = dijsktraAlgorithm.GetShortestPath($"({ghostPositions.Key}, {ghostPositions.Value})", $"({newPlayerPosition.Key}, {newPlayerPosition.Value})");
-                        return PositionConverter.ConvertPositionsFromString(distance[$"({ghostPositions.Key}, {ghostPositions.Value})"]);
+                        var distance = dijsktraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(newPlayerPosition));
+                        return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                     }
                 case "Inky":
                     {
                         var newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value - 2);
 
-                        var distance = dijsktraAlgorithm.GetShortestPath($"({ghostPositions.Key}, {ghostPositions.Value})", $"({newPlayerPosition.Key}, {newPlayerPosition.Value})");
-                        return PositionConverter.ConvertPositionsFromString(distance[$"({ghostPositions.Key}, {ghostPositions.Value})"]);
+                        var distance = dijsktraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(newPlayerPosition));
+                        return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                     }
                 case "Clyde":
                     {
@@ -48,14 +47,14 @@
                         }
                         else
                         {
-                            var distance = dijsktraAlgorithm.GetShortestPath($"({ghostPositions.Key}, {ghostPositions.Value})", $"({playerPositions.Key}, {playerPositions.Value})");
-                            return PositionConverter.ConvertPositionsFromString(distance[$"({ghostPositions.Key}, {ghostPositions.Value})"]);
+                            var distance = dijsktraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(playerPositions));
+                            return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                         }
                     }
                 default:
                     {
-                        var distance = dijsktraAlgorithm.GetShortestPath($"({ghostPositions.Key}, {ghostPositions.Value})", $"({playerPositions.Key}, {playerPositions.Value})");
-                        return PositionConverter.ConvertPositionsFromString(distance[$"({ghostPositions.Key}, {ghostPositions.Value})"]);
+                        var distance = dijsktraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(playerPositions));
+                        return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                     }
             };
         }
