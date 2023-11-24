@@ -23,7 +23,7 @@ public class DijkstraAlgorithm
         foreach (var node in nodes)
         {
             distances.Add(node.Value.ToString(), int.MaxValue);
-            previous.Add(node.Value.ToString(), null);
+            previous.Add(node.Value.ToString(), string.Empty);
             visited.Add(node.Value.ToString(), false);
         }
 

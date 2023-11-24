@@ -6,9 +6,10 @@ namespace Pac_Man.Business
     {
         private List<Piece> boardConfiguration;
 
-        public MoveablesContainer Character = new MoveablesContainer(new Character());
+        public MoveablesContainer Character = new(new Character());
 
-        public Dictionary<string, MoveablesContainer> Ghosts = new Dictionary<string, MoveablesContainer> {
+        public Dictionary<string, MoveablesContainer> Ghosts = new()
+        {
             {"Blinky", new MoveablesContainer (new Ghost())},
             {"Pinky", new MoveablesContainer (new Ghost())},
             {"Inky", new MoveablesContainer (new Ghost())},
