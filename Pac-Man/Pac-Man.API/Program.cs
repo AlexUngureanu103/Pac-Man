@@ -28,10 +28,10 @@ board[9, 7] = new Character();
 board.Character = new MoveablesContainer(new Character());
 board.Character.position = new KeyValuePair<int, int>(9, 7);
 board[3,7] = new Ghost();
-board.Ghosts["Blinky"].position = new KeyValuePair<int, int>(3, 7);
+board.Ghosts["Clyde"].position = new KeyValuePair<int, int>(3, 7);
 board.PrintBoard();
 
-var path = ghostPathAlgorithms.MainGhostMovements("Blinky", board.Ghosts["Blinky"], board.Character);
+var path = ghostPathAlgorithms.MainGhostMovements("Clyde", board.Ghosts["Clyde"], board.Character);
 
 var app = builder.Build();
 

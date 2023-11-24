@@ -30,7 +30,7 @@ namespace Pac_Man.Business.Movement.Ghost_Algorithms
                 if (distance > maxDistance)
                 {
                     maxDistance = distance;
-                    safestPosition = new KeyValuePair<string, string>($"({neighbour.SecondNode.RowPosition}, {neighbour.SecondNode.ColumnPosition})", $"({neighbour.FirstNode.RowPosition}, {neighbour.FirstNode.ColumnPosition})");
+                    safestPosition = new KeyValuePair<string, string>($"({neighbour.FirstNode.RowPosition}, {neighbour.FirstNode.ColumnPosition})", $"({neighbour.SecondNode.RowPosition}, {neighbour.SecondNode.ColumnPosition})");
                 }
                 else if (distance == maxDistance)
                 {
@@ -39,7 +39,7 @@ namespace Pac_Man.Business.Movement.Ghost_Algorithms
                     if (randomValue == 0)
                     {
                         maxDistance = distance;
-                        safestPosition = new KeyValuePair<string, string>($"({neighbour.SecondNode.RowPosition}, {neighbour.SecondNode.ColumnPosition})", $"({neighbour.FirstNode.RowPosition}, {neighbour.FirstNode.ColumnPosition})");
+                        safestPosition = new KeyValuePair<string, string>($"({neighbour.FirstNode.RowPosition}, {neighbour.FirstNode.ColumnPosition})", $"({neighbour.SecondNode.RowPosition}, {neighbour.SecondNode.ColumnPosition})");
                     }
                 }
             }
