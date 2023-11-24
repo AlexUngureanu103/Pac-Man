@@ -1,5 +1,4 @@
-﻿using FluentAssertions;
-using Pac_Man.Business.Movement;
+﻿using Pac_Man.Business.Movement;
 
 namespace Pac_Man.Business.UnitTests.Movement
 {
@@ -7,7 +6,7 @@ namespace Pac_Man.Business.UnitTests.Movement
     public class PositionConverterTests
     {
         [TestMethod]
-        public void ConvertPositionsFromString_ValidPositionString_ReturnsKeyValuePair()
+        public void ConvertPositionsFromString_ShouldReturnsKeyValuePair_WhenValidPositionIsValid()
         {
             var position = "(1, 2)";
             var expectedPosition = new KeyValuePair<int, int>(1, 2);
@@ -28,15 +27,15 @@ namespace Pac_Man.Business.UnitTests.Movement
         [DataRow("(1, text]")]
         [DataRow("{1, text)")]
         [DataRow("(1, text}")]
-        public void ConvertPositionsFromString_InvalidPositionString_ThrowsException(string position)
+        public void ConvertPositionsFromString_ShouldThrowsException_WhenPositionIsInvalid(string position)
         {
             Action action = () => PositionConverter.ConvertPositionsFromString(position);
 
-            action.Should().Throw<Exception>().WithMessage("Invalid position format");
+            action.Should().Throw<ArgumentException>().WithMessage("Invalid position format");
         }
 
         [TestMethod]
-        public void ConvertPositionsToString_ValidPosition_ReturnsString()
+        public void ConvertPositionsToString_ShouldReturnString_WhenPositionIsValid()
         {
             var position = new KeyValuePair<int, int>(1, 2);
             var expectedPosition = "(1, 2)";
@@ -47,7 +46,7 @@ namespace Pac_Man.Business.UnitTests.Movement
         }
 
         [TestMethod]
-        public void ConvertPositionsToString_ValidPositions_ReturnsString()
+        public void ConvertPositionsToString_ShouldReturnString_WhenPositionsAreValid()
         {
             var positionX = 1;
             var positionY = 2;
@@ -59,4 +58,3 @@ namespace Pac_Man.Business.UnitTests.Movement
         }
     }
 }
-    

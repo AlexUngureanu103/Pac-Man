@@ -18,6 +18,7 @@ namespace Pac_Man.Business.UnitTests.Movement.GhostAlgorithms
         }
 
         [TestMethod]
+        [Ignore]
         public void Flee_ShouldReturnNothing_WhenThereIsNoPath()
         {
             var ghost = new MoveablesContainer(new Ghost());

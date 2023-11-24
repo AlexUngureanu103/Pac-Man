@@ -10,7 +10,7 @@ namespace Pac_Man.Business.Movement
             Regex regex = new Regex(@"\(\d+, \d+\)");
             if (!regex.IsMatch(position))
             {
-                throw new Exception("Invalid position format");
+                throw new ArgumentException("Invalid position format");
             }
 
             var positionValues = position.Split(", ");
