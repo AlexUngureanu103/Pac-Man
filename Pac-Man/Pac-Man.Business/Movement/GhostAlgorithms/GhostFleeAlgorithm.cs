@@ -19,7 +19,7 @@ namespace Pac_Man.Business.Movement.GhostAlgorithms
             var safestPosition = new KeyValuePair<string, string>("", "");
             var maxDistance = int.MinValue;
 
-            foreach (var neighbour in graph.AdjacencyList[graph.Nodes[$"({ghostPositions.Key}, {ghostPositions.Value})"]])
+            foreach (var neighbour in graph.AdjacencyList[graph.Nodes[PositionConverter.ConvertPositionsToString(ghostPositions)]])
             {
                 if (neighbour.SecondNode.IsOccupied)
                 {
@@ -30,7 +30,7 @@ namespace Pac_Man.Business.Movement.GhostAlgorithms
                 if (distance > maxDistance)
                 {
                     maxDistance = distance;
-                    safestPosition = new KeyValuePair<string, string>($"({neighbour.FirstNode.RowPosition}, {neighbour.FirstNode.ColumnPosition})", $"({neighbour.SecondNode.RowPosition}, {neighbour.SecondNode.ColumnPosition})");
+                    safestPosition = new KeyValuePair<string, string>(PositionConverter.ConvertPositionsToString(neighbour.FirstNode.RowPosition, neighbour.FirstNode.ColumnPosition), PositionConverter.ConvertPositionsToString(neighbour.SecondNode.RowPosition, neighbour.SecondNode.ColumnPosition));
                 }
                 else if (distance == maxDistance)
                 {
@@ -39,7 +39,7 @@ namespace Pac_Man.Business.Movement.GhostAlgorithms
                     if (randomValue == 0)
                     {
                         maxDistance = distance;
-                        safestPosition = new KeyValuePair<string, string>($"({neighbour.FirstNode.RowPosition}, {neighbour.FirstNode.ColumnPosition})", $"({neighbour.SecondNode.RowPosition}, {neighbour.SecondNode.ColumnPosition})");
+                        safestPosition = new KeyValuePair<string, string>(PositionConverter.ConvertPositionsToString(neighbour.FirstNode.RowPosition, neighbour.FirstNode.ColumnPosition), PositionConverter.ConvertPositionsToString(neighbour.SecondNode.RowPosition, neighbour.SecondNode.ColumnPosition));
                     }
                 }
             }
