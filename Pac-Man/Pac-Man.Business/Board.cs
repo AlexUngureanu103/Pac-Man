@@ -412,5 +412,57 @@ namespace Pac_Man.Business
             Console.WriteLine();
             Console.WriteLine();
         }
+
+        public bool GhostSeesThePlayer(string ghostName)
+        {
+            var ghostPositions = Ghosts[ghostName].position;
+
+            for (int row = ghostPositions.Key + 1; row < Rows; row++)
+            {
+                if (!this[row, ghostPositions.Value].canMoveIn)
+                {
+                    break;
+                }
+                else if (this[row, ghostPositions.Value] is Character)
+                {
+                    return true;
+                }
+            }
+            for (int row = ghostPositions.Key - 1; row > 0; row--)
+            {
+                if (!this[row, ghostPositions.Value].canMoveIn)
+                {
+                    break;
+                }
+                else if (this[row, ghostPositions.Value] is Character)
+                {
+                    return true;
+                }
+            }
+            for (int column = ghostPositions.Value + 1; column < Columns; column++)
+            {
+                if (!this[ghostPositions.Key, column].canMoveIn)
+                {
+                    break;
+                }
+                else if (this[ghostPositions.Key, column] is Character)
+                {
+                    return true;
+                }
+            }
+            for (int column = ghostPositions.Value - 1; column > 0; column--)
+            {
+                if (!this[ghostPositions.Key, column].canMoveIn)
+                {
+                    break;
+                }
+                else if (this[ghostPositions.Key, column] is Character)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
