@@ -20,7 +20,7 @@ graph.PrintAdjacencyList();
 DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
 var ghostPositions = graph.Ghosts["Blinky"].position;
 var playerPositions = graph.Character.position;
-var distances = dijkstraAlgorithm.Execute($"({ghostPositions.Key}, {ghostPositions.Value})",$"({playerPositions.Key}, {playerPositions.Value})");
+var distances = dijkstraAlgorithm.GetShortestPath($"({ghostPositions.Key}, {ghostPositions.Value})",$"({playerPositions.Key}, {playerPositions.Value})");
 
 var app = builder.Build();
 

@@ -8,8 +8,14 @@ public class DijkstraAlgorithm
     {
         this.graph = graph;
     }
-
-    public Dictionary<string, string> Execute(string startNode, string endNode)
+    /// <summary>
+    /// Get the shortest path between two nodes. The algorithm is based on Dijkstra's algorithm.
+    /// The parameters are the .ToString() methods of the nodes, which are in the format: "(row, column)".
+    /// </summary>
+    /// <param name="startNode"> The start node for the algorithm</param>
+    /// <param name="endNode"> The destination node for the algorithm</param>
+    /// <returns></returns>
+    public Dictionary<string, string> GetShortestPath(string startNode, string endNode)
     {
         var adjList = graph.AdjacencyList;
         var nodes = graph.Nodes;
