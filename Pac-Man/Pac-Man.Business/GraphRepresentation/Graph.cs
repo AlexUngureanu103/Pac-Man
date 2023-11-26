@@ -5,7 +5,11 @@ namespace Pac_Man.Business.GraphRepresentation
     //TO DO : generate the graph based on the board configuration
     public class Graph
     {
-        public List<Node> Nodes { get; set; } = new List<Node>();
+        public MoveablesContainer Character;
+
+        public Dictionary<string, MoveablesContainer> Ghosts;
+
+        public Dictionary<string, Node> Nodes { get; set; } = new();
         public List<NodeConnection> NodeConnections { get; set; } = new List<NodeConnection>();
         public Dictionary<Node, List<NodeConnection>> AdjacencyList { get; set; } = new Dictionary<Node, List<NodeConnection>>();
 
@@ -14,12 +18,15 @@ namespace Pac_Man.Business.GraphRepresentation
             if (nodes == null || nodeConnections == null)
                 throw new ArgumentNullException("Nodes and node connections cannot be null.");
 
-            Nodes = nodes;
+            Nodes = nodes.ToDictionary(node => node.ToString(), Dictionary => Dictionary);
             NodeConnections = nodeConnections;
         }
 
         public Graph(Board boardConfiguration)
         {
+            Character = boardConfiguration.Character;
+            Ghosts = boardConfiguration.Ghosts;
+
             CreateNodesBasedOnBoardConfiguration(boardConfiguration);
             GenerateNodeConnectionsBasedOnNodesPositions();
         }
@@ -56,7 +63,8 @@ namespace Pac_Man.Business.GraphRepresentation
                         var isGhost = boardConfiguration[i, j] is Ghost;
                         var isPacMan = boardConfiguration[i, j] is Character;
 
-                        Nodes.Add(new Node(i, j, isGhost || isPacMan, isGhost, isPacMan));
+                        var node = new Node(i, j, isGhost || isPacMan, isGhost, isPacMan);
+                        Nodes.Add(node.ToString(), node);
                     }
                 }
             }
@@ -68,19 +76,23 @@ namespace Pac_Man.Business.GraphRepresentation
             {
                 for (int j = i + 1; j < Nodes.Count; j++)
                 {
-                    if (Nodes[i].RowPosition == Nodes[j].RowPosition && Math.Abs(Nodes[i].ColumnPosition - Nodes[j].ColumnPosition) == 1)
+                    var nodeI = Nodes.ElementAt(i).Value;
+                    var nodeJ = Nodes.ElementAt(j).Value;
+                    if (nodeI.RowPosition == nodeJ.RowPosition && Math.Abs(nodeI.ColumnPosition - nodeJ.ColumnPosition) == 1)
                     {
-                        var nodeConnection = new NodeConnection(Nodes[i], Nodes[j]);
+                        var nodeConnection = new NodeConnection(nodeI, nodeJ);
+                        var nodeConnectionReverse = new NodeConnection(nodeJ, nodeI);
                         NodeConnections.Add(nodeConnection);
-                        AddToAdjacencyList(Nodes[i], nodeConnection);
-                        AddToAdjacencyList(Nodes[j], nodeConnection);
+                        AddToAdjacencyList(nodeI, nodeConnection);
+                        AddToAdjacencyList(nodeJ, nodeConnectionReverse);
                     }
-                    else if (Nodes[i].ColumnPosition == Nodes[j].ColumnPosition && Math.Abs(Nodes[i].RowPosition - Nodes[j].RowPosition) == 1)
+                    else if (nodeI.ColumnPosition == nodeJ.ColumnPosition && Math.Abs(nodeI.RowPosition - nodeJ.RowPosition) == 1)
                     {
-                        var nodeConnection = new NodeConnection(Nodes[i], Nodes[j]);
+                        var nodeConnection = new NodeConnection(nodeI, nodeJ);
+                        var nodeConnectionReverse = new NodeConnection(nodeJ, nodeI);
                         NodeConnections.Add(nodeConnection);
-                        AddToAdjacencyList(Nodes[i], nodeConnection);
-                        AddToAdjacencyList(Nodes[j], nodeConnection);
+                        AddToAdjacencyList(nodeI, nodeConnection);
+                        AddToAdjacencyList(nodeJ, nodeConnectionReverse);
                     }
                 }
             }
