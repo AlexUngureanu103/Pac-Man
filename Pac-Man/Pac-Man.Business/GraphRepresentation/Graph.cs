@@ -2,21 +2,17 @@
 
 namespace Pac_Man.Business.GraphRepresentation
 {
-    //TO DO : generate the graph based on the board configuration
-    public class Graph
+    public class Graph : IGraph
     {
-        public MoveablesContainer Character;
-
-        public Dictionary<string, MoveablesContainer> Ghosts;
+        public IGameCharacters GameCharacters { get; set; }
 
         public Dictionary<string, Node> Nodes { get; set; } = new();
         public List<NodeConnection> NodeConnections { get; set; } = new List<NodeConnection>();
         public Dictionary<Node, List<NodeConnection>> AdjacencyList { get; set; } = new Dictionary<Node, List<NodeConnection>>();
 
-        public Graph(Board boardConfiguration)
+        public Graph(IBoard boardConfiguration, IGameCharacters gameCharacters)
         {
-            Character = boardConfiguration.Character;
-            Ghosts = boardConfiguration.Ghosts;
+            GameCharacters = gameCharacters;
 
             CreateNodesBasedOnBoardConfiguration(boardConfiguration);
             GenerateNodeConnectionsBasedOnNodesPositions();
@@ -43,7 +39,7 @@ namespace Pac_Man.Business.GraphRepresentation
             Console.WriteLine();
         }
 
-        private void CreateNodesBasedOnBoardConfiguration(Board boardConfiguration)
+        private void CreateNodesBasedOnBoardConfiguration(IBoard boardConfiguration)
         {
             for (int i = 0; i < boardConfiguration.Rows; i++)
             {
