@@ -40,7 +40,7 @@
                     }
                 case "Clyde":
                     {
-                        if (board.GhostSeesThePlayer(ghostName))
+                        if (board.CheckIfGhostSeesThePlayer(ghostName))
                         {
                             var nextMove = ghostFleeAlgorithm.Flee(ghost, player);
                             return PositionConverter.ConvertPositionsFromString(nextMove.Value);
