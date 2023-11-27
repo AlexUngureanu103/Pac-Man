@@ -464,5 +464,12 @@ namespace Pac_Man.Business
 
             return false;
         }
+
+        public void SwitchPieces(KeyValuePair<int, int> position1, KeyValuePair<int, int> position2)
+        {
+            var aux = this[position1.Key, position1.Value];
+            this[position1.Key, position1.Value] = this[position2.Key, position2.Value];
+            this[position2.Key, position2.Value] = aux;
+        }
     }
 }
