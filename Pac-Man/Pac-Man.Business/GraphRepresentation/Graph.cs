@@ -13,15 +13,6 @@ namespace Pac_Man.Business.GraphRepresentation
         public List<NodeConnection> NodeConnections { get; set; } = new List<NodeConnection>();
         public Dictionary<Node, List<NodeConnection>> AdjacencyList { get; set; } = new Dictionary<Node, List<NodeConnection>>();
 
-        public Graph(List<Node> nodes, List<NodeConnection> nodeConnections)
-        {
-            if (nodes == null || nodeConnections == null)
-                throw new ArgumentNullException("Nodes and node connections cannot be null.");
-
-            Nodes = nodes.ToDictionary(node => node.ToString(), Dictionary => Dictionary);
-            NodeConnections = nodeConnections;
-        }
-
         public Graph(Board boardConfiguration)
         {
             Character = boardConfiguration.Character;
