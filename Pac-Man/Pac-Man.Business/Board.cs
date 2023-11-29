@@ -119,5 +119,10 @@ namespace Pac_Man.Business
 
             return false;
         }
+
+        public void SwitchPieces(KeyValuePair<int, int> oldPosition, KeyValuePair<int, int> newPosition)
+        {
+            (this[newPosition.Key, newPosition.Value], this[oldPosition.Key, oldPosition.Value]) = (this[oldPosition.Key, oldPosition.Value], this[newPosition.Key, newPosition.Value]);
+        }
     }
 }

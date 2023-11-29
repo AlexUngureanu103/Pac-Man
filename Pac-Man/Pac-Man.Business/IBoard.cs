@@ -13,5 +13,6 @@ namespace Pac_Man.Business
 
         void ClassicBoardGneration();
         bool CheckIfGhostSeesThePlayer(string ghostName);
+        void SwitchPieces(KeyValuePair<int, int> position1, KeyValuePair<int, int> position2);
     }
 }
