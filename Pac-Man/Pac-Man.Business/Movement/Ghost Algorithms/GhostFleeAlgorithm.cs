@@ -2,11 +2,11 @@
 
 namespace Pac_Man.Business.Movement.Ghost_Algorithms
 {
-    public class GhostFleeAlgorithm
+    public class GhostFleeAlgorithm : IGhostFleeAlgorithm
     {
-        private Graph graph;
+        private readonly IGraph graph;
 
-        public GhostFleeAlgorithm(Graph graph)
+        public GhostFleeAlgorithm(IGraph graph)
         {
             this.graph = graph;
         }

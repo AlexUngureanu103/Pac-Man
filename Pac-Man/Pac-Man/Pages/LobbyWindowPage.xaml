@@ -20,20 +20,22 @@
 
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="50">
                 <Button
+                x:Name="GamePageButton"
                 Text="Play"
                 BackgroundColor="Yellow"
                 TextColor="Black"
                 FontAttributes="Bold"
                 WidthRequest="80"
-                Command="{Binding PlayButtonCommand}"/>
+                Clicked="GamePageButton_Clicked"/>
 
                 <Button
+                x:Name="AboutPageButton"
                 Text="About"
                 BackgroundColor="Yellow"
                 TextColor="Black"
                 FontAttributes="Bold"
                 WidthRequest="80"
-                Command="{Binding AboutButtonCommand}"/>
+                Clicked="AboutPageButton_Clicked"/>
                 
             </HorizontalStackLayout>
 

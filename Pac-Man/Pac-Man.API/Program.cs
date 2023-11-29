@@ -1,5 +1,6 @@
 using Pac_Man.Business;
 using Pac_Man.Business.GraphRepresentation;
+using Pac_Man.Business.Movement;
 using Pac_Man.Business.Movement.Ghost_Algorithms;
 using Pac_Man.Domain.Models;
 
@@ -12,26 +13,25 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-Board board = new Board();
+IGameCharacters gameCharacters = new GameCharacters();
+Board board = new Board(gameCharacters);
 board.PrintBoard();
 
-Graph graph = new Graph(board);
+IGraph graph = new Graph(board, gameCharacters);
 graph.PrintAdjacencyList();
 
-DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
-
-GhostFleeAlgorithm ghostFleeAlgorithm = new GhostFleeAlgorithm(graph);
-GhostPathAlgorithms ghostPathAlgorithms = new GhostPathAlgorithms(dijkstraAlgorithm, ghostFleeAlgorithm, board);
+IDijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
+IGhostFleeAlgorithm ghostFleeAlgorithm = new GhostFleeAlgorithm(graph);
+IGhostPathAlgorithms ghostPathAlgorithms = new GhostPathAlgorithms(dijkstraAlgorithm, ghostFleeAlgorithm, board);
 
 board[9, 7] = new Character();
-board.Character = new MoveablesContainer(new Character());
-board.Character.position = new KeyValuePair<int, int>(9, 7);
-board[3,7] = new Ghost();
-board.Ghosts["Clyde"].position = new KeyValuePair<int, int>(3, 7);
+board.GameCharacters.Character = new MoveablesContainer(new Character());
+board.GameCharacters.Character.position = new KeyValuePair<int, int>(9, 7);
+board[3, 7] = new Ghost();
+board.GameCharacters.Ghosts["Clyde"].position = new KeyValuePair<int, int>(3, 7);
 board.PrintBoard();
 
-var path = ghostPathAlgorithms.MainGhostMovements("Clyde", board.Ghosts["Clyde"], board.Character);
+var path = ghostPathAlgorithms.MainGhostMovements("Clyde", board.GameCharacters.Ghosts["Clyde"], board.GameCharacters.Character);
 
 var app = builder.Build();
 
