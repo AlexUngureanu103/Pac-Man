@@ -3,26 +3,19 @@ using Pac_Man.Domain.Models;
 
 namespace Pac_Man.Business
 {
-    public class Board
+    public class Board : IBoard
     {
         private List<Piece> boardConfiguration = new List<Piece>();
 
-        public MoveablesContainer Character = new(new Character());
-        public Dictionary<string, MoveablesContainer> Ghosts = new()
-        {
-            {"Blinky", new MoveablesContainer (new Ghost())},
-            {"Pinky", new MoveablesContainer (new Ghost())},
-            {"Inky", new MoveablesContainer (new Ghost())},
-            {"Clyde", new MoveablesContainer (new Ghost())},
-        };
+        public IGameCharacters GameCharacters { get; set; }
 
-        public int Rows { get; private set; }
-        public int Columns { get; private set; }
+        public int Rows { get; set; }
+        public int Columns { get; set; }
 
-        public Board()
+        public Board(IGameCharacters gameCharacters)
         {
+            GameCharacters = gameCharacters;
             ClassicBoardGneration();
-            SpawnPlayerBasicBoard();
         }
 
         #region Classic Board Generation
@@ -32,7 +25,8 @@ namespace Pac_Man.Business
             Rows = 23;
             Columns = 23;
 
-            boardConfiguration = BoardGenerator.GenerateClassicBoard(Ghosts, Rows, Columns);
+            boardConfiguration = BoardGenerator.GenerateClassicBoard(GameCharacters.Ghosts, Rows, Columns);
+            SpawnPlayerBasicBoard();
         }
 
         private void SpawnPlayerBasicBoard()
@@ -47,8 +41,8 @@ namespace Pac_Man.Business
 
             Random random = new Random();
             int randomIndex = random.Next(0, possibleSpawnPoints.Count);
-            this[possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value] = Character.piece;
-            Character.position = new KeyValuePair<int, int>(possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value);
+            this[possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value] = GameCharacters.Character.piece;
+            GameCharacters.Character.position = new KeyValuePair<int, int>(possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value);
         }
 
         #endregion
@@ -76,7 +70,7 @@ namespace Pac_Man.Business
 
         public bool CheckIfGhostSeesThePlayer(string ghostName)
         {
-            var ghostPositions = Ghosts[ghostName].position;
+            var ghostPositions = GameCharacters.Ghosts[ghostName].position;
 
             for (int row = ghostPositions.Key + 1; row < Rows; row++)
             {
