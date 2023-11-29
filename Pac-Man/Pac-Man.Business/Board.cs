@@ -120,11 +120,9 @@ namespace Pac_Man.Business
             return false;
         }
 
-        public void SwitchPieces(KeyValuePair<int, int> position1, KeyValuePair<int, int> position2)
+        public void SwitchPieces(KeyValuePair<int, int> oldPosition, KeyValuePair<int, int> newPosition)
         {
-            var aux = this[position1.Key, position1.Value];
-            this[position1.Key, position1.Value] = this[position2.Key, position2.Value];
-            this[position2.Key, position2.Value] = aux;
+            (this[newPosition.Key, newPosition.Value], this[oldPosition.Key, oldPosition.Value]) = (this[oldPosition.Key, oldPosition.Value], this[newPosition.Key, newPosition.Value]);
         }
     }
 }

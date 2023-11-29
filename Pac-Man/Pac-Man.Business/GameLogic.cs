@@ -9,20 +9,21 @@ namespace Pac_Man.Business
 {
     public class GameLogic : IObserver, ISubject
     {
-        private Board board;
-        private Graph graph;
-        private readonly DijkstraAlgorithm dijkstraAlgorithm;
-        private readonly GhostFleeAlgorithm ghostFleeAlgorithm;
-        private readonly GhostPathAlgorithms ghostPathAlgorithms;
+        private IBoard board;
+        private IGraph graph;
+        private readonly IDijkstraAlgorithm dijkstraAlgorithm;
+        private readonly IGhostFleeAlgorithm ghostFleeAlgorithm;
+        private readonly IGhostPathAlgorithms ghostPathAlgorithms;
         private GameStateEnum gameState;
         private PlayerStateEnum playerState;
 
-        public string PlayerName { get; set; }
+        public string PlayerName { get; set; } = "Guest";
 
-        public GameLogic(DijkstraAlgorithm dijkstraAlgorithm, GhostFleeAlgorithm ghostFleeAlgorithm, GhostPathAlgorithms ghostPathAlgorithms)
+        public GameLogic(IDijkstraAlgorithm dijkstraAlgorithm, IGhostFleeAlgorithm ghostFleeAlgorithm, IGhostPathAlgorithms ghostPathAlgorithms)
         {
-            board = new Board();
-            graph = new Graph(board);
+            IGameCharacters gameCharacters = new GameCharacters();
+            board = new Board(gameCharacters);
+            graph = new Graph(board, gameCharacters);
 
             this.dijkstraAlgorithm = dijkstraAlgorithm;
             this.ghostFleeAlgorithm = ghostFleeAlgorithm;
@@ -30,7 +31,6 @@ namespace Pac_Man.Business
 
             gameState = GameStateEnum.Lobby;
             playerState = PlayerStateEnum.Alive;
-            this.ghostPathAlgorithms = ghostPathAlgorithms;
         }
 
         public void NotifyObservers()
@@ -55,35 +55,35 @@ namespace Pac_Man.Business
 
         private void ModifyCharacterPosition(int newCharacterRow, int newCharacterPositionColumn)
         {
-            int characterRow = board.Character.position.Key;
-            int characterColumn = board.Character.position.Value;
+            var characterRow = board.GameCharacters.Character.position.Key;
+            var characterColumn = board.GameCharacters.Character.position.Value;
 
-            KeyValuePair<int, int> newPosition = new KeyValuePair<int, int>(newCharacterRow, newCharacterPositionColumn);
+            var newPosition = new KeyValuePair<int, int>(newCharacterRow, newCharacterPositionColumn);
 
             if (board[characterRow, characterColumn - 1] is Empty)
             {
-                board.SwitchPieces(board.Character.position, newPosition);
+                board.SwitchPieces(board.GameCharacters.Character.position, newPosition);
             }
             else
             {
                 board[characterRow, characterColumn] = new Empty();
-                board[newCharacterRow, newCharacterPositionColumn] = board.Character.piece;
+                board[newCharacterRow, newCharacterPositionColumn] = board.GameCharacters.Character.piece;
             }
 
-            graph.Nodes[PositionConverter.ConvertPositionsToString(board.Character.position)].IsPacMan = false;
-            graph.Nodes[PositionConverter.ConvertPositionsToString(board.Character.position)].IsOccupied = false;
+            graph.Nodes[PositionConverter.ConvertPositionsToString(board.GameCharacters.Character.position)].IsPacMan = false;
+            graph.Nodes[PositionConverter.ConvertPositionsToString(board.GameCharacters.Character.position)].IsOccupied = false;
 
             graph.Nodes[PositionConverter.ConvertPositionsToString(newPosition)].IsPacMan = true;
             graph.Nodes[PositionConverter.ConvertPositionsToString(newPosition)].IsOccupied = true;
 
-            board.Character.position = newPosition;
-            graph.Character.position = newPosition;
+            board.GameCharacters.Character.position = newPosition;
+            graph.GameCharacters.Character.position = newPosition;
         }
 
         public void MoveCharacter(InputKeyEnum inputKey)
         {
-            int characterRow = board.Character.position.Key;
-            int characterColumn = board.Character.position.Value;
+            int characterRow = board.GameCharacters.Character.position.Key;
+            int characterColumn = board.GameCharacters.Character.position.Value;
 
             switch (inputKey)
             {

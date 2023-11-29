@@ -13,16 +13,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-GameCharacters gameCharacters = new GameCharacters();
-Board board = new(gameCharacters);
+IGameCharacters gameCharacters = new GameCharacters();
+Board board = new Board(gameCharacters);
 board.PrintBoard();
 
-Graph graph = new(board, gameCharacters);
+IGraph graph = new Graph(board, gameCharacters);
 graph.PrintAdjacencyList();
 
-DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
-GhostFleeAlgorithm ghostFleeAlgorithm = new GhostFleeAlgorithm(graph);
-GhostPathAlgorithms ghostPathAlgorithms = new GhostPathAlgorithms(dijkstraAlgorithm, ghostFleeAlgorithm, board);
+IDijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
+IGhostFleeAlgorithm ghostFleeAlgorithm = new GhostFleeAlgorithm(graph);
+IGhostPathAlgorithms ghostPathAlgorithms = new GhostPathAlgorithms(dijkstraAlgorithm, ghostFleeAlgorithm, board);
 
 board[9, 7] = new Character();
 board.GameCharacters.Character = new MoveablesContainer(new Character());
