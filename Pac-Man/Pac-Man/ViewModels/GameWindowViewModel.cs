@@ -1,5 +1,4 @@
-﻿using Pac_Man.Business;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +8,9 @@ namespace Pac_Man.ViewModels
 {
     public class GameWindowViewModel
     {
-        private readonly InputManager inputManager;
-
-        public GameWindowViewModel(InputManager inputManager) 
+        public GameWindowViewModel()
         {
-            this.inputManager = inputManager;
-            this.inputManager.OnKeyPressed += GameWindowViewModel.HandleKeyPress;
+
         }
 
         public static void HandleKeyPress(char key)
@@ -38,5 +34,6 @@ namespace Pac_Man.ViewModels
                     break;
             }
         }
+
     }
 }
