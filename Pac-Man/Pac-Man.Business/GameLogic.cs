@@ -16,6 +16,7 @@ namespace Pac_Man.Business
         private readonly IGhostPathAlgorithms ghostPathAlgorithms;
         private GameStateEnum gameState;
         private PlayerStateEnum playerState;
+        private List<IObserver> observers = new List<IObserver>();
 
         public string PlayerName { get; set; } = "Guest";
 
@@ -33,24 +34,63 @@ namespace Pac_Man.Business
             playerState = PlayerStateEnum.Alive;
         }
 
-        public void NotifyObservers()
+        public void NotifyObservers(string state)
         {
-            throw new NotImplementedException();
+            foreach (var observer in observers)
+            {
+                observer.Update(state);
+            }
         }
 
         public void RegisterObserver(IObserver observer)
         {
-            throw new NotImplementedException();
+            observers.Add(observer);
         }
 
         public void RemoveObserver(IObserver observer)
         {
-            throw new NotImplementedException();
+            observers.Remove(observer);
         }
 
-        public void Update()
+        public void Update(string state)
         {
-            throw new NotImplementedException();
+            switch (state)
+            {
+                case "lobby":
+                    {
+                        gameState = GameStateEnum.Lobby;
+                        break;
+                    }
+                case "start":
+                    {
+                        gameState = GameStateEnum.Starting;
+                        break;
+                    }
+                case "run":
+                    {
+                        gameState = GameStateEnum.Running;
+                        break;
+                    }
+                case "pause":
+                    {
+                        gameState = GameStateEnum.Paused;
+                        break;
+                    }
+                case "end":
+                    {
+                        gameState = GameStateEnum.End;
+                        break;
+                    }
+                case "stop":
+                    {
+                        gameState = GameStateEnum.Stop;
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
         }
 
         private void ModifyCharacterPosition(int newCharacterRow, int newCharacterPositionColumn)
