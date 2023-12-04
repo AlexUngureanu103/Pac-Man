@@ -35,7 +35,7 @@ namespace Pac_Man.Business
             gameState = GameStateEnum.Lobby;
             playerState = PlayerStateEnum.Alive;
 
-            ghostMoveTimer = new Timer(OnGhostMoveTimerCallback, null, Timeout.Infinite, 1000);
+            ghostMoveTimer = new Timer(OnGhostMoveTimerCallback, new object(), Timeout.Infinite, 3000);
         }
 
         public void NotifyObservers(string state)
@@ -100,7 +100,8 @@ namespace Pac_Man.Business
         public void StartGame()
         {
             gameState = GameStateEnum.Running;
-            ghostMoveTimer.Change(0, 1000);
+            ghostMoveTimer.Change(0, 3000);
+            board.PrintBoard();
         }
         public void StopGame()
         {
@@ -123,9 +124,14 @@ namespace Pac_Man.Business
                 foreach (var ghost in board.GameCharacters.Ghosts)
                 {
                     var newPosition = ghostPathAlgorithms.MainGhostMovements(ghost.Key, ghost.Value, board.GameCharacters.Character);
+                    if (board.GameCharacters.Ghosts[ghost.Key].position.Key == newPosition.Key &&
+                        board.GameCharacters.Ghosts[ghost.Key].position.Value == newPosition.Value)
+                    {
+                        continue;
+                    }
                     UpdateGhostsPosition(ghost.Key, newPosition.Key, newPosition.Value);
+                    board.PrintBoard();
                 }
-                board.PrintBoard();
             }
         }
 

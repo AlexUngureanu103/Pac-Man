@@ -15,23 +15,23 @@ builder.Services.AddSwaggerGen();
 
 IGameCharacters gameCharacters = new GameCharacters();
 Board board = new Board(gameCharacters);
-board.PrintBoard();
+//board.PrintBoard();
 
 IGraph graph = new Graph(board, gameCharacters);
-graph.PrintAdjacencyList();
+//graph.PrintAdjacencyList();
 
 IDijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
 IGhostFleeAlgorithm ghostFleeAlgorithm = new GhostFleeAlgorithm(graph);
 IGhostPathAlgorithms ghostPathAlgorithms = new GhostPathAlgorithms(dijkstraAlgorithm, ghostFleeAlgorithm, board);
 
-board[9, 7] = new Character();
-board.GameCharacters.Character = new MoveablesContainer(new Character());
-board.GameCharacters.Character.position = new KeyValuePair<int, int>(9, 7);
-board[3, 7] = new Ghost();
-board.GameCharacters.Ghosts["Clyde"].position = new KeyValuePair<int, int>(3, 7);
-board.PrintBoard();
+//board[9, 7] = new Character();
+//board.GameCharacters.Character = new MoveablesContainer(new Character());
+//board.GameCharacters.Character.position = new KeyValuePair<int, int>(9, 7);
+//board[3, 7] = new Ghost();
+//board.GameCharacters.Ghosts["Clyde"].position = new KeyValuePair<int, int>(3, 7);
+//board.PrintBoard();
 
-var path = ghostPathAlgorithms.MainGhostMovements("Clyde", board.GameCharacters.Ghosts["Clyde"], board.GameCharacters.Character);
+//var path = ghostPathAlgorithms.MainGhostMovements("Clyde", board.GameCharacters.Ghosts["Clyde"], board.GameCharacters.Character);
 
 var app = builder.Build();
 

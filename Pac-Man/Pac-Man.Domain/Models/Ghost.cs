@@ -8,7 +8,8 @@
 
         public override string ToString()
         {
-            return " G ";
+            //return " G ";
+            return " " + Icon.First() + " ";
         }
     }
 }
