@@ -2,7 +2,6 @@ using Pac_Man.Business;
 using Pac_Man.Business.GraphRepresentation;
 using Pac_Man.Business.Movement;
 using Pac_Man.Business.Movement.Ghost_Algorithms;
-using Pac_Man.Domain.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 IGameCharacters gameCharacters = new GameCharacters();
-Board board = new Board(gameCharacters);
+IBoard board = new Board(gameCharacters);
 //board.PrintBoard();
 
 IGraph graph = new Graph(board, gameCharacters);
@@ -35,7 +34,7 @@ IGhostPathAlgorithms ghostPathAlgorithms = new GhostPathAlgorithms(dijkstraAlgor
 
 var app = builder.Build();
 
-var gamelogic = new GameLogic(dijkstraAlgorithm, ghostFleeAlgorithm, ghostPathAlgorithms);
+var gamelogic = new GameLogic(dijkstraAlgorithm, ghostFleeAlgorithm, ghostPathAlgorithms, board, graph);
 
 gamelogic.StartGame();
 
