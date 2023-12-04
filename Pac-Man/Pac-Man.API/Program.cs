@@ -35,6 +35,10 @@ var path = ghostPathAlgorithms.MainGhostMovements("Clyde", board.GameCharacters.
 
 var app = builder.Build();
 
+var gamelogic = new GameLogic(dijkstraAlgorithm, ghostFleeAlgorithm, ghostPathAlgorithms);
+
+gamelogic.StartGame();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
