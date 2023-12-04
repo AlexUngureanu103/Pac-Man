@@ -16,6 +16,8 @@ namespace Pac_Man.Business
         private readonly IGhostPathAlgorithms ghostPathAlgorithms;
         private GameStateEnum gameState;
         private PlayerStateEnum playerState;
+        private int lifes = 3;
+        private int score = 0;
 
         public string PlayerName { get; set; } = "Guest";
 
@@ -53,21 +55,34 @@ namespace Pac_Man.Business
             throw new NotImplementedException();
         }
 
-        private void ModifyCharacterPosition(int newCharacterRow, int newCharacterPositionColumn)
+        private void ModifyCharacterPosition(int newCharacterRow, int newCharacterColumn)
         {
             var characterRow = board.GameCharacters.Character.position.Key;
             var characterColumn = board.GameCharacters.Character.position.Value;
 
-            var newPosition = new KeyValuePair<int, int>(newCharacterRow, newCharacterPositionColumn);
+            var newPosition = new KeyValuePair<int, int>(newCharacterRow, newCharacterColumn);
 
-            if (board[characterRow, characterColumn - 1] is Empty)
+            if (board[newCharacterRow, newCharacterColumn] is Empty)
             {
                 board.SwitchPieces(board.GameCharacters.Character.position, newPosition);
             }
             else
             {
                 board[characterRow, characterColumn] = new Empty();
-                board[newCharacterRow, newCharacterPositionColumn] = board.GameCharacters.Character.piece;
+                board[newCharacterRow, newCharacterColumn] = board.GameCharacters.Character.piece;
+            }
+
+            if (board[newCharacterRow, newCharacterColumn] is Food)
+            {
+                score++;
+            }
+            else if (board[newCharacterRow, newCharacterColumn] is Ghost)
+            {
+                lifes--;
+                if (lifes == 0)
+                {
+                    //stop game
+                }
             }
 
             graph.Nodes[PositionConverter.ConvertPositionsToString(board.GameCharacters.Character.position)].IsPacMan = false;
