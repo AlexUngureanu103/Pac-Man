@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+﻿using NSubstitute;
 using Pac_Man.Business.GraphRepresentation;
 using Pac_Man.Business.Movement.GhostAlgorithms;
 using Pac_Man.Domain.Models;
@@ -8,13 +8,16 @@ namespace Pac_Man.Business.UnitTests.Movement.GhostAlgorithms
     [TestClass]
     public class GhostFleeAlgorithmTests
     {
-        private Graph graph;
+        private IGameCharacters gameCharacters;
+        private IBoard board;
+        private IGraph graph;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            var board = new Board();
-            graph = new Graph(board);
+            gameCharacters = Substitute.For<GameCharacters>();
+            board = Substitute.For<Board>(gameCharacters);
+            graph = Substitute.For<Graph>(board, gameCharacters);
         }
 
         [TestMethod]
@@ -34,6 +37,14 @@ namespace Pac_Man.Business.UnitTests.Movement.GhostAlgorithms
             // Assert
             result.Key.Should().Be("");
             result.Value.Should().Be("");
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            gameCharacters = null;
+            board = null;
+            graph = null;
         }
     }
 }

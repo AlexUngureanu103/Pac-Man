@@ -1,14 +1,16 @@
-﻿namespace Pac_Man.Business.Movement.GhostAlgorithms
-{
-    public class GhostPathAlgorithms
-    {
-        private Board board;
-        private DijkstraAlgorithm dijsktraAlgorithm;
-        private GhostFleeAlgorithm ghostFleeAlgorithm;
+﻿using Pac_Man.Business.Movement.Ghost_Algorithms;
 
-        public GhostPathAlgorithms(DijkstraAlgorithm dijkstraAlgorithm, GhostFleeAlgorithm ghostFleeAlgorithm, Board board)
+namespace Pac_Man.Business.Movement.GhostAlgorithms
+{
+    public class GhostPathAlgorithms : IGhostPathAlgorithms
+    {
+        private readonly IBoard board;
+        private readonly IDijkstraAlgorithm dijkstraAlgorithm;
+        private readonly IGhostFleeAlgorithm ghostFleeAlgorithm;
+
+        public GhostPathAlgorithms(IDijkstraAlgorithm dijkstraAlgorithm, IGhostFleeAlgorithm ghostFleeAlgorithm, IBoard board)
         {
-            dijsktraAlgorithm = dijkstraAlgorithm;
+            this.dijkstraAlgorithm = dijkstraAlgorithm;
             this.ghostFleeAlgorithm = ghostFleeAlgorithm;
             this.board = board;
         }
@@ -22,38 +24,38 @@
             {
                 case "Blinky":
                     {
-                        var distance = dijsktraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(playerPositions));
+                        var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(playerPositions));
                         return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                     }
                 case "Pinky":
                     {
                         var newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value + 2);
-                        var distance = dijsktraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(newPlayerPosition));
+                        var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(newPlayerPosition));
                         return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                     }
                 case "Inky":
                     {
                         var newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value - 2);
 
-                        var distance = dijsktraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(newPlayerPosition));
+                        var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(newPlayerPosition));
                         return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                     }
                 case "Clyde":
                     {
-                        if (board.GhostSeesThePlayer(ghostName))
+                        if (board.CheckIfGhostSeesThePlayer(ghostName))
                         {
                             var nextMove = ghostFleeAlgorithm.Flee(ghost, player);
                             return PositionConverter.ConvertPositionsFromString(nextMove.Value);
                         }
                         else
                         {
-                            var distance = dijsktraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(playerPositions));
+                            var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(playerPositions));
                             return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                         }
                     }
                 default:
                     {
-                        var distance = dijsktraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(playerPositions));
+                        var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(playerPositions));
                         return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                     }
             };

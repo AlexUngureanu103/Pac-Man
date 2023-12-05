@@ -7,7 +7,7 @@ namespace Pac_Man.Business.Movement
     {
         public static KeyValuePair<int, int> ConvertPositionsFromString(string position)
         {
-            Regex regex = new Regex(@"\(\d+, \d+\)");
+            var regex = new Regex(@"\(\d+, \d+\)");
             if (!regex.IsMatch(position))
             {
                 throw new ArgumentException("Invalid position format");

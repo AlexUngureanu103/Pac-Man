@@ -1,377 +1,32 @@
-﻿using Pac_Man.Domain.Models;
+﻿using Pac_Man.Business.BoardManager;
+using Pac_Man.Domain.Models;
 
 namespace Pac_Man.Business
 {
-    public class Board
+    public class Board : IBoard
     {
-        private List<Piece> boardConfiguration;
+        private List<Piece> boardConfiguration = new List<Piece>();
 
-        public MoveablesContainer Character = new(new Character());
+        public IGameCharacters GameCharacters { get; set; }
 
-        public Dictionary<string, MoveablesContainer> Ghosts = new()
+        public int Rows { get; set; }
+        public int Columns { get; set; }
+
+        public Board(IGameCharacters gameCharacters)
         {
-            {"Blinky", new MoveablesContainer (new Ghost())},
-            {"Pinky", new MoveablesContainer (new Ghost())},
-            {"Inky", new MoveablesContainer (new Ghost())},
-            {"Clyde", new MoveablesContainer (new Ghost())},
-        };
-
-        public int Rows { get; private set; }
-        public int Columns { get; private set; }
-
-        public Board()
-        {
+            GameCharacters = gameCharacters;
             ClassicBoardGneration();
-            SpawnPlayerBasicBoard();
         }
 
         #region Classic Board Generation
 
-        private void ClassicBoardGneration()
+        public void ClassicBoardGneration()
         {
             Rows = 23;
             Columns = 23;
 
-            boardConfiguration = new List<Piece>(Rows * Columns);
-
-            GnerateFirstRow();
-            GenerateSecondRow();
-            GenerateThirdRow();
-            GenerateForthRow();
-            GenerateFifthRow();
-            GenerateSixthRow();
-            GenerateSeventhRow();
-            GenerateEightRow();
-            GenerateNinethRow();
-            GenerateTenthRow();
-            GenerateEleventhRow();
-            GenerateTwelvethRow();
-            GenerateEleventhRowBack();
-            GenerateTenthRow();
-            GenerateNinethRow();
-            GenerateEightRow();
-            GenerateSeventhRow();
-            GenerateSixthRow();
-            GenerateFifthRow();
-            GenerateForthRow();
-            GenerateThirdRow();
-            GenerateSecondRow();
-            GnerateFirstRow();
-        }
-
-        private void GenerateEleventhRowBack()
-        {
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            for (int i = 0; i < 5; i++)
-            {
-                boardConfiguration.Add(new Wall());
-            }
-
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-
-            for (int i = 0; i < 5; i++)
-            {
-                boardConfiguration.Add(new Wall());
-            }
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-        }
-
-        private void GenerateTwelvethRow()
-        {
-            boardConfiguration.Add(new Wall());
-            for (int i = 0; i < 7; i++)
-            {
-                boardConfiguration.Add(new Food());
-            }
-
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(Ghosts["Blinky"].piece);
-            Ghosts["Blinky"].position = new KeyValuePair<int, int>(11, 9);
-
-            boardConfiguration.Add(Ghosts["Pinky"].piece);
-            Ghosts["Pinky"].position = new KeyValuePair<int, int>(11, 10);
-
-            boardConfiguration.Add(new Empty());
-            boardConfiguration.Add(Ghosts["Inky"].piece);
-            Ghosts["Inky"].position = new KeyValuePair<int, int>(11, 12);
-
-            boardConfiguration.Add(Ghosts["Clyde"].piece);
-            Ghosts["Clyde"].position = new KeyValuePair<int, int>(11, 13);
-
-            boardConfiguration.Add(new Wall());
-
-            for (int i = 0; i < 7; i++)
-            {
-                boardConfiguration.Add(new Food());
-            }
-            boardConfiguration.Add(new Wall());
-        }
-
-        private void GenerateEleventhRow()
-        {
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            for (int i = 0; i < 5; i++)
-            {
-                boardConfiguration.Add(new Wall());
-            }
-
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Empty());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-
-            for (int i = 0; i < 5; i++)
-            {
-                boardConfiguration.Add(new Wall());
-            }
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-        }
-
-        private void GenerateTenthRow()
-        {
-            boardConfiguration.Add(new Wall());
-            for (int i = 0; i < 5; i++)
-            {
-                boardConfiguration.Add(new Food());
-            }
-            boardConfiguration.Add(new Wall());
-            for (int i = 0; i < 9; i++)
-            {
-                boardConfiguration.Add(new Food());
-            }
-            boardConfiguration.Add(new Wall());
-            for (int i = 0; i < 5; i++)
-            {
-                boardConfiguration.Add(new Food());
-            }
-            boardConfiguration.Add(new Wall());
-        }
-
-        private void GenerateNinethRow()
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                boardConfiguration.Add(new Wall());
-            }
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            for (int i = 0; i < 7; i++)
-            {
-                boardConfiguration.Add(new Wall());
-            }
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            for (int i = 0; i < 5; i++)
-            {
-                boardConfiguration.Add(new Wall());
-            }
-        }
-
-        private void GenerateEightRow()
-        {
-            boardConfiguration.Add(new Wall());
-            for (int i = 0; i < 3; i++)
-            {
-                boardConfiguration.Add(new Food());
-            }
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            for (int i = 0; i < 9; i++)
-            {
-                boardConfiguration.Add(new Food());
-            }
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            for (int i = 0; i < 3; i++)
-            {
-                boardConfiguration.Add(new Food());
-            }
-            boardConfiguration.Add(new Wall());
-        }
-
-        private void GenerateSeventhRow()
-        {
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-        }
-        private void GenerateSixthRow()
-        {
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Empty());
-            boardConfiguration.Add(new Wall());
-
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-
-
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-        }
-
-        private void GenerateFifthRow()
-        {
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Wall());
-        }
-
-        private void GenerateForthRow()
-        {
-            boardConfiguration.Add(new Wall());
-            for (int i = 0; i < 7; i++)
-            {
-                boardConfiguration.Add(new Food());
-            }
-            boardConfiguration.Add(new Wall());
-            for (int i = 0; i < 5; i++)
-            {
-                boardConfiguration.Add(new Food());
-            }
-            boardConfiguration.Add(new Wall());
-            for (int i = 0; i < 7; i++)
-            {
-                boardConfiguration.Add(new Food());
-            }
-            boardConfiguration.Add(new Wall());
-        }
-
-        private void GenerateThirdRow()
-        {
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            for (int i = 0; i < 5; i++)
-            {
-                boardConfiguration.Add(new Wall());
-            }
-            boardConfiguration.Add(new Food());
-            for (int i = 0; i < 5; i++)
-            {
-                boardConfiguration.Add(new Wall());
-            }
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-        }
-
-        private void GenerateSecondRow()
-        {
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-            for (int i = 0; i < 13; i++)
-            {
-                boardConfiguration.Add(new Food());
-            }
-            boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Food());
-            boardConfiguration.Add(new Wall());
-        }
-
-        private void GnerateFirstRow()
-        {
-            for (int i = 0; i < Rows; i++)
-            {
-                boardConfiguration.Add(new Wall());
-            }
+            boardConfiguration = BoardGenerator.GenerateClassicBoard(GameCharacters.Ghosts, Rows, Columns);
+            SpawnPlayerBasicBoard();
         }
 
         private void SpawnPlayerBasicBoard()
@@ -386,8 +41,8 @@ namespace Pac_Man.Business
 
             Random random = new Random();
             int randomIndex = random.Next(0, possibleSpawnPoints.Count);
-            this[possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value] = Character.piece;
-            Character.position = new KeyValuePair<int, int>(possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value);
+            this[possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value] = GameCharacters.Character.piece;
+            GameCharacters.Character.position = new KeyValuePair<int, int>(possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value);
         }
 
         #endregion
@@ -413,9 +68,9 @@ namespace Pac_Man.Business
             Console.WriteLine();
         }
 
-        public bool GhostSeesThePlayer(string ghostName)
+        public bool CheckIfGhostSeesThePlayer(string ghostName)
         {
-            var ghostPositions = Ghosts[ghostName].position;
+            var ghostPositions = GameCharacters.Ghosts[ghostName].position;
 
             for (int row = ghostPositions.Key + 1; row < Rows; row++)
             {
@@ -463,6 +118,11 @@ namespace Pac_Man.Business
             }
 
             return false;
+        }
+
+        public void SwitchPieces(KeyValuePair<int, int> oldPosition, KeyValuePair<int, int> newPosition)
+        {
+            (this[newPosition.Key, newPosition.Value], this[oldPosition.Key, oldPosition.Value]) = (this[oldPosition.Key, oldPosition.Value], this[newPosition.Key, newPosition.Value]);
         }
     }
 }
