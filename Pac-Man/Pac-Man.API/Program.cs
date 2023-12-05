@@ -2,6 +2,7 @@ using Pac_Man.Business;
 using Pac_Man.Business.GraphRepresentation;
 using Pac_Man.Business.Movement;
 using Pac_Man.Business.Movement.Ghost_Algorithms;
+using Pac_Man.Business.Movement.GhostAlgorithms;
 
 var builder = WebApplication.CreateBuilder(args);
 
