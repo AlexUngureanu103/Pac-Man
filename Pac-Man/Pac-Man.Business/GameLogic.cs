@@ -22,20 +22,18 @@ namespace Pac_Man.Business
 
         public string PlayerName { get; set; } = "Guest";
 
-        public GameLogic(IDijkstraAlgorithm dijkstraAlgorithm, IGhostFleeAlgorithm ghostFleeAlgorithm, IGhostPathAlgorithms ghostPathAlgorithms)
+        public GameLogic(IDijkstraAlgorithm dijkstraAlgorithm, IGhostFleeAlgorithm ghostFleeAlgorithm, IGhostPathAlgorithms ghostPathAlgorithms, IBoard board, IGraph graph)
         {
-            IGameCharacters gameCharacters = new GameCharacters();
-            board = new Board(gameCharacters);
-            graph = new Graph(board, gameCharacters);
-
             this.dijkstraAlgorithm = dijkstraAlgorithm;
             this.ghostFleeAlgorithm = ghostFleeAlgorithm;
             this.ghostPathAlgorithms = ghostPathAlgorithms;
+            this.board = board;
+            this.graph = graph;
 
             gameState = GameStateEnum.Lobby;
             playerState = PlayerStateEnum.Alive;
 
-            ghostMoveTimer = new Timer(OnGhostMoveTimerCallback, new object(), Timeout.Infinite, 3000);
+            ghostMoveTimer = new Timer(OnGhostMoveTimerCallback, new object(), Timeout.Infinite, 1000);
         }
 
         public void NotifyObservers(string state)
@@ -100,7 +98,7 @@ namespace Pac_Man.Business
         public void StartGame()
         {
             gameState = GameStateEnum.Running;
-            ghostMoveTimer.Change(0, 3000);
+            ghostMoveTimer.Change(0, 1000);
             board.PrintBoard();
         }
         public void StopGame()
