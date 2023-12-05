@@ -13,7 +13,7 @@ namespace Pac_Man.Business
 
         void PrintBoard();
         void ClassicBoardGneration();
-        void BoardRestart();
+        void BoardRestart(IGameCharacters gameCharactersInitialPos);
         bool CheckIfGhostSeesThePlayer(string ghostName);
         void SwitchPieces(KeyValuePair<int, int> position1, KeyValuePair<int, int> position2);
     }

@@ -1,4 +1,5 @@
-﻿using Pac_Man.Domain.Models;
+﻿using Pac_Man.Business.Movement;
+using Pac_Man.Domain.Models;
 
 namespace Pac_Man.Business.GraphRepresentation
 {
@@ -16,6 +17,35 @@ namespace Pac_Man.Business.GraphRepresentation
 
             CreateNodesBasedOnBoardConfiguration(boardConfiguration);
             GenerateNodeConnectionsBasedOnNodesPositions();
+        }
+
+        public void GraphRestart(IGameCharacters gameCharactersInitialPos)
+        {
+            Nodes[PositionConverter.ConvertPositionsToString(GameCharacters.Character.position)].IsPacMan = false;
+            Nodes[PositionConverter.ConvertPositionsToString(GameCharacters.Character.position)].IsOccupied = false;
+            Nodes[PositionConverter.ConvertPositionsToString(gameCharactersInitialPos.Character.position)].IsPacMan = true;
+            Nodes[PositionConverter.ConvertPositionsToString(gameCharactersInitialPos.Character.position)].IsOccupied = true;
+
+
+            Nodes[PositionConverter.ConvertPositionsToString(GameCharacters.Ghosts["Pinky"].position)].IsGhost = false;
+            Nodes[PositionConverter.ConvertPositionsToString(GameCharacters.Ghosts["Pinky"].position)].IsOccupied = false;
+            Nodes[PositionConverter.ConvertPositionsToString(gameCharactersInitialPos.Ghosts["Pinky"].position)].IsGhost = true;
+            Nodes[PositionConverter.ConvertPositionsToString(gameCharactersInitialPos.Ghosts["Pinky"].position)].IsOccupied = true;
+
+            Nodes[PositionConverter.ConvertPositionsToString(GameCharacters.Ghosts["Inky"].position)].IsGhost = false;
+            Nodes[PositionConverter.ConvertPositionsToString(GameCharacters.Ghosts["Inky"].position)].IsOccupied = false;
+            Nodes[PositionConverter.ConvertPositionsToString(gameCharactersInitialPos.Ghosts["Inky"].position)].IsGhost = true;
+            Nodes[PositionConverter.ConvertPositionsToString(gameCharactersInitialPos.Ghosts["Inky"].position)].IsOccupied = true;
+
+            Nodes[PositionConverter.ConvertPositionsToString(GameCharacters.Ghosts["Blinky"].position)].IsGhost = false;
+            Nodes[PositionConverter.ConvertPositionsToString(GameCharacters.Ghosts["Blinky"].position)].IsOccupied = false;
+            Nodes[PositionConverter.ConvertPositionsToString(gameCharactersInitialPos.Ghosts["Blinky"].position)].IsGhost = true;
+            Nodes[PositionConverter.ConvertPositionsToString(gameCharactersInitialPos.Ghosts["Blinky"].position)].IsOccupied = true;
+
+            Nodes[PositionConverter.ConvertPositionsToString(GameCharacters.Ghosts["Clyde"].position)].IsGhost = false;
+            Nodes[PositionConverter.ConvertPositionsToString(GameCharacters.Ghosts["Clyde"].position)].IsOccupied = false;
+            Nodes[PositionConverter.ConvertPositionsToString(gameCharactersInitialPos.Ghosts["Clyde"].position)].IsGhost = true;
+            Nodes[PositionConverter.ConvertPositionsToString(gameCharactersInitialPos.Ghosts["Clyde"].position)].IsOccupied = true;
         }
 
         public void PrintAdjacencyList()

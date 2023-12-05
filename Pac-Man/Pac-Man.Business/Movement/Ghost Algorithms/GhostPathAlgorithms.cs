@@ -1,4 +1,6 @@
-﻿namespace Pac_Man.Business.Movement.Ghost_Algorithms
+﻿using Pac_Man.Domain.Models;
+
+namespace Pac_Man.Business.Movement.Ghost_Algorithms
 {
     public class GhostPathAlgorithms : IGhostPathAlgorithms
     {
@@ -13,7 +15,7 @@
             this.board = board;
         }
 
-        public KeyValuePair<int, int> MainGhostMovements(string ghostName, MoveablesContainer ghost, MoveablesContainer player, int boardColumns)
+        public KeyValuePair<int, int> MainGhostMovements(string ghostName, MoveablesContainer ghost, MoveablesContainer player)
         {
             var ghostPositions = ghost.position;
             var playerPositions = player.position;
@@ -31,14 +33,16 @@
                     }
                 case "Pinky":
                     {
-                        if (playerPositions.Value + 2 >= boardColumns)
+                        KeyValuePair<int, int> newPlayerPosition;
+                        if (board.Columns - playerPositions.Value < 2 || board[playerPositions.Key, playerPositions.Value + 2] is Wall)
                         {
-                            var newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value + 1);
+                            newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value);
                         }
                         else
                         {
-                            var newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value + 2);
+                            newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value + 2);
                         }
+
                         var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(newPlayerPosition));
                         if (!distance.ContainsKey(PositionConverter.ConvertPositionsToString(ghostPositions)))
                         {
@@ -48,8 +52,15 @@
                     }
                 case "Inky":
                     {
-                        var newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value - 2);
-
+                        KeyValuePair<int, int> newPlayerPosition;
+                        if (playerPositions.Value < 2 || board[playerPositions.Key, playerPositions.Value - 2] is Wall)
+                        {
+                            newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value);
+                        }
+                        else
+                        {
+                            newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value - 2);
+                        }
                         var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(newPlayerPosition));
                         if (!distance.ContainsKey(PositionConverter.ConvertPositionsToString(ghostPositions)))
                         {

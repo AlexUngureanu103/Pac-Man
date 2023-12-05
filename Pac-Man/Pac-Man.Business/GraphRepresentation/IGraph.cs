@@ -8,5 +8,7 @@
         Dictionary<Node, List<NodeConnection>> AdjacencyList { get; set; }
 
         void PrintAdjacencyList();
+        void GraphRestart(IGameCharacters gameCharactersInitialPos);
+
     }
 }
