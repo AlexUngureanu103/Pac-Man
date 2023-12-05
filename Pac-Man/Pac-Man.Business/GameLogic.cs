@@ -16,6 +16,9 @@ namespace Pac_Man.Business
         private readonly IGhostPathAlgorithms ghostPathAlgorithms;
         private GameStateEnum gameState;
         private PlayerStateEnum playerState;
+        private List<IObserver> observers = new List<IObserver>();
+
+        private Timer ghostMoveTimer;
 
         public string PlayerName { get; set; } = "Guest";
 
@@ -31,26 +34,124 @@ namespace Pac_Man.Business
 
             gameState = GameStateEnum.Lobby;
             playerState = PlayerStateEnum.Alive;
+
+            ghostMoveTimer = new Timer(OnGhostMoveTimerCallback, new object(), Timeout.Infinite, 3000);
         }
 
-        public void NotifyObservers()
+        public void NotifyObservers(string state)
         {
-            throw new NotImplementedException();
+            foreach (var observer in observers)
+            {
+                observer.Update(state);
+            }
         }
 
         public void RegisterObserver(IObserver observer)
         {
-            throw new NotImplementedException();
+            observers.Add(observer);
         }
 
         public void RemoveObserver(IObserver observer)
         {
-            throw new NotImplementedException();
+            observers.Remove(observer);
         }
 
-        public void Update()
+        public void Update(string state)
         {
-            throw new NotImplementedException();
+            switch (state)
+            {
+                case "lobby":
+                    {
+                        gameState = GameStateEnum.Lobby;
+                        break;
+                    }
+                case "start":
+                    {
+                        gameState = GameStateEnum.Starting;
+                        break;
+                    }
+                case "run":
+                    {
+                        gameState = GameStateEnum.Running;
+                        break;
+                    }
+                case "pause":
+                    {
+                        gameState = GameStateEnum.Paused;
+                        break;
+                    }
+                case "end":
+                    {
+                        gameState = GameStateEnum.End;
+                        break;
+                    }
+                case "stop":
+                    {
+                        gameState = GameStateEnum.Stop;
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
+        }
+
+        public void StartGame()
+        {
+            gameState = GameStateEnum.Running;
+            ghostMoveTimer.Change(0, 3000);
+            board.PrintBoard();
+        }
+        public void StopGame()
+        {
+            gameState = GameStateEnum.End;
+            ghostMoveTimer.Change(Timeout.Infinite, Timeout.Infinite);
+        }
+
+        private void OnGhostMoveTimerCallback(object state)
+        {
+            lock (this)
+            {
+                MoveGhosts();
+            }
+        }
+
+        private void MoveGhosts()
+        {
+            if (gameState == GameStateEnum.Running)
+            {
+                foreach (var ghost in board.GameCharacters.Ghosts)
+                {
+                    var newPosition = ghostPathAlgorithms.MainGhostMovements(ghost.Key, ghost.Value, board.GameCharacters.Character);
+                    if (board.GameCharacters.Ghosts[ghost.Key].position.Key == newPosition.Key &&
+                        board.GameCharacters.Ghosts[ghost.Key].position.Value == newPosition.Value)
+                    {
+                        continue;
+                    }
+                    UpdateGhostsPosition(ghost.Key, newPosition.Key, newPosition.Value);
+                    board.PrintBoard();
+                }
+            }
+        }
+
+        private void UpdateGhostsPosition(string ghostName, int newGhostColumnRow, int newGhostPositionColumnn)
+        {
+            var ghostRow = board.GameCharacters.Ghosts[ghostName].position.Key;
+            var ghostColumn = board.GameCharacters.Ghosts[ghostName].position.Value;
+
+            var newPosition = new KeyValuePair<int, int>(newGhostColumnRow, newGhostPositionColumnn);
+
+            board.SwitchPieces(board.GameCharacters.Ghosts[ghostName].position, newPosition);
+
+            graph.Nodes[PositionConverter.ConvertPositionsToString(board.GameCharacters.Ghosts[ghostName].position)].IsGhost = false;
+            graph.Nodes[PositionConverter.ConvertPositionsToString(board.GameCharacters.Ghosts[ghostName].position)].IsOccupied = false;
+
+            graph.Nodes[PositionConverter.ConvertPositionsToString(newPosition)].IsGhost = true;
+            graph.Nodes[PositionConverter.ConvertPositionsToString(newPosition)].IsOccupied = true;
+
+            board.GameCharacters.Ghosts[ghostName].position = newPosition;
+            graph.GameCharacters.Ghosts[ghostName].position = newPosition;
         }
 
         private void ModifyCharacterPosition(int newCharacterRow, int newCharacterPositionColumn)

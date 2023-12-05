@@ -25,12 +25,20 @@ namespace Pac_Man.Business.Movement.GhostAlgorithms
                 case "Blinky":
                     {
                         var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(playerPositions));
+                        if (!distance.ContainsKey(PositionConverter.ConvertPositionsToString(ghostPositions)))
+                        {
+                            return ghostPositions;
+                        }
                         return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                     }
                 case "Pinky":
                     {
                         var newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value + 2);
                         var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(newPlayerPosition));
+                        if (!distance.ContainsKey(PositionConverter.ConvertPositionsToString(ghostPositions)))
+                        {
+                            return ghostPositions;
+                        }
                         return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                     }
                 case "Inky":
@@ -38,6 +46,10 @@ namespace Pac_Man.Business.Movement.GhostAlgorithms
                         var newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value - 2);
 
                         var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(newPlayerPosition));
+                        if (!distance.ContainsKey(PositionConverter.ConvertPositionsToString(ghostPositions)))
+                        {
+                            return ghostPositions;
+                        }
                         return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                     }
                 case "Clyde":
@@ -45,18 +57,26 @@ namespace Pac_Man.Business.Movement.GhostAlgorithms
                         if (board.CheckIfGhostSeesThePlayer(ghostName))
                         {
                             var nextMove = ghostFleeAlgorithm.Flee(ghost, player);
+                            if (nextMove.Key == "" && nextMove.Value == "" || nextMove.Value == "")
+                            {
+                                return ghostPositions;
+                            }
+
                             return PositionConverter.ConvertPositionsFromString(nextMove.Value);
                         }
                         else
                         {
                             var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(playerPositions));
+                            if (!distance.ContainsKey(PositionConverter.ConvertPositionsToString(ghostPositions)))
+                            {
+                                return ghostPositions;
+                            }
                             return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                         }
                     }
                 default:
                     {
-                        var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(playerPositions));
-                        return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
+                        return ghostPositions;
                     }
             };
         }
