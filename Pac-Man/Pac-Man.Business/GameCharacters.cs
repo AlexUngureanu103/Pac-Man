@@ -8,7 +8,7 @@ namespace Pac_Man.Business
         public Dictionary<string, MoveablesContainer> Ghosts { get; set; } = new Dictionary<string, MoveablesContainer>
             {
                 { "Blinky", new MoveablesContainer(new Ghost{Icon ="B"}) },
-                { "Pinky", new MoveablesContainer(new Ghost{Icon = "P"}) },
+                { "Pinky", new MoveablesContainer(new Ghost{Icon = "H"}) },
                 { "Inky", new MoveablesContainer(new Ghost{Icon = "I"}) },
                 { "Clyde", new MoveablesContainer(new Ghost{Icon = "C"}) }
             };
