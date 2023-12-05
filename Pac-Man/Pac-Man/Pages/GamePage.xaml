@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Pac_Man.Pages.GamePage"
-             Title="GamePage">
+             Title="GamePage"
+             xmlns:vm="clr-namespace:Pac_Man.ViewModels"
+             x:DataType="vm:GameWindowViewModel">
     <VerticalStackLayout
         Spacing="25"
         Padding="30,0"
@@ -15,6 +17,10 @@
             TextColor="Yellow"
             HorizontalOptions="Center"
         />
+
+        <StackLayout>
+            <Entry x:Name="entry" TextChanged="OnEntryTextChanged" VerticalOptions="CenterAndExpand" />
+        </StackLayout>
 
         <HorizontalStackLayout HorizontalOptions="Center" Spacing="50">
             <Button
