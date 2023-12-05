@@ -13,7 +13,7 @@
             this.board = board;
         }
 
-        public KeyValuePair<int, int> MainGhostMovements(string ghostName, MoveablesContainer ghost, MoveablesContainer player)
+        public KeyValuePair<int, int> MainGhostMovements(string ghostName, MoveablesContainer ghost, MoveablesContainer player, int boardColumns)
         {
             var ghostPositions = ghost.position;
             var playerPositions = player.position;
@@ -31,7 +31,14 @@
                     }
                 case "Pinky":
                     {
-                        var newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value + 2);
+                        if (playerPositions.Value + 2 >= boardColumns)
+                        {
+                            var newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value + 1);
+                        }
+                        else
+                        {
+                            var newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value + 2);
+                        }
                         var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(newPlayerPosition));
                         if (!distance.ContainsKey(PositionConverter.ConvertPositionsToString(ghostPositions)))
                         {

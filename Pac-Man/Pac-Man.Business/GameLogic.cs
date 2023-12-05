@@ -117,30 +117,46 @@ namespace Pac_Man.Business
             }
         }
 
+        public void GhostCharacterInteracts()
+        {
+            lifes--;
+            if (lifes != 0)
+            {
+                board.BoardRestart();
+            }
+            else
+            {
+                StopGame();
+                Update("stop");
+            }
+
+        }
+
         private void MoveGhosts()
         {
             if (gameState == GameStateEnum.Running)
             {
                 foreach (var ghost in board.GameCharacters.Ghosts)
                 {
-                    var newPosition = ghostPathAlgorithms.MainGhostMovements(ghost.Key, ghost.Value, board.GameCharacters.Character);
+                    var newPosition = ghostPathAlgorithms.MainGhostMovements(ghost.Key, ghost.Value, board.GameCharacters.Character, board.Columns);
                     if (board.GameCharacters.Ghosts[ghost.Key].position.Key == newPosition.Key &&
                         board.GameCharacters.Ghosts[ghost.Key].position.Value == newPosition.Value)
                     {
                         continue;
                     }
                     UpdateGhostsPosition(ghost.Key, newPosition.Key, newPosition.Value);
-                    board.PrintBoard();
                 }
+                ModifyCharacterPosition(board.GameCharacters.Character.position.Key, board.GameCharacters.Character.position.Value + 1);
+                board.PrintBoard();
             }
         }
 
-        private void UpdateGhostsPosition(string ghostName, int newGhostColumnRow, int newGhostPositionColumnn)
+        private void UpdateGhostsPosition(string ghostName, int newGhostRow, int newGhostPositionColumnn)
         {
             var ghostRow = board.GameCharacters.Ghosts[ghostName].position.Key;
             var ghostColumn = board.GameCharacters.Ghosts[ghostName].position.Value;
 
-            var newPosition = new KeyValuePair<int, int>(newGhostColumnRow, newGhostPositionColumnn);
+            var newPosition = new KeyValuePair<int, int>(newGhostRow, newGhostPositionColumnn);
 
             board.SwitchPieces(board.GameCharacters.Ghosts[ghostName].position, newPosition);
 
@@ -152,6 +168,11 @@ namespace Pac_Man.Business
 
             board.GameCharacters.Ghosts[ghostName].position = newPosition;
             graph.GameCharacters.Ghosts[ghostName].position = newPosition;
+
+            if (board.GameCharacters.Character.position.Key == newGhostRow && board.GameCharacters.Character.position.Value == newGhostPositionColumnn)
+            {
+                GhostCharacterInteracts();
+            }
         }
 
         private void ModifyCharacterPosition(int newCharacterRow, int newCharacterColumn)
@@ -161,6 +182,18 @@ namespace Pac_Man.Business
 
             var newPosition = new KeyValuePair<int, int>(newCharacterRow, newCharacterColumn);
 
+            if (board[newCharacterRow, newCharacterColumn] is Wall)
+            {
+                return;
+            }
+
+            if (board[newCharacterRow, newCharacterColumn] is Food)
+            {
+                score++;
+                Console.Write(score);
+                Console.WriteLine();
+            }
+
             if (board[newCharacterRow, newCharacterColumn] is Empty)
             {
                 board.SwitchPieces(board.GameCharacters.Character.position, newPosition);
@@ -168,20 +201,13 @@ namespace Pac_Man.Business
             else
             {
                 board[characterRow, characterColumn] = new Empty();
+                board.GameCharacters.Character.position = newPosition;
                 board[newCharacterRow, newCharacterColumn] = board.GameCharacters.Character.piece;
             }
 
-            if (board[newCharacterRow, newCharacterColumn] is Food)
+            if (board[newCharacterRow, newCharacterColumn] is Ghost)
             {
-                score++;
-            }
-            else if (board[newCharacterRow, newCharacterColumn] is Ghost)
-            {
-                lifes--;
-                if (lifes == 0)
-                {
-                    //stop game
-                }
+                GhostCharacterInteracts();
             }
 
             graph.Nodes[PositionConverter.ConvertPositionsToString(board.GameCharacters.Character.position)].IsPacMan = false;
@@ -190,7 +216,6 @@ namespace Pac_Man.Business
             graph.Nodes[PositionConverter.ConvertPositionsToString(newPosition)].IsPacMan = true;
             graph.Nodes[PositionConverter.ConvertPositionsToString(newPosition)].IsOccupied = true;
 
-            board.GameCharacters.Character.position = newPosition;
             graph.GameCharacters.Character.position = newPosition;
         }
 

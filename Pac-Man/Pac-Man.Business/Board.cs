@@ -29,6 +29,16 @@ namespace Pac_Man.Business
             SpawnPlayerBasicBoard();
         }
 
+        public void BoardRestart()
+        {
+            GameCharacters.Ghosts["Blinky"].position = new KeyValuePair<int, int>(11, 9);
+            GameCharacters.Ghosts["Pinky"].position = new KeyValuePair<int, int>(11, 10);
+            GameCharacters.Ghosts["Inky"].position = new KeyValuePair<int, int>(11, 12);
+            GameCharacters.Ghosts["Clyde"].position = new KeyValuePair<int, int>(11, 13);
+
+            SpawnPlayerBasicBoard();
+        }
+
         private void SpawnPlayerBasicBoard()
         {
             List<KeyValuePair<int, int>> possibleSpawnPoints = new List<KeyValuePair<int, int>>
