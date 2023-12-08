@@ -1,4 +1,5 @@
 ﻿using Pac_Man.Business.BoardManager;
+using Pac_Man.Domain;
 using Pac_Man.Domain.Models;
 
 namespace Pac_Man.Business
@@ -18,6 +19,27 @@ namespace Pac_Man.Business
             ClassicBoardGneration();
         }
 
+        public void BoardRestart(IGameCharacters gameCharactersInitialPos)
+        {
+            if (gameCharactersInitialPos.Character.position.Key != GameCharacters.Character.position.Key || gameCharactersInitialPos.Character.position.Value != GameCharacters.Character.position.Value)
+            {
+                this[gameCharactersInitialPos.Character.position.Key, gameCharactersInitialPos.Character.position.Value] = GameCharacters.Character.piece;
+                this[GameCharacters.Character.position.Key, GameCharacters.Character.position.Value] = new Empty();
+            }
+
+            this[gameCharactersInitialPos.Ghosts[Ghosts.Blinky].position.Key, gameCharactersInitialPos.Ghosts[Ghosts.Blinky].position.Value] = GameCharacters.Ghosts[Ghosts.Blinky].piece;
+            this[GameCharacters.Ghosts[Ghosts.Blinky].position.Key, GameCharacters.Ghosts[Ghosts.Blinky].position.Value] = new Empty();
+
+            this[gameCharactersInitialPos.Ghosts[Ghosts.Pinky].position.Key, gameCharactersInitialPos.Ghosts[Ghosts.Pinky].position.Value] = GameCharacters.Ghosts[Ghosts.Pinky].piece;
+            this[GameCharacters.Ghosts[Ghosts.Pinky].position.Key, GameCharacters.Ghosts[Ghosts.Pinky].position.Value] = new Empty();
+
+            this[gameCharactersInitialPos.Ghosts[Ghosts.Inky].position.Key, gameCharactersInitialPos.Ghosts[Ghosts.Inky].position.Value] = GameCharacters.Ghosts[Ghosts.Inky].piece; ;
+            this[GameCharacters.Ghosts[Ghosts.Inky].position.Key, GameCharacters.Ghosts[Ghosts.Inky].position.Value] = new Empty();
+
+            this[gameCharactersInitialPos.Ghosts[Ghosts.Clyde].position.Key, gameCharactersInitialPos.Ghosts[Ghosts.Clyde].position.Value] = GameCharacters.Ghosts[Ghosts.Clyde].piece;
+            this[GameCharacters.Ghosts[Ghosts.Clyde].position.Key, GameCharacters.Ghosts[Ghosts.Clyde].position.Value] = new Empty();
+        }
+
         #region Classic Board Generation
 
         public void ClassicBoardGneration()
@@ -28,6 +50,8 @@ namespace Pac_Man.Business
             boardConfiguration = BoardGenerator.GenerateClassicBoard(GameCharacters.Ghosts, Rows, Columns);
             SpawnPlayerBasicBoard();
         }
+
+
 
         private void SpawnPlayerBasicBoard()
         {
@@ -124,5 +148,6 @@ namespace Pac_Man.Business
         {
             (this[newPosition.Key, newPosition.Value], this[oldPosition.Key, oldPosition.Value]) = (this[oldPosition.Key, oldPosition.Value], this[newPosition.Key, newPosition.Value]);
         }
+
     }
 }

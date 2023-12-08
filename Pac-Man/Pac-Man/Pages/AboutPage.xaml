@@ -6,27 +6,25 @@
     <VerticalStackLayout
         Spacing="25"
         Padding="30,0"
-        VerticalOptions="Center">
+        Margin="20,75,0,0">
 
-        <Label
-            Text="About Page"
-            FontSize="50"
+        <Image
+            Source="about_logo.png"
+            HeightRequest="50"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            Margin="0,0,0,0"/>
+
+        <Button
+            x:Name="BackButton"
+            Text="Back"
+            BackgroundColor="Yellow"
+            TextColor="Black"
             FontAttributes="Bold"
-            TextColor="Yellow"
-            HorizontalOptions="Center"
-        />
-
-        <HorizontalStackLayout HorizontalOptions="Center" Spacing="50">
-            <Button
-                x:Name="BackButton"
-                Text="Back"
-                BackgroundColor="Yellow"
-                TextColor="Black"
-                FontAttributes="Bold"
-                WidthRequest="80"
-                Clicked="BackButton_Clicked"/>
-
-        </HorizontalStackLayout>
+            WidthRequest="80"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            Clicked="BackButton_Clicked"/>
 
     </VerticalStackLayout>
 </ContentPage>

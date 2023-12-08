@@ -1,4 +1,5 @@
-﻿using Pac_Man.Domain.Models;
+﻿using Pac_Man.Domain;
+using Pac_Man.Domain.Models;
 
 namespace Pac_Man.Business.BoardManager
 {
@@ -73,18 +74,18 @@ namespace Pac_Man.Business.BoardManager
             }
 
             boardConfiguration.Add(new Wall());
-            boardConfiguration.Add(ghosts["Blinky"].piece);
-            ghosts["Blinky"].position = new KeyValuePair<int, int>(11, 9);
+            boardConfiguration.Add(ghosts[Ghosts.Blinky].piece);
+            ghosts[Ghosts.Blinky].position = new KeyValuePair<int, int>(11, 9);
 
-            boardConfiguration.Add(ghosts["Pinky"].piece);
-            ghosts["Pinky"].position = new KeyValuePair<int, int>(11, 10);
+            boardConfiguration.Add(ghosts[Ghosts.Pinky].piece);
+            ghosts[Ghosts.Pinky].position = new KeyValuePair<int, int>(11, 10);
 
             boardConfiguration.Add(new Empty());
-            boardConfiguration.Add(ghosts["Inky"].piece);
-            ghosts["Inky"].position = new KeyValuePair<int, int>(11, 12);
+            boardConfiguration.Add(ghosts[Ghosts.Inky].piece);
+            ghosts[Ghosts.Inky].position = new KeyValuePair<int, int>(11, 12);
 
-            boardConfiguration.Add(ghosts["Clyde"].piece);
-            ghosts["Clyde"].position = new KeyValuePair<int, int>(11, 13);
+            boardConfiguration.Add(ghosts[Ghosts.Clyde].piece);
+            ghosts[Ghosts.Clyde].position = new KeyValuePair<int, int>(11, 13);
 
             boardConfiguration.Add(new Wall());
 

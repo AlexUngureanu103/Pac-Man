@@ -1,6 +1,7 @@
-﻿using Pac_Man.Business.Movement.Ghost_Algorithms;
+﻿using Pac_Man.Domain;
+using Pac_Man.Domain.Models;
 
-namespace Pac_Man.Business.Movement.GhostAlgorithms
+namespace Pac_Man.Business.Movement.Ghost_Algorithms
 {
     public class GhostPathAlgorithms : IGhostPathAlgorithms
     {
@@ -22,7 +23,7 @@ namespace Pac_Man.Business.Movement.GhostAlgorithms
 
             switch (ghostName)
             {
-                case "Blinky":
+                case Ghosts.Blinky:
                     {
                         var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(playerPositions));
                         if (!distance.ContainsKey(PositionConverter.ConvertPositionsToString(ghostPositions)))
@@ -31,19 +32,17 @@ namespace Pac_Man.Business.Movement.GhostAlgorithms
                         }
                         return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                     }
-                case "Pinky":
+                case Ghosts.Pinky:
                     {
-                        var newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value + 2);
-                        var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(newPlayerPosition));
-                        if (!distance.ContainsKey(PositionConverter.ConvertPositionsToString(ghostPositions)))
+                        KeyValuePair<int, int> newPlayerPosition;
+                        if (board.Columns - playerPositions.Value < 2 || board[playerPositions.Key, playerPositions.Value + 2] is Wall)
                         {
-                            return ghostPositions;
+                            newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value);
                         }
-                        return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
-                    }
-                case "Inky":
-                    {
-                        var newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value - 2);
+                        else
+                        {
+                            newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value + 2);
+                        }
 
                         var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(newPlayerPosition));
                         if (!distance.ContainsKey(PositionConverter.ConvertPositionsToString(ghostPositions)))
@@ -52,7 +51,25 @@ namespace Pac_Man.Business.Movement.GhostAlgorithms
                         }
                         return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                     }
-                case "Clyde":
+                case Ghosts.Inky:
+                    {
+                        KeyValuePair<int, int> newPlayerPosition;
+                        if (playerPositions.Value < 2 || board[playerPositions.Key, playerPositions.Value - 2] is Wall)
+                        {
+                            newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value);
+                        }
+                        else
+                        {
+                            newPlayerPosition = new KeyValuePair<int, int>(playerPositions.Key, playerPositions.Value - 2);
+                        }
+                        var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(newPlayerPosition));
+                        if (!distance.ContainsKey(PositionConverter.ConvertPositionsToString(ghostPositions)))
+                        {
+                            return ghostPositions;
+                        }
+                        return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
+                    }
+                case Ghosts.Clyde:
                     {
                         if (board.CheckIfGhostSeesThePlayer(ghostName))
                         {
