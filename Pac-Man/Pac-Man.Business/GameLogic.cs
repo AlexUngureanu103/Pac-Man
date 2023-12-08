@@ -160,9 +160,17 @@ namespace Pac_Man.Business
                     }
                     UpdateGhostsPosition(ghost.Key, newPosition.Key, newPosition.Value);
                 }
-                ModifyCharacterPosition(board.GameCharacters.Character.position.Key, board.GameCharacters.Character.position.Value + 1);
+                RandomMoveThePlayer();
                 board.PrintBoard();
             }
+        }
+
+        private void RandomMoveThePlayer()
+        {
+            var adjacentNodes = graph.AdjacencyList[graph.Nodes[PositionConverter.ConvertPositionsToString(graph.GameCharacters.Character.position)]];
+            var newPositionNode = adjacentNodes[new Random().Next(0, adjacentNodes.Count)].SecondNode;
+
+            ModifyCharacterPosition(newPositionNode.RowPosition, newPositionNode.ColumnPosition);
         }
 
         private void UpdateGhostsPosition(string ghostName, int newGhostRow, int newGhostPositionColumnn)
