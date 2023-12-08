@@ -19,7 +19,7 @@ namespace Pac_Man.Business
         private int lifes = 3;
         private int score = 0;
         private List<IObserver> observers = new List<IObserver>();
-        private IGameCharacters GameCharactersInitialPos = new GameCharacters();
+        private IGameCharacters gameCharactersInitialPos = new GameCharacters();
 
         private Timer ghostMoveTimer;
         public string PlayerName { get; set; } = "Guest";
@@ -99,11 +99,11 @@ namespace Pac_Man.Business
 
         public void StartGame()
         {
-            GameCharactersInitialPos.Character.position = board.GameCharacters.Character.position;
-            GameCharactersInitialPos.Ghosts["Blinky"].position = board.GameCharacters.Ghosts["Blinky"].position;
-            GameCharactersInitialPos.Ghosts["Pinky"].position = board.GameCharacters.Ghosts["Pinky"].position;
-            GameCharactersInitialPos.Ghosts["Inky"].position = board.GameCharacters.Ghosts["Inky"].position;
-            GameCharactersInitialPos.Ghosts["Clyde"].position = board.GameCharacters.Ghosts["Clyde"].position;
+            gameCharactersInitialPos.Character.position = board.GameCharacters.Character.position;
+            gameCharactersInitialPos.Ghosts["Blinky"].position = board.GameCharacters.Ghosts["Blinky"].position;
+            gameCharactersInitialPos.Ghosts["Pinky"].position = board.GameCharacters.Ghosts["Pinky"].position;
+            gameCharactersInitialPos.Ghosts["Inky"].position = board.GameCharacters.Ghosts["Inky"].position;
+            gameCharactersInitialPos.Ghosts["Clyde"].position = board.GameCharacters.Ghosts["Clyde"].position;
             gameState = GameStateEnum.Running;
             playerState = PlayerStateEnum.Alive;
             ghostMoveTimer.Change(0, 1000);
@@ -129,14 +129,14 @@ namespace Pac_Man.Business
             lifes--;
             if (lifes != 0)
             {
-                board.BoardRestart(GameCharactersInitialPos);
-                graph.GraphRestart(GameCharactersInitialPos);
+                board.BoardRestart(gameCharactersInitialPos);
+                graph.GraphRestart(gameCharactersInitialPos);
 
-                board.GameCharacters.Character.position = GameCharactersInitialPos.Character.position;
-                board.GameCharacters.Ghosts["Blinky"].position = GameCharactersInitialPos.Ghosts["Blinky"].position;
-                board.GameCharacters.Ghosts["Pinky"].position = GameCharactersInitialPos.Ghosts["Pinky"].position;
-                board.GameCharacters.Ghosts["Inky"].position = GameCharactersInitialPos.Ghosts["Inky"].position;
-                board.GameCharacters.Ghosts["Clyde"].position = GameCharactersInitialPos.Ghosts["Clyde"].position;
+                board.GameCharacters.Character.position = gameCharactersInitialPos.Character.position;
+                board.GameCharacters.Ghosts["Blinky"].position = gameCharactersInitialPos.Ghosts["Blinky"].position;
+                board.GameCharacters.Ghosts["Pinky"].position = gameCharactersInitialPos.Ghosts["Pinky"].position;
+                board.GameCharacters.Ghosts["Inky"].position = gameCharactersInitialPos.Ghosts["Inky"].position;
+                board.GameCharacters.Ghosts["Clyde"].position = gameCharactersInitialPos.Ghosts["Clyde"].position;
             }
             else
             {
@@ -160,7 +160,7 @@ namespace Pac_Man.Business
                     }
                     UpdateGhostsPosition(ghost.Key, newPosition.Key, newPosition.Value);
                 }
-                ModifyCharacterPosition(board.GameCharacters.Character.position.Key, board.GameCharacters.Character.position.Value + 1);
+                //ModifyCharacterPosition(board.GameCharacters.Character.position.Key, board.GameCharacters.Character.position.Value + 1);
                 board.PrintBoard();
             }
         }

@@ -1,6 +1,5 @@
 ﻿using Pac_Man.Business.BoardManager;
 using Pac_Man.Domain.Models;
-using Pac_Man.Domain.ObserverInterfaces;
 
 namespace Pac_Man.Business
 {
@@ -51,7 +50,7 @@ namespace Pac_Man.Business
             SpawnPlayerBasicBoard();
         }
 
-        
+
 
         private void SpawnPlayerBasicBoard()
         {
