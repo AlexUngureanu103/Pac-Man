@@ -1,4 +1,5 @@
-﻿using Pac_Man.Domain.Models;
+﻿using Pac_Man.Domain;
+using Pac_Man.Domain.Models;
 
 namespace Pac_Man.Business.Movement.Ghost_Algorithms
 {
@@ -22,7 +23,7 @@ namespace Pac_Man.Business.Movement.Ghost_Algorithms
 
             switch (ghostName)
             {
-                case "Blinky":
+                case Ghosts.Blinky:
                     {
                         var distance = dijkstraAlgorithm.GetShortestPath(PositionConverter.ConvertPositionsToString(ghostPositions), PositionConverter.ConvertPositionsToString(playerPositions));
                         if (!distance.ContainsKey(PositionConverter.ConvertPositionsToString(ghostPositions)))
@@ -31,7 +32,7 @@ namespace Pac_Man.Business.Movement.Ghost_Algorithms
                         }
                         return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                     }
-                case "Pinky":
+                case Ghosts.Pinky:
                     {
                         KeyValuePair<int, int> newPlayerPosition;
                         if (board.Columns - playerPositions.Value < 2 || board[playerPositions.Key, playerPositions.Value + 2] is Wall)
@@ -50,7 +51,7 @@ namespace Pac_Man.Business.Movement.Ghost_Algorithms
                         }
                         return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                     }
-                case "Inky":
+                case Ghosts.Inky:
                     {
                         KeyValuePair<int, int> newPlayerPosition;
                         if (playerPositions.Value < 2 || board[playerPositions.Key, playerPositions.Value - 2] is Wall)
@@ -68,7 +69,7 @@ namespace Pac_Man.Business.Movement.Ghost_Algorithms
                         }
                         return PositionConverter.ConvertPositionsFromString(distance[PositionConverter.ConvertPositionsToString(ghostPositions)]);
                     }
-                case "Clyde":
+                case Ghosts.Clyde:
                     {
                         if (board.CheckIfGhostSeesThePlayer(ghostName))
                         {

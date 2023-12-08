@@ -1,6 +1,7 @@
 ﻿using Pac_Man.Business.GraphRepresentation;
 using Pac_Man.Business.Movement;
 using Pac_Man.Business.Movement.Ghost_Algorithms;
+using Pac_Man.Domain;
 using Pac_Man.Domain.Enums;
 using Pac_Man.Domain.Models;
 using Pac_Man.Domain.ObserverInterfaces;
@@ -100,10 +101,10 @@ namespace Pac_Man.Business
         public void StartGame()
         {
             GameCharactersInitialPos.Character.position = board.GameCharacters.Character.position;
-            GameCharactersInitialPos.Ghosts["Blinky"].position = board.GameCharacters.Ghosts["Blinky"].position;
-            GameCharactersInitialPos.Ghosts["Pinky"].position = board.GameCharacters.Ghosts["Pinky"].position;
-            GameCharactersInitialPos.Ghosts["Inky"].position = board.GameCharacters.Ghosts["Inky"].position;
-            GameCharactersInitialPos.Ghosts["Clyde"].position = board.GameCharacters.Ghosts["Clyde"].position;
+            GameCharactersInitialPos.Ghosts[Ghosts.Blinky].position = board.GameCharacters.Ghosts[Ghosts.Blinky].position;
+            GameCharactersInitialPos.Ghosts[Ghosts.Pinky].position = board.GameCharacters.Ghosts[Ghosts.Pinky].position;
+            GameCharactersInitialPos.Ghosts[Ghosts.Inky].position = board.GameCharacters.Ghosts[Ghosts.Inky].position;
+            GameCharactersInitialPos.Ghosts[Ghosts.Clyde].position = board.GameCharacters.Ghosts[Ghosts.Clyde].position;
             gameState = GameStateEnum.Running;
             playerState = PlayerStateEnum.Alive;
             ghostMoveTimer.Change(0, 1000);
@@ -133,10 +134,10 @@ namespace Pac_Man.Business
                 graph.GraphRestart(GameCharactersInitialPos);
 
                 board.GameCharacters.Character.position = GameCharactersInitialPos.Character.position;
-                board.GameCharacters.Ghosts["Blinky"].position = GameCharactersInitialPos.Ghosts["Blinky"].position;
-                board.GameCharacters.Ghosts["Pinky"].position = GameCharactersInitialPos.Ghosts["Pinky"].position;
-                board.GameCharacters.Ghosts["Inky"].position = GameCharactersInitialPos.Ghosts["Inky"].position;
-                board.GameCharacters.Ghosts["Clyde"].position = GameCharactersInitialPos.Ghosts["Clyde"].position;
+                board.GameCharacters.Ghosts[Ghosts.Blinky].position = GameCharactersInitialPos.Ghosts[Ghosts.Blinky].position;
+                board.GameCharacters.Ghosts[Ghosts.Pinky].position = GameCharactersInitialPos.Ghosts[Ghosts.Pinky].position;
+                board.GameCharacters.Ghosts[Ghosts.Inky].position = GameCharactersInitialPos.Ghosts[Ghosts.Inky].position;
+                board.GameCharacters.Ghosts[Ghosts.Clyde].position = GameCharactersInitialPos.Ghosts[Ghosts.Clyde].position;
             }
             else
             {
