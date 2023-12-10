@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Pac_Man.ViewModels
+﻿namespace Pac_Man.ViewModels
 {
-    public class GameWindowViewModel
+    public class GameWindowViewModel : BaseVM
     {
         public GameWindowViewModel()
         {
-
         }
 
         public static void HandleKeyPress(char key)
@@ -34,6 +27,5 @@ namespace Pac_Man.ViewModels
                     break;
             }
         }
-
     }
 }
