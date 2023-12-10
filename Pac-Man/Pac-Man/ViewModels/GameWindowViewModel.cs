@@ -1,31 +1,73 @@
-﻿namespace Pac_Man.ViewModels
+﻿using Pac_Man.Business;
+using Pac_Man.Business.GraphRepresentation;
+using Pac_Man.Business.Movement;
+using Pac_Man.Business.Movement.Ghost_Algorithms;
+using Pac_Man.Domain.Enums;
+
+namespace Pac_Man.ViewModels
 {
-    public class GameWindowViewModel : BaseVM
+    public partial class GameWindowViewModel : BaseVM
     {
+        private readonly GameLogic gameLogic;
+        private readonly IBoard board;
+        private Timer updateTimer;
+
         public GameWindowViewModel()
         {
+            //To inject dependencies!
+            IGameCharacters gameCharacters = new GameCharacters();
+            board = new Board(gameCharacters);
+            IGraph graph = new Graph(board, gameCharacters);
+            IDijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
+            IGhostFleeAlgorithm ghostFleeAlgorithm = new GhostFleeAlgorithm(graph);
+            IGhostPathAlgorithms ghostPathAlgorithms = new GhostPathAlgorithms(dijkstraAlgorithm, ghostFleeAlgorithm, board);
+            gameLogic = new GameLogic(dijkstraAlgorithm, ghostFleeAlgorithm, ghostPathAlgorithms, board, graph);
+
+            updateTimer = new Timer(UpdateBoard, new object(), 0, 1000);
+            gameLogic.StartGame();
+            updateTimer.Change(0, 250);
         }
 
-        public static void HandleKeyPress(char key)
+        private void UpdateBoard(object state)
+        {
+            lock (this)
+            {
+                GameBoard = board.ToString();
+            }
+        }
+
+        private string _gameBoard;
+        public string GameBoard
+        {
+            get { return _gameBoard; }
+            set
+            {
+                _gameBoard = value;
+                OnPropertyChanged(nameof(GameBoard));
+            }
+        }
+
+        public void HandleKeyPress(char key)
         {
             switch (char.ToLower(key))
             {
                 case 'w':
-                    // Send "Up" option to GameLogic from InputKeyEnum.cs
+                    gameLogic.MoveCharacter(InputKeyEnum.Up);
                     break;
                 case 'a':
-                    // Send "Left" option to GameLogic from InputKeyEnum.cs
+                    gameLogic.MoveCharacter(InputKeyEnum.Left);
                     break;
                 case 's':
-                    // Send "Down" option to GameLogic from InputKeyEnum.cs
+                    gameLogic.MoveCharacter(InputKeyEnum.Down);
                     break;
                 case 'd':
-                    // Send "Right" option to GameLogic from InputKeyEnum.cs
+                    gameLogic.MoveCharacter(InputKeyEnum.Right);
                     break;
                 default:
-                    // Send "Invalid" option to GameLogic from InputKeyEnum.cs
+                    gameLogic.MoveCharacter(InputKeyEnum.Invalid);
                     break;
             }
+            GameBoard = board.ToString();
         }
     }
 }

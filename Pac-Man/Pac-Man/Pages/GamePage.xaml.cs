@@ -3,10 +3,13 @@ using Pac_Man.ViewModels;
 
 public partial class GamePage : ContentPage
 {
+    private readonly GameWindowViewModel gameWindowViewModel;
     public GamePage()
-	{
-		InitializeComponent();
+    {
+        gameWindowViewModel = new GameWindowViewModel();
+        InitializeComponent();
         Loaded += MainPage_Loaded;
+        BindingContext = gameWindowViewModel;
     }
 
     private void MainPage_Loaded(object sender, EventArgs e)
@@ -19,9 +22,8 @@ public partial class GamePage : ContentPage
         string newText = e.NewTextValue;
         if (!string.IsNullOrEmpty(newText))
         {
-            char newChar = newText[newText.Length - 1]; 
-            GameWindowViewModel viewModel = (GameWindowViewModel)BindingContext; 
-            GameWindowViewModel.HandleKeyPress(newChar);
+            char newChar = newText[newText.Length - 1];
+            gameWindowViewModel.HandleKeyPress(newChar);
         }
     }
 

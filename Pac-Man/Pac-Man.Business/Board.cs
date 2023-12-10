@@ -92,6 +92,25 @@ namespace Pac_Man.Business
             Console.WriteLine();
         }
 
+        public override string ToString()
+        {
+            var boardAsStruing = string.Empty + Environment.NewLine;
+
+            for (int i = 0; i < Rows; i++)
+            {
+                boardAsStruing += Environment.NewLine;
+                for (int j = 0; j < Columns; j++)
+                {
+                    boardAsStruing += this[i, j].ToString();
+                }
+            }
+            boardAsStruing += Environment.NewLine;
+            boardAsStruing += Environment.NewLine;
+            boardAsStruing += Environment.NewLine;
+
+            return boardAsStruing;
+        }
+
         public bool CheckIfGhostSeesThePlayer(string ghostName)
         {
             var ghostPositions = GameCharacters.Ghosts[ghostName].position;
