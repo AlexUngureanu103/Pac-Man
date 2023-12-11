@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Pac_Man.ApplicationConfiguration;
 
 namespace Pac_Man
 {
@@ -7,6 +8,9 @@ namespace Pac_Man
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+
+            Bootstapper.BuildApp(builder);
+
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
@@ -16,7 +20,7 @@ namespace Pac_Man
                 });
 
 #if DEBUG
-		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

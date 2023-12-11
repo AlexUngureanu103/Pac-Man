@@ -1,15 +1,17 @@
-﻿using Pac_Man.Pages;
+﻿using Pac_Man.ApplicationConfiguration;
+using Pac_Man.Pages;
 
 namespace Pac_Man
 {
     public partial class App : Application
     {
-        public App()
+        private readonly IContentPageFactory _contentPageFactory;
+        public App(IContentPageFactory contentPageFactory)
         {
+            _contentPageFactory = contentPageFactory;
             InitializeComponent();
 
-            //MainPage = new AppShell();
-            MainPage = new LobbyWindowPage(); //for showing the LobbyWindow
+            MainPage = _contentPageFactory.Create<LobbyWindowPage>();
         }
     }
 }

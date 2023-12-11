@@ -1,27 +1,19 @@
 ﻿using Pac_Man.Business;
-using Pac_Man.Business.GraphRepresentation;
-using Pac_Man.Business.Movement;
-using Pac_Man.Business.Movement.Ghost_Algorithms;
 using Pac_Man.Domain.Enums;
 
 namespace Pac_Man.ViewModels
 {
     public partial class GameWindowViewModel : BaseVM
     {
-        private readonly GameLogic gameLogic;
-        private readonly IBoard board;
+        private readonly GameLogic _gameLogic;
+        private readonly IBoard _board;
         private Timer updateTimer;
 
-        public GameWindowViewModel()
+        public GameWindowViewModel(IBoard board, GameLogic gameLogic)
         {
-            //To inject dependencies!
-            IGameCharacters gameCharacters = new GameCharacters();
-            board = new Board(gameCharacters);
-            IGraph graph = new Graph(board, gameCharacters);
-            IDijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
-            IGhostFleeAlgorithm ghostFleeAlgorithm = new GhostFleeAlgorithm(graph);
-            IGhostPathAlgorithms ghostPathAlgorithms = new GhostPathAlgorithms(dijkstraAlgorithm, ghostFleeAlgorithm, board);
-            gameLogic = new GameLogic(dijkstraAlgorithm, ghostFleeAlgorithm, ghostPathAlgorithms, board, graph);
+            _board = board;
+            _gameLogic = gameLogic;
+
 
             updateTimer = new Timer(UpdateBoard, new object(), 0, 1000);
             gameLogic.StartGame();
@@ -32,7 +24,7 @@ namespace Pac_Man.ViewModels
         {
             lock (this)
             {
-                GameBoard = board.ToString();
+                GameBoard = _board.ToString();
             }
         }
 
@@ -52,22 +44,22 @@ namespace Pac_Man.ViewModels
             switch (char.ToLower(key))
             {
                 case 'w':
-                    gameLogic.MoveCharacter(InputKeyEnum.Up);
+                    _gameLogic.MoveCharacter(InputKeyEnum.Up);
                     break;
                 case 'a':
-                    gameLogic.MoveCharacter(InputKeyEnum.Left);
+                    _gameLogic.MoveCharacter(InputKeyEnum.Left);
                     break;
                 case 's':
-                    gameLogic.MoveCharacter(InputKeyEnum.Down);
+                    _gameLogic.MoveCharacter(InputKeyEnum.Down);
                     break;
                 case 'd':
-                    gameLogic.MoveCharacter(InputKeyEnum.Right);
+                    _gameLogic.MoveCharacter(InputKeyEnum.Right);
                     break;
                 default:
-                    gameLogic.MoveCharacter(InputKeyEnum.Invalid);
+                    _gameLogic.MoveCharacter(InputKeyEnum.Invalid);
                     break;
             }
-            GameBoard = board.ToString();
+            GameBoard = _board.ToString();
         }
     }
 }
