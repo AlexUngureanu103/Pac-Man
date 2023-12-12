@@ -10,6 +10,12 @@
         Padding="30,0"
         VerticalOptions="Center">
 
+        <Label Text="{Binding GameBoard}"
+               FontSize="12"
+               CharacterSpacing="4"
+               LineBreakMode="CharacterWrap"
+            />
+        
         <Label
             Text="Game Page"
             FontSize="50"

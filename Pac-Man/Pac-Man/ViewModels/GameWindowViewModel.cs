@@ -1,39 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Pac_Man.Business;
+using Pac_Man.Domain.Enums;
 
 namespace Pac_Man.ViewModels
 {
-    public class GameWindowViewModel
+    public partial class GameWindowViewModel : BaseVM
     {
-        public GameWindowViewModel()
-        {
+        private readonly GameLogic _gameLogic;
+        private readonly IBoard _board;
+        private Timer updateTimer;
 
+        public GameWindowViewModel(IBoard board, GameLogic gameLogic)
+        {
+            _board = board;
+            _gameLogic = gameLogic;
+
+
+            updateTimer = new Timer(UpdateBoard, new object(), 0, 1000);
+            gameLogic.StartGame();
+            updateTimer.Change(0, 250);
         }
 
-        public static void HandleKeyPress(char key)
+        private void UpdateBoard(object state)
+        {
+            lock (this)
+            {
+                GameBoard = _board.ToString();
+            }
+        }
+
+        private string _gameBoard;
+        public string GameBoard
+        {
+            get { return _gameBoard; }
+            set
+            {
+                _gameBoard = value;
+                OnPropertyChanged(nameof(GameBoard));
+            }
+        }
+
+        public void HandleKeyPress(char key)
         {
             switch (char.ToLower(key))
             {
                 case 'w':
-                    // Send "Up" option to GameLogic from InputKeyEnum.cs
+                    _gameLogic.MoveCharacter(InputKeyEnum.Up);
                     break;
                 case 'a':
-                    // Send "Left" option to GameLogic from InputKeyEnum.cs
+                    _gameLogic.MoveCharacter(InputKeyEnum.Left);
                     break;
                 case 's':
-                    // Send "Down" option to GameLogic from InputKeyEnum.cs
+                    _gameLogic.MoveCharacter(InputKeyEnum.Down);
                     break;
                 case 'd':
-                    // Send "Right" option to GameLogic from InputKeyEnum.cs
+                    _gameLogic.MoveCharacter(InputKeyEnum.Right);
                     break;
                 default:
-                    // Send "Invalid" option to GameLogic from InputKeyEnum.cs
+                    _gameLogic.MoveCharacter(InputKeyEnum.Invalid);
                     break;
             }
+            GameBoard = _board.ToString();
         }
-
     }
 }

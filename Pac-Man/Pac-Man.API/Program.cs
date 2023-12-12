@@ -2,7 +2,10 @@ using Pac_Man.Business;
 using Pac_Man.Business.GraphRepresentation;
 using Pac_Man.Business.Movement;
 using Pac_Man.Business.Movement.Ghost_Algorithms;
+using Pac_Man.Domain;
 
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "Log4Net.config", Watch = true)]
+log4net.ILog log = log4net.LogManager.GetLogger(typeof(Program));
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -25,6 +28,7 @@ var app = builder.Build();
 
 var gamelogic = new GameLogic(dijkstraAlgorithm, ghostFleeAlgorithm, ghostPathAlgorithms, board, graph);
 
+var logger = new Logger();
 gamelogic.StartGame();
 
 // Configure the HTTP request pipeline.

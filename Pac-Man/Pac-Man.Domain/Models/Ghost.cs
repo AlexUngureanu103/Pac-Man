@@ -9,7 +9,7 @@
         public override string ToString()
         {
             //return " G ";
-            return " " + Icon.First() + " ";
+            return Icon.First() + "  ";
         }
     }
 }

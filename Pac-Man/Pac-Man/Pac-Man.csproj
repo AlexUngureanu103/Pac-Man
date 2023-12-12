@@ -49,7 +49,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="log4net" Version="2.0.15" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Pac-Man.Business\Pac-Man.Business.csproj" />
+	  <ProjectReference Include="..\Pac-Man.Domain\Pac-Man.Domain.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

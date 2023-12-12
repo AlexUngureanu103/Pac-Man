@@ -1,9 +1,7 @@
-﻿using System.Windows.Input;
-
-namespace Pac_Man.ViewModels
+﻿namespace Pac_Man.ViewModels
 {
-    internal class LobbyWindowViewModel
+    public class LobbyWindowViewModel : BaseVM
     {
-        
+
     }
 }

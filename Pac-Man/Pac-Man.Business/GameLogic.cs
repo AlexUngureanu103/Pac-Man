@@ -10,6 +10,7 @@ namespace Pac_Man.Business
 {
     public class GameLogic : IObserver, ISubject
     {
+        private readonly IDataLogger logger;
         private IBoard board;
         private IGraph graph;
         private readonly IDijkstraAlgorithm dijkstraAlgorithm;
@@ -27,6 +28,9 @@ namespace Pac_Man.Business
 
         public GameLogic(IDijkstraAlgorithm dijkstraAlgorithm, IGhostFleeAlgorithm ghostFleeAlgorithm, IGhostPathAlgorithms ghostPathAlgorithms, IBoard board, IGraph graph)
         {
+            log4net.ILog log = log4net.LogManager.GetLogger(typeof(GameLogic));
+
+            logger = new Logger();
             this.dijkstraAlgorithm = dijkstraAlgorithm;
             this.ghostFleeAlgorithm = ghostFleeAlgorithm;
             this.ghostPathAlgorithms = ghostPathAlgorithms;
@@ -108,7 +112,8 @@ namespace Pac_Man.Business
             gameState = GameStateEnum.Running;
             playerState = PlayerStateEnum.Alive;
             ghostMoveTimer.Change(0, 1000);
-            board.PrintBoard();
+
+            logger.LogInfo(board.ToString());
         }
         public void StopGame()
         {
@@ -162,7 +167,9 @@ namespace Pac_Man.Business
                     UpdateGhostsPosition(ghost.Key, newPosition.Key, newPosition.Value);
                 }
                 //RandomMoveThePlayer();
-                board.PrintBoard();
+                 board.PrintBoard();
+                logger.LogInfo(board.ToString());
+
             }
         }
 
