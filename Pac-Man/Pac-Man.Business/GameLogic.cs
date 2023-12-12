@@ -168,7 +168,7 @@ namespace Pac_Man.Business
                     UpdateGhostsPosition(ghost.Key, newPosition.Key, newPosition.Value);
                 }
                 //RandomMoveThePlayer();
-                 board.PrintBoard();
+                board.PrintBoard();
                 logger.LogInfo(board.ToString());
 
             }
@@ -213,7 +213,11 @@ namespace Pac_Man.Business
             var characterColumn = board.GameCharacters.Character.position.Value;
 
             var newPosition = new KeyValuePair<int, int>(newCharacterRow, newCharacterColumn);
-
+            if (board[newCharacterRow, newCharacterColumn] is Ghost)
+            {
+                GhostCharacterInteracts();
+                return;
+            }
             if (board[newCharacterRow, newCharacterColumn] is Wall)
             {
                 return;
@@ -237,11 +241,6 @@ namespace Pac_Man.Business
                 board[newCharacterRow, newCharacterColumn] = board.GameCharacters.Character.piece;
             }
 
-            if (board[newCharacterRow, newCharacterColumn] is Ghost)
-            {
-                GhostCharacterInteracts();
-            }
-
             graph.Nodes[PositionConverter.ConvertPositionsToString(board.GameCharacters.Character.position)].IsPacMan = false;
             graph.Nodes[PositionConverter.ConvertPositionsToString(board.GameCharacters.Character.position)].IsOccupied = false;
 
@@ -253,6 +252,11 @@ namespace Pac_Man.Business
 
         public void MoveCharacter(InputKeyEnum inputKey)
         {
+            if (gameState != GameStateEnum.Running)
+            {
+                return;
+            }
+
             int characterRow = board.GameCharacters.Character.position.Key;
             int characterColumn = board.GameCharacters.Character.position.Value;
 
