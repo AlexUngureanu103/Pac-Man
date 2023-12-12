@@ -15,18 +15,8 @@
                CharacterSpacing="4"
                LineBreakMode="CharacterWrap"
             />
-        
-        <Label
-            Text="Game Page"
-            FontSize="50"
-            FontAttributes="Bold"
-            TextColor="Yellow"
-            HorizontalOptions="Center"
-        />
 
-        <StackLayout>
-            <Entry x:Name="entry" TextChanged="OnEntryTextChanged" VerticalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Entry x:Name="entry" TextChanged="OnEntryTextChanged" VerticalOptions="CenterAndExpand" Opacity="0"/>
 
         <HorizontalStackLayout HorizontalOptions="Center" Spacing="50">
             <Button
