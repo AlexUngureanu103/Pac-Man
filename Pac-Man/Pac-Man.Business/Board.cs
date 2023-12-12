@@ -96,6 +96,11 @@ namespace Pac_Man.Business
         {
             var boardAsStruing = string.Empty + Environment.NewLine;
 
+            if (boardConfiguration.Count == 0)
+            {
+                return boardAsStruing;
+            }
+
             for (int i = 0; i < Rows; i++)
             {
                 boardAsStruing += Environment.NewLine;

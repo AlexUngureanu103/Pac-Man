@@ -111,7 +111,7 @@ namespace Pac_Man.Business
             gameCharactersInitialPos.Ghosts[Ghosts.Clyde].position = board.GameCharacters.Ghosts[Ghosts.Clyde].position;
             gameState = GameStateEnum.Running;
             playerState = PlayerStateEnum.Alive;
-            ghostMoveTimer.Change(0, 1000);
+            ghostMoveTimer.Change(0, 250);
 
             logger.LogInfo(board.ToString());
         }
@@ -159,8 +159,9 @@ namespace Pac_Man.Business
                 foreach (var ghost in board.GameCharacters.Ghosts)
                 {
                     var newPosition = ghostPathAlgorithms.MainGhostMovements(ghost.Key, ghost.Value, board.GameCharacters.Character);
-                    if (board.GameCharacters.Ghosts[ghost.Key].position.Key == newPosition.Key &&
-                        board.GameCharacters.Ghosts[ghost.Key].position.Value == newPosition.Value)
+                    if ((board.GameCharacters.Ghosts[ghost.Key].position.Key == newPosition.Key &&
+                        board.GameCharacters.Ghosts[ghost.Key].position.Value == newPosition.Value) ||
+                        (graph.Nodes[PositionConverter.ConvertPositionsToString(newPosition)].IsGhost))
                     {
                         continue;
                     }
