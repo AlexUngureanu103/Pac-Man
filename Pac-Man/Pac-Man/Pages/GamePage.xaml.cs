@@ -4,10 +4,13 @@ using Pac_Man.ViewModels;
 
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
+using Pac_Man.Business;
+using Microsoft.Maui;
 
 public partial class GamePage : ContentPage
 {
     private readonly GameWindowViewModel _gameWindowViewModel;
+
     public GamePage(GameWindowViewModel gameWindowViewModel)
     {
         _gameWindowViewModel = gameWindowViewModel;
@@ -41,15 +44,51 @@ public partial class GamePage : ContentPage
             grid.ColumnDefinitions.Add(new ColumnDefinition());
         }
 
+        string board = _gameWindowViewModel.GameBoard;
+        int number = 0;
+
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)
             {
                 var image = new Image();
-                image.Source = "pinky.png"; 
-                image.WidthRequest = 10; 
-                image.HeightRequest = 10; 
+                char myChar;
+                do {
+                    if (number == board.Length)
+                        break;
+                    myChar = board[number];
+                    number++;
+                    switch (myChar)
+                    {
+                        case 'P':
+                            image.Source = "pac_man.png";
+                            break;
+                        case 'I':
+                            image.Source = "inky.png";
+                            break;
+                        case 'B':
+                            image.Source = "blinky.png";
+                            break;
+                        case 'H':
+                            image.Source = "pinky.png";
+                            break;
+                        case 'C':
+                            image.Source = "clyde.png";
+                            break;
+                        case '.':
+                            image.Source = "pac_dot.png";
+                            break;
+                        case 'W':
+                            image.Source = "block.png";
+                            break;
+                        default:
+                            break;
+                    }
+                } while (char.IsWhiteSpace(myChar));
 
+
+                image.WidthRequest = 10;
+                image.HeightRequest = 10;
                 grid.Children.Add(image);
                 Grid.SetRow(image, i);
                 Grid.SetColumn(image, j);
