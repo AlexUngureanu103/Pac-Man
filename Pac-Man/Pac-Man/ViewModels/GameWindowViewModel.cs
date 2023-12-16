@@ -1,5 +1,6 @@
 ﻿using Pac_Man.Business;
 using Pac_Man.Domain.Enums;
+using System.Collections.ObjectModel;
 
 namespace Pac_Man.ViewModels
 {
@@ -14,10 +15,38 @@ namespace Pac_Man.ViewModels
             _board = board;
             _gameLogic = gameLogic;
             PopulateBoardImages();
+            CreateImageGrid();
 
             updateTimer = new Timer(UpdateBoard, new object(), 0, 1000);
             gameLogic.StartGame();
-            updateTimer.Change(0, 250);
+            updateTimer.Change(0, 10);
+
+        }
+
+        private ObservableCollection<ObservableCollection<string>> imageSources;
+        public ObservableCollection<ObservableCollection<string>> ImageSources
+        {
+            get { return imageSources; }
+            set
+            {
+                imageSources = value;
+                OnPropertyChanged(nameof(ImageSources));
+            }
+        }
+
+
+        private void CreateImageGrid()
+        {
+            imageSources = new ObservableCollection<ObservableCollection<string>>();
+            for (int row = 0; row < 23; row++)
+            {
+                var rowList = new ObservableCollection<string>();
+                for (int col = 0; col < 23; col++)
+                {
+                    rowList.Add(_board[row, col].Icon);
+                }
+                imageSources.Add(rowList);
+            }
         }
 
         private void PopulateBoardImages()
@@ -62,18 +91,16 @@ namespace Pac_Man.ViewModels
         {
             lock (this)
             {
-                GameBoard = _board.ToString();
-            }
-        }
-
-        private string _gameBoard;
-        public string GameBoard
-        {
-            get { return _gameBoard; }
-            set
-            {
-                _gameBoard = value;
-                OnPropertyChanged(nameof(GameBoard));
+                for (int row = 0; row < 23; row++)
+                {
+                    for (int col = 0; col < 23; col++)
+                    {
+                        if (_board[row, col].Icon != ImageSources[row][col])
+                        {
+                            ImageSources[row][col] = _board[row, col].Icon;
+                        }
+                    }
+                }
             }
         }
 
@@ -97,7 +124,6 @@ namespace Pac_Man.ViewModels
                     _gameLogic.MoveCharacter(InputKeyEnum.Invalid);
                     break;
             }
-            GameBoard = _board.ToString();
         }
     }
 }

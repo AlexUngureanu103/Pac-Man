@@ -5,7 +5,7 @@
              Title="GamePage"
              xmlns:vm="clr-namespace:Pac_Man.ViewModels"
              x:DataType="vm:GameWindowViewModel">
-    <ScrollView>
+    <ScrollView HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
         <VerticalStackLayout
             x:Name="mainStackLayout"
             Spacing="25"
@@ -13,11 +13,25 @@
             VerticalOptions="Center"
             HorizontalOptions="Center">
 
-            <Label Text="{Binding GameBoard}"
-                FontSize="12"
-                CharacterSpacing="4"
-                LineBreakMode="CharacterWrap"
-            />
+            <CollectionView x:Name="grid" ItemsSource="{Binding ImageSources}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="0" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <CollectionView ItemsSource="{Binding}">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="0" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding }" Aspect="AspectFill"  WidthRequest="14" HeightRequest="14" />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
             <Entry x:Name="entry" TextChanged="OnEntryTextChanged" VerticalOptions="CenterAndExpand" Opacity="0"/>
 
@@ -31,10 +45,7 @@
                 WidthRequest="80"
                 Clicked="BackButton_Clicked"/>
             </HorizontalStackLayout>
-
-            <Grid x:Name="myGrid"/>
-
         </VerticalStackLayout>
     </ScrollView>
-    
+
 </ContentPage>
