@@ -1,11 +1,7 @@
 namespace Pac_Man.Pages;
 
-using Pac_Man.ViewModels;
-
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-using Pac_Man.Business;
-using Microsoft.Maui;
+using Pac_Man.ViewModels;
 
 public partial class GamePage : ContentPage
 {
@@ -34,64 +30,31 @@ public partial class GamePage : ContentPage
         grid.WidthRequest = columns * (imageWidth + marginBetweenImages);
 
 
-        for (int i = 0; i < rows; i++)
+        for (int row = 0; row < rows; row++)
         {
             grid.RowDefinitions.Add(new RowDefinition());
         }
 
-        for (int i = 0; i < columns; i++)
+        for (int col = 0; col < columns; col++)
         {
             grid.ColumnDefinitions.Add(new ColumnDefinition());
         }
 
-        string board = _gameWindowViewModel.GameBoard;
-        int number = 0;
+        var board = _gameWindowViewModel._board;
 
-        for (int i = 0; i < rows; i++)
+        for (int row = 0; row < rows; row++)
         {
-            for (int j = 0; j < columns; j++)
+            for (int col = 0; col < columns; col++)
             {
                 var image = new Image();
-                char myChar;
-                do {
-                    if (number == board.Length)
-                        break;
-                    myChar = board[number];
-                    number++;
-                    switch (myChar)
-                    {
-                        case 'P':
-                            image.Source = "pac_man.png";
-                            break;
-                        case 'I':
-                            image.Source = "inky.png";
-                            break;
-                        case 'B':
-                            image.Source = "blinky.png";
-                            break;
-                        case 'H':
-                            image.Source = "pinky.png";
-                            break;
-                        case 'C':
-                            image.Source = "clyde.png";
-                            break;
-                        case '.':
-                            image.Source = "pac_dot.png";
-                            break;
-                        case 'W':
-                            image.Source = "block.png";
-                            break;
-                        default:
-                            break;
-                    }
-                } while (char.IsWhiteSpace(myChar));
 
+                image.Source = board[row, col].Icon;
 
                 image.WidthRequest = 10;
                 image.HeightRequest = 10;
                 grid.Children.Add(image);
-                Grid.SetRow(image, i);
-                Grid.SetColumn(image, j);
+                Grid.SetRow(image, row);
+                Grid.SetColumn(image, col);
             }
         }
 
