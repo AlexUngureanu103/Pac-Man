@@ -1,9 +1,12 @@
 namespace Pac_Man.Pages;
+
+using Microsoft.Maui.Controls;
 using Pac_Man.ViewModels;
 
 public partial class GamePage : ContentPage
 {
     private readonly GameWindowViewModel _gameWindowViewModel;
+
     public GamePage(GameWindowViewModel gameWindowViewModel)
     {
         _gameWindowViewModel = gameWindowViewModel;
