@@ -26,20 +26,20 @@ namespace Pac_Man.ApplicationConfiguration
 
         private static void RegisterViewModels(MauiAppBuilder builder)
         {
-            builder.Services.AddScoped<GameWindowViewModel>();
-            builder.Services.AddScoped<LobbyWindowViewModel>();
+            builder.Services.AddTransient<GameWindowViewModel>();
+            builder.Services.AddTransient<LobbyWindowViewModel>();
         }
 
         private static void RegisterGameBusiness(MauiAppBuilder builder)
         {
-            builder.Services.AddScoped<IGameCharacters, GameCharacters>();
-            builder.Services.AddScoped<IBoard, Board>();
-            builder.Services.AddScoped<IGraph, Graph>();
-            builder.Services.AddScoped<IDijkstraAlgorithm, DijkstraAlgorithm>();
-            builder.Services.AddScoped<IGhostFleeAlgorithm, GhostFleeAlgorithm>();
-            builder.Services.AddScoped<IGhostPathAlgorithms, GhostPathAlgorithms>();
+            builder.Services.AddSingleton<IGameCharacters, GameCharacters>();
+            builder.Services.AddSingleton<IBoard, Board>();
+            builder.Services.AddSingleton<IGraph, Graph>();
+            builder.Services.AddSingleton<IDijkstraAlgorithm, DijkstraAlgorithm>();
+            builder.Services.AddSingleton<IGhostFleeAlgorithm, GhostFleeAlgorithm>();
+            builder.Services.AddSingleton<IGhostPathAlgorithms, GhostPathAlgorithms>();
 
-            builder.Services.AddScoped<GameLogic>();
+            builder.Services.AddSingleton<GameLogic>();
         }
 
         private static void RegisterFactory(MauiAppBuilder builder)

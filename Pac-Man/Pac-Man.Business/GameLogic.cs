@@ -16,20 +16,27 @@ namespace Pac_Man.Business
         private readonly IDijkstraAlgorithm dijkstraAlgorithm;
         private readonly IGhostFleeAlgorithm ghostFleeAlgorithm;
         private readonly IGhostPathAlgorithms ghostPathAlgorithms;
-        private GameStateEnum gameState;
-        private PlayerStateEnum playerState;
-        private int lifes = 3;
-        private int score = 0;
+
+        private int maxScore = 0;
         private List<IObserver> observers = new List<IObserver>();
         private IGameCharacters gameCharactersInitialPos = new GameCharacters();
 
         private Empty emptySpace = new();
-
         private Timer ghostMoveTimer;
+
+        public int Lifes { get; private set; } = 3;
+        public int Score { get; private set; } = 0;
+        public PlayerStateEnum playerState { get; private set; }
+        public GameStateEnum GameState { get; private set; }
         public string PlayerName { get; set; } = "Guest";
 
         public GameLogic(IDijkstraAlgorithm dijkstraAlgorithm, IGhostFleeAlgorithm ghostFleeAlgorithm, IGhostPathAlgorithms ghostPathAlgorithms, IBoard board, IGraph graph)
         {
+            gameCharactersInitialPos.Character.position = board.GameCharacters.Character.position;
+            gameCharactersInitialPos.Ghosts[Ghosts.Blinky].position = board.GameCharacters.Ghosts[Ghosts.Blinky].position;
+            gameCharactersInitialPos.Ghosts[Ghosts.Pinky].position = board.GameCharacters.Ghosts[Ghosts.Pinky].position;
+            gameCharactersInitialPos.Ghosts[Ghosts.Inky].position = board.GameCharacters.Ghosts[Ghosts.Inky].position;
+            gameCharactersInitialPos.Ghosts[Ghosts.Clyde].position = board.GameCharacters.Ghosts[Ghosts.Clyde].position;
             log4net.ILog log = log4net.LogManager.GetLogger(typeof(GameLogic));
 
             logger = new Logger();
@@ -39,8 +46,9 @@ namespace Pac_Man.Business
             this.ghostPathAlgorithms = ghostPathAlgorithms;
             this.board = board;
             this.graph = graph;
+            maxScore = this.board.ToString().Count(x => x == '.');
 
-            gameState = GameStateEnum.Lobby;
+            GameState = GameStateEnum.Lobby;
             playerState = PlayerStateEnum.Alive;
 
             ghostMoveTimer = new Timer(OnGhostMoveTimerCallback, new object(), Timeout.Infinite, 1000);
@@ -70,32 +78,33 @@ namespace Pac_Man.Business
             {
                 case "lobby":
                     {
-                        gameState = GameStateEnum.Lobby;
+                        GameState = GameStateEnum.Lobby;
                         break;
                     }
                 case "start":
                     {
-                        gameState = GameStateEnum.Starting;
+                        GameState = GameStateEnum.Starting;
+                        GameState = GameStateEnum.Running;
                         break;
                     }
                 case "run":
                     {
-                        gameState = GameStateEnum.Running;
+                        GameState = GameStateEnum.Running;
                         break;
                     }
                 case "pause":
                     {
-                        gameState = GameStateEnum.Paused;
+                        GameState = GameStateEnum.Paused;
                         break;
                     }
                 case "end":
                     {
-                        gameState = GameStateEnum.End;
+                        GameState = GameStateEnum.End;
                         break;
                     }
                 case "stop":
                     {
-                        gameState = GameStateEnum.Stop;
+                        GameState = GameStateEnum.Stop;
                         break;
                     }
                 default:
@@ -105,22 +114,31 @@ namespace Pac_Man.Business
             }
         }
 
+        public void SetupGame()
+        {
+            GameState = GameStateEnum.Paused;
+
+            board.BoardRestart(gameCharactersInitialPos);
+            board.ClassicBoardGneration();
+            graph.GraphSetup(board);
+
+            Lifes = 3;
+            maxScore = board.ToString().Count(x => x == '.');
+            Score = 0;
+
+            playerState = PlayerStateEnum.Alive;
+            logger.LogInfo(board.ToString());
+        }
+
         public void StartGame()
         {
-            gameCharactersInitialPos.Character.position = board.GameCharacters.Character.position;
-            gameCharactersInitialPos.Ghosts[Ghosts.Blinky].position = board.GameCharacters.Ghosts[Ghosts.Blinky].position;
-            gameCharactersInitialPos.Ghosts[Ghosts.Pinky].position = board.GameCharacters.Ghosts[Ghosts.Pinky].position;
-            gameCharactersInitialPos.Ghosts[Ghosts.Inky].position = board.GameCharacters.Ghosts[Ghosts.Inky].position;
-            gameCharactersInitialPos.Ghosts[Ghosts.Clyde].position = board.GameCharacters.Ghosts[Ghosts.Clyde].position;
-            gameState = GameStateEnum.Running;
+            GameState = GameStateEnum.Running;
             playerState = PlayerStateEnum.Alive;
             ghostMoveTimer.Change(0, 250);
-
-            logger.LogInfo(board.ToString());
         }
         public void StopGame()
         {
-            gameState = GameStateEnum.End;
+            GameState = GameStateEnum.End;
             playerState = PlayerStateEnum.Dead;
             ghostMoveTimer.Change(Timeout.Infinite, Timeout.Infinite);
         }
@@ -135,8 +153,8 @@ namespace Pac_Man.Business
 
         public void GhostCharacterInteracts()
         {
-            lifes--;
-            if (lifes > 0)
+            Lifes--;
+            if (Lifes > 0)
             {
                 board.BoardRestart(gameCharactersInitialPos);
                 graph.GraphRestart(gameCharactersInitialPos);
@@ -150,14 +168,13 @@ namespace Pac_Man.Business
             else
             {
                 StopGame();
-                Update("stop");
+                NotifyObservers("stop");
             }
-
         }
 
         private void MoveGhosts()
         {
-            if (gameState == GameStateEnum.Running)
+            if (GameState == GameStateEnum.Running)
             {
                 foreach (var ghost in board.GameCharacters.Ghosts)
                 {
@@ -228,8 +245,8 @@ namespace Pac_Man.Business
 
             if (board[newCharacterRow, newCharacterColumn] is Food)
             {
-                score++;
-                Console.Write(score);
+                Score++;
+                Console.Write(Score);
                 Console.WriteLine();
             }
 
@@ -255,9 +272,15 @@ namespace Pac_Man.Business
 
         public void MoveCharacter(InputKeyEnum inputKey)
         {
-            if (gameState != GameStateEnum.Running)
+            if (GameState != GameStateEnum.Running)
             {
                 return;
+            }
+            if (maxScore == Score)
+            {
+                StopGame();
+                GameState = GameStateEnum.End;
+                NotifyObservers("end");
             }
 
             int characterRow = board.GameCharacters.Character.position.Key;

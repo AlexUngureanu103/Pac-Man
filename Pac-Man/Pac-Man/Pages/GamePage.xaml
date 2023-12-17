@@ -12,6 +12,8 @@
             Padding="30,0"
             VerticalOptions="Center"
             HorizontalOptions="Center">
+            <Label Text="{Binding Lives, StringFormat='Lives: {0}'}"/>
+            <Label Text="{Binding Score, StringFormat='Score: {0}'}"/>
 
             <CollectionView x:Name="grid" ItemsSource="{Binding ImageSources}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                 <CollectionView.ItemsLayout>
@@ -25,7 +27,9 @@
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <Image Source="{Binding }" Aspect="AspectFill"  WidthRequest="14" HeightRequest="14" />
+                                    <Frame WidthRequest="40" HeightRequest="40">
+                                        <Image Source="{Binding }" Aspect="AspectFill"  WidthRequest="14" HeightRequest="14" />
+                                    </Frame>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
