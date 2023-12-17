@@ -5,31 +5,38 @@
              Title="GamePage"
              xmlns:vm="clr-namespace:Pac_Man.ViewModels"
              x:DataType="vm:GameWindowViewModel">
-    <VerticalStackLayout
-        Spacing="25"
-        Padding="30,0"
-        VerticalOptions="Center">
+    <ScrollView HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <VerticalStackLayout
+            x:Name="mainStackLayout"
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
 
-        <Label Text="{Binding GameBoard}"
-               FontSize="12"
-               CharacterSpacing="4"
-               LineBreakMode="CharacterWrap"
-            />
-        
-        <Label
-            Text="Game Page"
-            FontSize="50"
-            FontAttributes="Bold"
-            TextColor="Yellow"
-            HorizontalOptions="Center"
-        />
+            <CollectionView x:Name="grid" ItemsSource="{Binding ImageSources}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="0" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <CollectionView ItemsSource="{Binding}">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="0" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding }" Aspect="AspectFill"  WidthRequest="14" HeightRequest="14" />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
-        <StackLayout>
-            <Entry x:Name="entry" TextChanged="OnEntryTextChanged" VerticalOptions="CenterAndExpand" />
-        </StackLayout>
+            <Entry x:Name="entry" TextChanged="OnEntryTextChanged" VerticalOptions="CenterAndExpand" Opacity="0"/>
 
-        <HorizontalStackLayout HorizontalOptions="Center" Spacing="50">
-            <Button
+            <HorizontalStackLayout  Spacing="50">
+                <Button
                 x:Name="BackButton"
                 Text="Back"
                 BackgroundColor="Yellow"
@@ -37,7 +44,8 @@
                 FontAttributes="Bold"
                 WidthRequest="80"
                 Clicked="BackButton_Clicked"/>
-        </HorizontalStackLayout>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 
-    </VerticalStackLayout>
 </ContentPage>

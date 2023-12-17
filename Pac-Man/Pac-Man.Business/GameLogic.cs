@@ -23,6 +23,8 @@ namespace Pac_Man.Business
         private List<IObserver> observers = new List<IObserver>();
         private IGameCharacters gameCharactersInitialPos = new GameCharacters();
 
+        private Empty emptySpace = new();
+
         private Timer ghostMoveTimer;
         public string PlayerName { get; set; } = "Guest";
 
@@ -32,6 +34,7 @@ namespace Pac_Man.Business
 
             logger = new Logger();
             this.dijkstraAlgorithm = dijkstraAlgorithm;
+            this.ghostFleeAlgorithm = ghostFleeAlgorithm;
             this.ghostFleeAlgorithm = ghostFleeAlgorithm;
             this.ghostPathAlgorithms = ghostPathAlgorithms;
             this.board = board;
@@ -236,7 +239,7 @@ namespace Pac_Man.Business
             }
             else
             {
-                board[characterRow, characterColumn] = new Empty();
+                board[characterRow, characterColumn] = emptySpace;
                 board.GameCharacters.Character.position = newPosition;
                 board[newCharacterRow, newCharacterColumn] = board.GameCharacters.Character.piece;
             }
