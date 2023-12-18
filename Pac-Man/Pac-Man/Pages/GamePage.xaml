@@ -48,6 +48,15 @@
                 FontAttributes="Bold"
                 WidthRequest="80"
                 Clicked="BackButton_Clicked"/>
+
+                <Button
+                x:Name="PauseButton"
+                Text="Pause"
+                BackgroundColor="Yellow"
+                TextColor="Black"
+                FontAttributes="Bold"       
+                WidthRequest="80"
+                Clicked="PauseButton_Clicked"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

@@ -1,4 +1,6 @@
 namespace Pac_Man.Pages;
+
+using CommunityToolkit.Maui.Views;
 using Microsoft.Maui.Controls;
 using Pac_Man.ApplicationConfiguration;
 using Pac_Man.Domain.ObserverInterfaces;
@@ -7,11 +9,13 @@ using Pac_Man.ViewModels;
 public partial class GamePage : ContentPage, IObserver
 {
     private readonly IContentPageFactory _contentPageFactory;
+    private readonly IPopupFactory _popupFactory;
     private readonly GameWindowViewModel _gameWindowViewModel;
 
-    public GamePage(GameWindowViewModel gameWindowViewModel, IContentPageFactory contentPageFactory)
+    public GamePage(GameWindowViewModel gameWindowViewModel, IContentPageFactory contentPageFactory, IPopupFactory popupFactory)
     {
         _contentPageFactory = contentPageFactory;
+        _popupFactory = popupFactory;
         _gameWindowViewModel = gameWindowViewModel;
         _gameWindowViewModel._gameLogic.RegisterObserver(this);
 
@@ -69,5 +73,11 @@ public partial class GamePage : ContentPage, IObserver
                 }
             });
 
+    }
+
+    private void PauseButton_Clicked(object sender, EventArgs e)
+    {
+        //_gameWindowViewModel._gameLogic.GameState = Domain.Enums.GameStateEnum.Paused;
+        this.ShowPopup(_popupFactory.Create<PausePopupPage>());
     }
 }

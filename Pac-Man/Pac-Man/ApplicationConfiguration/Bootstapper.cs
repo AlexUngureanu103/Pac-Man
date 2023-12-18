@@ -15,6 +15,7 @@ namespace Pac_Man.ApplicationConfiguration
             RegisterViewModels(builder);
             RegisterGameBusiness(builder);
             RegisterFactory(builder);
+            RegisterPopup(builder);
         }
 
         private static void RegisterPages(MauiAppBuilder builder)
@@ -22,6 +23,11 @@ namespace Pac_Man.ApplicationConfiguration
             builder.Services.AddScoped<GamePage>();
             builder.Services.AddScoped<AboutPage>();
             builder.Services.AddScoped<LobbyWindowPage>();
+        }
+
+        private static void RegisterPopup(MauiAppBuilder builder)
+        {
+            builder.Services.AddScoped<PausePopupPage>();
         }
 
         private static void RegisterViewModels(MauiAppBuilder builder)
@@ -45,6 +51,7 @@ namespace Pac_Man.ApplicationConfiguration
         private static void RegisterFactory(MauiAppBuilder builder)
         {
             builder.Services.AddScoped<IContentPageFactory, ContentPageFactory>();
+            builder.Services.AddScoped<IPopupFactory, PopupFactory>();
         }
     }
 }
