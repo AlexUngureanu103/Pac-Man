@@ -2,7 +2,7 @@ using CommunityToolkit.Maui.Views;
 using Pac_Man.Business.Strategy;
 
 namespace Pac_Man.Pages;
-
+//To Do: Add an option for restarting the game & exit the game (exit to desktop)
 public partial class PausePopupPage : Popup
 {
     private readonly List<StrategyEnum> difficulties = Enum.GetValues(typeof(StrategyEnum)).Cast<StrategyEnum>().ToList();
