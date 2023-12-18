@@ -41,13 +41,13 @@
 
             <HorizontalStackLayout  Spacing="50">
                 <Button
-                x:Name="BackButton"
-                Text="Back"
+                x:Name="PauseButton"
+                Text="Pause"
                 BackgroundColor="Yellow"
                 TextColor="Black"
-                FontAttributes="Bold"
+                FontAttributes="Bold"       
                 WidthRequest="80"
-                Clicked="BackButton_Clicked"/>
+                Clicked="PauseButton_Clicked"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
