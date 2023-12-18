@@ -38,7 +38,7 @@ namespace Pac_Man.Business
         public GameLogic(IDijkstraAlgorithm dijkstraAlgorithm, IGhostFleeAlgorithm ghostFleeAlgorithm, IGhostPathAlgorithms ghostPathAlgorithms, IBoard board, IGraph graph, IStrategyFactory strategyFactory)
         {
             this.strategyFactory = strategyFactory;
-            var strategy = strategyFactory.GetStrategy(StrategyEnum.Easy);
+            var strategy = strategyFactory.GetStrategy(StrategyEnum.Noob);
 
             this.strategy = strategy;
 

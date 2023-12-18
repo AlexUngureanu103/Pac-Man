@@ -17,6 +17,10 @@ namespace Pac_Man.Business.Strategy
         public KeyValuePair<int, int> MoveGhosts(KeyValuePair<string, MoveablesContainer> ghost, MoveablesContainer character)
         {
             var nextMove = _ghostFleeAlgorithm.Flee(ghost.Value, character);
+            if (nextMove.Key == "" && nextMove.Value == "" || nextMove.Value == "")
+            {
+                return ghost.Value.position;
+            }
 
             return PositionConverter.ConvertPositionsFromString(nextMove.Value);
         }

@@ -56,10 +56,10 @@ namespace Pac_Man.ApplicationConfiguration
             builder.Services.AddSingleton<IStrategyFactory, StrategyFactory>();
 
 
-            builder.Services.AddScoped<IStrategy, EasyStrategy>();
-            builder.Services.AddScoped<IStrategy, NormalStrategy>();
-            builder.Services.AddScoped<IStrategy, NoobStrategy>();
-            builder.Services.AddScoped<IStrategy, ImpossibleStrategy>();
+            builder.Services.AddScoped<EasyStrategy>();
+            builder.Services.AddScoped<NormalStrategy>();
+            builder.Services.AddScoped<NoobStrategy>();
+            builder.Services.AddScoped<ImpossibleStrategy>();
         }
 
         private static void RegisterFactory(MauiAppBuilder builder)
