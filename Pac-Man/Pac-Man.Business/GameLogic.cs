@@ -8,7 +8,7 @@ using Pac_Man.Domain.ObserverInterfaces;
 
 namespace Pac_Man.Business
 {
-    public class GameLogic : IObserver, ISubject
+    public class GameLogic : IObserver, ISubject, IGameLogic
     {
         private readonly IDataLogger logger;
         private IBoard board;
@@ -119,7 +119,8 @@ namespace Pac_Man.Business
             GameState = GameStateEnum.Paused;
 
             board.BoardRestart(gameCharactersInitialPos);
-            board.ClassicBoardGneration();
+            //board.ClassicBoardGneration();
+            board.SmallerBoardGneration();
             graph.GraphSetup(board);
 
             Lifes = 3;
@@ -194,13 +195,14 @@ namespace Pac_Man.Business
             }
         }
 
-        private void RandomMoveThePlayer()
+        // To delete
+       /* private void RandomMoveThePlayer()
         {
             var adjacentNodes = graph.AdjacencyList[graph.Nodes[PositionConverter.ConvertPositionsToString(graph.GameCharacters.Character.position)]];
             var newPositionNode = adjacentNodes[new Random().Next(0, adjacentNodes.Count)].SecondNode;
 
             ModifyCharacterPosition(newPositionNode.RowPosition, newPositionNode.ColumnPosition);
-        }
+        }*/
 
         private void UpdateGhostsPosition(string ghostName, int newGhostRow, int newGhostPositionColumnn)
         {

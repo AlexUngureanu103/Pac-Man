@@ -5,7 +5,7 @@
              Title="Lobby Window"
              xmlns:vm="clr-namespace:Pac_Man.ViewModels"
              x:DataType="vm:LobbyWindowViewModel">
-    <ScrollView>
+    <ScrollView BackgroundColor="Black">
         <VerticalStackLayout
         Spacing="25"
         Padding="30,0"

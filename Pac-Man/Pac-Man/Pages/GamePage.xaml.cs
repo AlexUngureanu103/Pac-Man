@@ -3,17 +3,20 @@ using Microsoft.Maui.Controls;
 using Pac_Man.ApplicationConfiguration;
 using Pac_Man.Domain.ObserverInterfaces;
 using Pac_Man.ViewModels;
+using System;
 
-public partial class GamePage : ContentPage, IObserver
+public partial class GamePage : ContentPage, IObserver, ISubject
 {
     private readonly IContentPageFactory _contentPageFactory;
     private readonly GameWindowViewModel _gameWindowViewModel;
+    private List<IObserver> observers = new List<IObserver>();
 
     public GamePage(GameWindowViewModel gameWindowViewModel, IContentPageFactory contentPageFactory)
     {
         _contentPageFactory = contentPageFactory;
         _gameWindowViewModel = gameWindowViewModel;
         _gameWindowViewModel._gameLogic.RegisterObserver(this);
+        RegisterObserver(_gameWindowViewModel._gameLogic);
 
         InitializeComponent();
 
@@ -69,5 +72,23 @@ public partial class GamePage : ContentPage, IObserver
                 }
             });
 
+    }
+
+    public void NotifyObservers(string state)
+    {
+        foreach (var observer in observers)
+        {
+            observer.Update(state);
+        }
+    }
+
+    public void RegisterObserver(IObserver observer)
+    {
+        observers.Add(observer);
+    }
+
+    public void RemoveObserver(IObserver observer)
+    {
+        observers.Remove(observer);
     }
 }
