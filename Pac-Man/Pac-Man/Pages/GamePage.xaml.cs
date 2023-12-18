@@ -3,6 +3,7 @@ namespace Pac_Man.Pages;
 using CommunityToolkit.Maui.Views;
 using Microsoft.Maui.Controls;
 using Pac_Man.ApplicationConfiguration;
+using Pac_Man.Business.Strategy;
 using Pac_Man.Domain.ObserverInterfaces;
 using Pac_Man.ViewModels;
 using System;
@@ -97,7 +98,7 @@ public partial class GamePage : ContentPage, IObserver, ISubject
 
         var result = await this.ShowPopupAsync(popupPage);
 
-        if (result != null)
+        if (result == null)
         {
             NotifyObservers("lobby");
 
@@ -105,6 +106,10 @@ public partial class GamePage : ContentPage, IObserver, ISubject
         }
         else
         {
+            if (result is StrategyEnum difficulty)
+            {
+                _gameWindowViewModel._gameLogic.ChangeStrategy(difficulty);
+            }
             NotifyObservers("resume");
             _gameWindowViewModel.ResumeGame();
         }

@@ -31,14 +31,26 @@ namespace Pac_Man.ViewModels
             updateTimer.Change(0, 10);
         }
 
+        private int lives;
         public int Lives
         {
-            get => _gameLogic.Lifes;
+            get => lives;
+            set
+            {
+                lives = value;
+                OnPropertyChanged(nameof(Lives));
+            }
         }
 
+        private int score;
         public int Score
         {
-            get => _gameLogic.Score;
+            get => score;
+            set
+            {
+                score = value;
+                OnPropertyChanged(nameof(Score));
+            }
         }
 
         private ObservableCollection<ObservableCollection<string>> imageSources;
@@ -136,6 +148,8 @@ namespace Pac_Man.ViewModels
         {
             lock (this)
             {
+                Lives = _gameLogic.Lifes;
+                Score = _gameLogic.Score;
                 if (_gameLogic.GameState != GameStateEnum.Running)
                 {
                     updateTimer.Change(Timeout.Infinite, Timeout.Infinite);

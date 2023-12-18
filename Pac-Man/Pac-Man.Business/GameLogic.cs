@@ -38,7 +38,7 @@ namespace Pac_Man.Business
         public GameLogic(IDijkstraAlgorithm dijkstraAlgorithm, IGhostFleeAlgorithm ghostFleeAlgorithm, IGhostPathAlgorithms ghostPathAlgorithms, IBoard board, IGraph graph, IStrategyFactory strategyFactory)
         {
             this.strategyFactory = strategyFactory;
-            var strategy = strategyFactory.GetStrategy(StrategyEnum.Noob);
+            var strategy = strategyFactory.GetStrategy(StrategyEnum.Normal);
 
             this.strategy = strategy;
 
@@ -66,7 +66,10 @@ namespace Pac_Man.Business
 
         public void ChangeStrategy(StrategyEnum strategyEnum)
         {
-            strategy = strategyFactory.GetStrategy(strategyEnum);
+            if (strategyEnum != StrategyEnum.Back)
+            {
+                strategy = strategyFactory.GetStrategy(strategyEnum);
+            }
         }
 
         public void NotifyObservers(string state)
@@ -212,13 +215,13 @@ namespace Pac_Man.Business
         }
 
         // To delete
-       /* private void RandomMoveThePlayer()
-        {
-            var adjacentNodes = graph.AdjacencyList[graph.Nodes[PositionConverter.ConvertPositionsToString(graph.GameCharacters.Character.position)]];
-            var newPositionNode = adjacentNodes[new Random().Next(0, adjacentNodes.Count)].SecondNode;
+        /* private void RandomMoveThePlayer()
+         {
+             var adjacentNodes = graph.AdjacencyList[graph.Nodes[PositionConverter.ConvertPositionsToString(graph.GameCharacters.Character.position)]];
+             var newPositionNode = adjacentNodes[new Random().Next(0, adjacentNodes.Count)].SecondNode;
 
-            ModifyCharacterPosition(newPositionNode.RowPosition, newPositionNode.ColumnPosition);
-        }*/
+             ModifyCharacterPosition(newPositionNode.RowPosition, newPositionNode.ColumnPosition);
+         }*/
 
         private void UpdateGhostsPosition(string ghostName, int newGhostRow, int newGhostPositionColumnn)
         {

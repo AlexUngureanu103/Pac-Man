@@ -2,9 +2,10 @@
 {
     public enum StrategyEnum
     {
-        Normal,
+        Back,
+        Noob,
         Easy,
-        Impossible,
-        Noob
+        Normal,
+        Impossible
     }
 }

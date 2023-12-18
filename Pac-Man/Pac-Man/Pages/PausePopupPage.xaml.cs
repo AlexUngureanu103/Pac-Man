@@ -1,23 +1,42 @@
 using CommunityToolkit.Maui.Views;
-using Pac_Man.ApplicationConfiguration;
-using Pac_Man.Domain.ObserverInterfaces;
+using Pac_Man.Business.Strategy;
 
 namespace Pac_Man.Pages;
 
-public partial class PausePopupPage: Popup
+public partial class PausePopupPage : Popup
 {
+    private readonly List<StrategyEnum> difficulties = Enum.GetValues(typeof(StrategyEnum)).Cast<StrategyEnum>().ToList();
+
     public PausePopupPage()
-	{
+    {
         InitializeComponent();
-	}
+    }
 
     private void Resume_Clicked(object sender, EventArgs e)
+    {
+        Close(true);
+    }
+
+    private void Lobby_Clicked(object sender, EventArgs e)
     {
         Close();
     }
 
-    private async void Lobby_Clicked(object sender, EventArgs e)
+    private void Change_Difficulty_Clicked(object sender, EventArgs e)
     {
-        Close(true);
+        itemPicker.ItemsSource = difficulties;
+        itemPicker.IsVisible = true;
+    }
+    private void OnPickerSelectedIndexChanged(object sender, EventArgs e)
+    {
+        var selectedIdx = itemPicker.SelectedIndex;
+        StrategyEnum selectedItem = StrategyEnum.Normal;
+
+        if (selectedIdx != -1)
+        {
+            selectedItem = difficulties[selectedIdx];
+            itemPicker.IsVisible = false;
+        }
+        Close(selectedItem);
     }
 }

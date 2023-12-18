@@ -31,6 +31,24 @@
                 WidthRequest="150"
                 FontAttributes="Bold"       
                 Clicked="Lobby_Clicked"/>
+
+            <Button
+                x:Name="Difficulty"
+                Text="Change Difficulty"
+                BackgroundColor="Yellow"
+                TextColor="Black"
+                WidthRequest="150"
+                FontAttributes="Bold"       
+                Clicked="Change_Difficulty_Clicked"/>
+            <Picker x:Name="itemPicker"
+                    IsVisible="false"
+                    Title="Choose a difficulty"
+                    BackgroundColor="Yellow"
+                    TextColor="Black"
+                    WidthRequest="150"
+                    FontAttributes="Bold" 
+                    SelectedIndexChanged="OnPickerSelectedIndexChanged" />
+
         </VerticalStackLayout>
     </VerticalStackLayout>
 </mct:Popup>
