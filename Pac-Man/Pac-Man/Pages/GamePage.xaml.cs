@@ -45,12 +45,6 @@ public partial class GamePage : ContentPage, IObserver
         }
     }
 
-
-    private async void BackButton_Clicked(object sender, EventArgs e)
-    {
-        await Navigation.PopModalAsync();
-    }
-
     public async void Update(string state)
     {
         await Dispatcher.DispatchAsync
@@ -75,11 +69,19 @@ public partial class GamePage : ContentPage, IObserver
 
     }
 
-    private void PauseButton_Clicked(object sender, EventArgs e)
+    private async void PauseButton_Clicked(object sender, EventArgs e)
     {
         //_gameWindowViewModel._gameLogic.GameState = Domain.Enums.GameStateEnum.Paused;
-        this.ShowPopup(_popupFactory.Create<PausePopupPage>());
+        var popupPage = _popupFactory.Create<PausePopupPage>();
+
+        var result = await this.ShowPopupAsync(popupPage);
+
+        if (result != null)
+        {
+            await Navigation.PopModalAsync();
+        }
     }
+
 
 
 }

@@ -6,10 +6,8 @@ namespace Pac_Man.Pages;
 
 public partial class PausePopupPage: Popup
 {
-    private readonly IContentPageFactory _contentPageFactory;
-    public PausePopupPage(IContentPageFactory contentPageFactory)
+    public PausePopupPage()
 	{
-        _contentPageFactory = contentPageFactory;
         InitializeComponent();
 	}
 
@@ -20,5 +18,6 @@ public partial class PausePopupPage: Popup
 
     private async void Lobby_Clicked(object sender, EventArgs e)
     {
+        Close(true);
     }
 }

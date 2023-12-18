@@ -41,15 +41,6 @@
 
             <HorizontalStackLayout  Spacing="50">
                 <Button
-                x:Name="BackButton"
-                Text="Back"
-                BackgroundColor="Yellow"
-                TextColor="Black"
-                FontAttributes="Bold"
-                WidthRequest="80"
-                Clicked="BackButton_Clicked"/>
-
-                <Button
                 x:Name="PauseButton"
                 Text="Pause"
                 BackgroundColor="Yellow"
