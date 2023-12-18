@@ -9,8 +9,8 @@ namespace Pac_Man.Business.GraphRepresentation
         public IGameCharacters GameCharacters { get; set; }
 
         public Dictionary<string, Node> Nodes { get; set; } = new();
-        public List<NodeConnection> NodeConnections { get; set; } = new List<NodeConnection>();
-        public Dictionary<Node, List<NodeConnection>> AdjacencyList { get; set; } = new Dictionary<Node, List<NodeConnection>>();
+        public List<NodeConnection> NodeConnections { get; set; } = new();
+        public Dictionary<Node, List<NodeConnection>> AdjacencyList { get; set; } = new();
 
         public Graph(IBoard boardConfiguration, IGameCharacters gameCharacters)
         {
@@ -47,6 +47,17 @@ namespace Pac_Man.Business.GraphRepresentation
             Nodes[PositionConverter.ConvertPositionsToString(GameCharacters.Ghosts[Ghosts.Clyde].position)].IsOccupied = false;
             Nodes[PositionConverter.ConvertPositionsToString(gameCharactersInitialPos.Ghosts[Ghosts.Clyde].position)].IsGhost = true;
             Nodes[PositionConverter.ConvertPositionsToString(gameCharactersInitialPos.Ghosts[Ghosts.Clyde].position)].IsOccupied = true;
+        }
+
+        public void GraphSetup(IBoard board)
+        {
+            GameCharacters = board.GameCharacters;
+            Nodes = new();
+            NodeConnections = new();
+            AdjacencyList = new();
+
+            CreateNodesBasedOnBoardConfiguration(board);
+            GenerateNodeConnectionsBasedOnNodesPositions();
         }
 
         public void PrintAdjacencyList()

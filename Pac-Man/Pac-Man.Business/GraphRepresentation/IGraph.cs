@@ -9,6 +9,6 @@
 
         void PrintAdjacencyList();
         void GraphRestart(IGameCharacters gameCharactersInitialPos);
-
+        void GraphSetup(IBoard board);
     }
 }
