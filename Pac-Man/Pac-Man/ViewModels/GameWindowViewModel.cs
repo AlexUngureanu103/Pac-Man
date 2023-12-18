@@ -175,5 +175,10 @@ namespace Pac_Man.ViewModels
                     break;
             }
         }
+
+        public void ResumeGame()
+        {
+            updateTimer.Change(0, 10);
+        }
     }
 }

@@ -42,7 +42,7 @@ public partial class GamePage : ContentPage, IObserver, ISubject
             _gameWindowViewModel.HandleKeyPress(newChar);
         }
 
-        if(sender is Entry entry)
+        if (sender is Entry entry)
         {
             entry.Text = string.Empty;
         }
@@ -92,17 +92,31 @@ public partial class GamePage : ContentPage, IObserver, ISubject
 
     private async void PauseButton_Clicked(object sender, EventArgs e)
     {
-        //_gameWindowViewModel._gameLogic.GameState = Domain.Enums.GameStateEnum.Paused;
+        ////_gameWindowViewModel._gameLogic.GameState = Domain.Enums.GameStateEnum.Paused;
+        //var popupPage = _popupFactory.Create<PausePopupPage>();
+
+        //var result = await this.ShowPopupAsync(popupPage);
+
+        //if (result != null)
+        //{
+        //    await Navigation.PopModalAsync();
+        //}
+
+        NotifyObservers("pause");
         var popupPage = _popupFactory.Create<PausePopupPage>();
 
         var result = await this.ShowPopupAsync(popupPage);
 
         if (result != null)
         {
+            NotifyObservers("lobby");
+
             await Navigation.PopModalAsync();
         }
+        else
+        {
+            NotifyObservers("resume");
+            _gameWindowViewModel.ResumeGame();
+        }
     }
-
-
-
 }

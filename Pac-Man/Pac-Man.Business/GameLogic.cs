@@ -87,7 +87,7 @@ namespace Pac_Man.Business
                         GameState = GameStateEnum.Running;
                         break;
                     }
-                case "run":
+                case "resume":
                     {
                         GameState = GameStateEnum.Running;
                         break;
