@@ -1,6 +1,7 @@
 ﻿using Pac_Man.Business.GraphRepresentation;
 using Pac_Man.Business.Movement;
 using Pac_Man.Business.Movement.Ghost_Algorithms;
+using Pac_Man.Business.Strategy;
 using Pac_Man.Domain;
 using Pac_Man.Domain.Enums;
 using Pac_Man.Domain.Models;
@@ -13,6 +14,10 @@ namespace Pac_Man.Business
         private readonly IDataLogger logger;
         private IBoard board;
         private IGraph graph;
+
+        private IStrategyFactory strategyFactory;
+        private IStrategy strategy;
+
         private readonly IDijkstraAlgorithm dijkstraAlgorithm;
         private readonly IGhostFleeAlgorithm ghostFleeAlgorithm;
         private readonly IGhostPathAlgorithms ghostPathAlgorithms;
@@ -30,8 +35,13 @@ namespace Pac_Man.Business
         public GameStateEnum GameState { get; private set; }
         public string PlayerName { get; set; } = "Guest";
 
-        public GameLogic(IDijkstraAlgorithm dijkstraAlgorithm, IGhostFleeAlgorithm ghostFleeAlgorithm, IGhostPathAlgorithms ghostPathAlgorithms, IBoard board, IGraph graph)
+        public GameLogic(IDijkstraAlgorithm dijkstraAlgorithm, IGhostFleeAlgorithm ghostFleeAlgorithm, IGhostPathAlgorithms ghostPathAlgorithms, IBoard board, IGraph graph, IStrategyFactory strategyFactory)
         {
+            this.strategyFactory = strategyFactory;
+            var strategy = strategyFactory.GetStrategy(StrategyEnum.Easy);
+
+            this.strategy = strategy;
+
             gameCharactersInitialPos.Character.position = board.GameCharacters.Character.position;
             gameCharactersInitialPos.Ghosts[Ghosts.Blinky].position = board.GameCharacters.Ghosts[Ghosts.Blinky].position;
             gameCharactersInitialPos.Ghosts[Ghosts.Pinky].position = board.GameCharacters.Ghosts[Ghosts.Pinky].position;
@@ -52,6 +62,11 @@ namespace Pac_Man.Business
             playerState = PlayerStateEnum.Alive;
 
             ghostMoveTimer = new Timer(OnGhostMoveTimerCallback, new object(), Timeout.Infinite, 1000);
+        }
+
+        public void ChangeStrategy(StrategyEnum strategyEnum)
+        {
+            strategy = strategyFactory.GetStrategy(strategyEnum);
         }
 
         public void NotifyObservers(string state)
@@ -178,7 +193,8 @@ namespace Pac_Man.Business
             {
                 foreach (var ghost in board.GameCharacters.Ghosts)
                 {
-                    var newPosition = ghostPathAlgorithms.MainGhostMovements(ghost.Key, ghost.Value, board.GameCharacters.Character);
+                    var newPosition = strategy.MoveGhosts(ghost, board.GameCharacters.Character);
+
                     if ((board.GameCharacters.Ghosts[ghost.Key].position.Key == newPosition.Key &&
                         board.GameCharacters.Ghosts[ghost.Key].position.Value == newPosition.Value) ||
                         (graph.Nodes[PositionConverter.ConvertPositionsToString(newPosition)].IsGhost))

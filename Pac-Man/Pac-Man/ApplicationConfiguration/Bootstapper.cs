@@ -2,6 +2,7 @@
 using Pac_Man.Business.GraphRepresentation;
 using Pac_Man.Business.Movement;
 using Pac_Man.Business.Movement.Ghost_Algorithms;
+using Pac_Man.Business.Strategy;
 using Pac_Man.Pages;
 using Pac_Man.ViewModels;
 
@@ -40,6 +41,19 @@ namespace Pac_Man.ApplicationConfiguration
             builder.Services.AddSingleton<IGhostPathAlgorithms, GhostPathAlgorithms>();
 
             builder.Services.AddSingleton<GameLogic>();
+
+            RegisterStrategy(builder);
+        }
+
+        private static void RegisterStrategy(MauiAppBuilder builder)
+        {
+            builder.Services.AddSingleton<IStrategyFactory, StrategyFactory>();
+
+
+            builder.Services.AddScoped<IStrategy, EasyStrategy>();
+            builder.Services.AddScoped<IStrategy, NormalStrategy>();
+            builder.Services.AddScoped<IStrategy, NoobStrategy>();
+            builder.Services.AddScoped<IStrategy, ImpossibleStrategy>();
         }
 
         private static void RegisterFactory(MauiAppBuilder builder)
