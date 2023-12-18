@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Pac_Man.ApplicationConfiguration;
+using CommunityToolkit.Maui;
 
 namespace Pac_Man
 {
@@ -13,6 +14,7 @@ namespace Pac_Man
 
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
