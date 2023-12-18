@@ -57,10 +57,10 @@ namespace Pac_Man.ViewModels
             if (imageSources == null)
             {
                 imageSources = new ObservableCollection<ObservableCollection<string>>();
-                for (int row = 0; row < 23; row++)
+                for (int row = 0; row < _board.Rows; row++)
                 {
                     var rowList = new ObservableCollection<string>();
-                    for (int col = 0; col < 23; col++)
+                    for (int col = 0; col < _board.Columns; col++)
                     {
                         rowList.Add(_board[row, col].Icon);
                     }
@@ -69,9 +69,9 @@ namespace Pac_Man.ViewModels
             }
             else
             {
-                for (int row = 0; row < 23; row++)
+                for (int row = 0; row < _board.Rows; row++)
                 {
-                    for (int col = 0; col < 23; col++)
+                    for (int col = 0; col < _board.Columns; col++)
                     {
                         if (_board[row, col].Icon != ImageSources[row][col])
                         {
@@ -84,9 +84,9 @@ namespace Pac_Man.ViewModels
 
         private void PopulateBoardImages()
         {
-            for (int row = 0; row < 23; row++)
+            for (int row = 0; row < _board.Rows; row++)
             {
-                for (int col = 0; col < 23; col++)
+                for (int col = 0; col < _board.Columns; col++)
                 {
                     var piece = _board[row, col].ToString().Trim();
                     switch (piece)
@@ -141,9 +141,9 @@ namespace Pac_Man.ViewModels
                     updateTimer.Change(Timeout.Infinite, Timeout.Infinite);
                     return;
                 }
-                for (int row = 0; row < 23; row++)
+                for (int row = 0; row < _board.Rows; row++)
                 {
-                    for (int col = 0; col < 23; col++)
+                    for (int col = 0; col < _board.Columns; col++)
                     {
                         if (_board[row, col].Icon != ImageSources[row][col])
                         {
@@ -174,6 +174,11 @@ namespace Pac_Man.ViewModels
                     _gameLogic.MoveCharacter(InputKeyEnum.Invalid);
                     break;
             }
+        }
+
+        public void ResumeGame()
+        {
+            updateTimer.Change(0, 10);
         }
     }
 }

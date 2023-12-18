@@ -5,8 +5,8 @@
              Title="GamePage"
              xmlns:vm="clr-namespace:Pac_Man.ViewModels"
              x:DataType="vm:GameWindowViewModel">
-    <ScrollView HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <VerticalStackLayout
+    <ScrollView BackgroundColor="Black" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <VerticalStackLayout BackgroundColor="Black"
             x:Name="mainStackLayout"
             Spacing="25"
             Padding="30,0"
@@ -27,7 +27,7 @@
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <Frame WidthRequest="40" HeightRequest="40">
+                                    <Frame BackgroundColor="Black" WidthRequest="40" HeightRequest="40" BorderColor="Black">
                                         <Image Source="{Binding }" Aspect="AspectFill"  WidthRequest="14" HeightRequest="14" />
                                     </Frame>
                                 </DataTemplate>
@@ -41,13 +41,13 @@
 
             <HorizontalStackLayout  Spacing="50">
                 <Button
-                x:Name="BackButton"
-                Text="Back"
+                x:Name="PauseButton"
+                Text="Pause"
                 BackgroundColor="Yellow"
                 TextColor="Black"
-                FontAttributes="Bold"
+                FontAttributes="Bold"       
                 WidthRequest="80"
-                Clicked="BackButton_Clicked"/>
+                Clicked="PauseButton_Clicked"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
