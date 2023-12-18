@@ -80,4 +80,6 @@ public partial class GamePage : ContentPage, IObserver
         //_gameWindowViewModel._gameLogic.GameState = Domain.Enums.GameStateEnum.Paused;
         this.ShowPopup(_popupFactory.Create<PausePopupPage>());
     }
+
+
 }

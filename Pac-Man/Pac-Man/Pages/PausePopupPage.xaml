@@ -2,29 +2,35 @@
 <mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
-             x:Class="Pac_Man.Pages.PausePopupPage">
-    <VerticalStackLayout Margin="20">
+             x:Class="Pac_Man.Pages.PausePopupPage"
+           CanBeDismissedByTappingOutsideOfPopup="False">
+    <VerticalStackLayout Margin="20,0,20,0" BackgroundColor="Black">
         <Label 
             Text="PAUSE"
+            TextColor="Yellow"
+            FontAttributes="Bold"
+            FontSize="Header"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
 
-        <Button
-        x:Name="Resume"
-        Text="Resume Game"
-        BackgroundColor="Yellow"
-        TextColor="Black"
-        FontAttributes="Bold"       
-        WidthRequest="80"
-        Clicked="Resume_Clicked"/>
-        
-        <Button
-        x:Name="Lobby"
-        Text="Exit to Lobby"
-        BackgroundColor="Yellow"
-        TextColor="Black"
-        FontAttributes="Bold"       
-        WidthRequest="80"
-        Clicked="Lobby_Clicked"/>
+        <VerticalStackLayout Margin="0, 30, 0, 30">
+            <Button
+                x:Name="Resume"
+                Text="Resume Game"
+                BackgroundColor="Yellow"
+                TextColor="Black"
+                WidthRequest="150"
+                FontAttributes="Bold"       
+                Clicked="Resume_Clicked"/>
+
+            <Button
+                x:Name="Lobby"
+                Text="Exit to Lobby"
+                BackgroundColor="Yellow"
+                TextColor="Black"
+                WidthRequest="150"
+                FontAttributes="Bold"       
+                Clicked="Lobby_Clicked"/>
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </mct:Popup>

@@ -1,21 +1,24 @@
 using CommunityToolkit.Maui.Views;
+using Pac_Man.ApplicationConfiguration;
+using Pac_Man.Domain.ObserverInterfaces;
 
 namespace Pac_Man.Pages;
 
 public partial class PausePopupPage: Popup
-{ 
-	public PausePopupPage()
+{
+    private readonly IContentPageFactory _contentPageFactory;
+    public PausePopupPage(IContentPageFactory contentPageFactory)
 	{
-		InitializeComponent();
+        _contentPageFactory = contentPageFactory;
+        InitializeComponent();
 	}
 
     private void Resume_Clicked(object sender, EventArgs e)
     {
-
+        Close();
     }
 
-    private void Lobby_Clicked(object sender, EventArgs e)
+    private async void Lobby_Clicked(object sender, EventArgs e)
     {
-
     }
 }
