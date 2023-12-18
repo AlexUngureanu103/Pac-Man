@@ -5,12 +5,14 @@ using Microsoft.Maui.Controls;
 using Pac_Man.ApplicationConfiguration;
 using Pac_Man.Domain.ObserverInterfaces;
 using Pac_Man.ViewModels;
+using System;
 
-public partial class GamePage : ContentPage, IObserver
+public partial class GamePage : ContentPage, IObserver, ISubject
 {
     private readonly IContentPageFactory _contentPageFactory;
     private readonly IPopupFactory _popupFactory;
     private readonly GameWindowViewModel _gameWindowViewModel;
+    private List<IObserver> observers = new List<IObserver>();
 
     public GamePage(GameWindowViewModel gameWindowViewModel, IContentPageFactory contentPageFactory, IPopupFactory popupFactory)
     {
@@ -18,6 +20,7 @@ public partial class GamePage : ContentPage, IObserver
         _popupFactory = popupFactory;
         _gameWindowViewModel = gameWindowViewModel;
         _gameWindowViewModel._gameLogic.RegisterObserver(this);
+        RegisterObserver(_gameWindowViewModel._gameLogic);
 
         InitializeComponent();
 
@@ -39,7 +42,7 @@ public partial class GamePage : ContentPage, IObserver
             _gameWindowViewModel.HandleKeyPress(newChar);
         }
 
-        if(sender is Entry entry)
+        if (sender is Entry entry)
         {
             entry.Text = string.Empty;
         }
@@ -69,19 +72,51 @@ public partial class GamePage : ContentPage, IObserver
 
     }
 
+    public void NotifyObservers(string state)
+    {
+        foreach (var observer in observers)
+        {
+            observer.Update(state);
+        }
+    }
+
+    public void RegisterObserver(IObserver observer)
+    {
+        observers.Add(observer);
+    }
+
+    public void RemoveObserver(IObserver observer)
+    {
+        observers.Remove(observer);
+    }
+
     private async void PauseButton_Clicked(object sender, EventArgs e)
     {
-        //_gameWindowViewModel._gameLogic.GameState = Domain.Enums.GameStateEnum.Paused;
+        ////_gameWindowViewModel._gameLogic.GameState = Domain.Enums.GameStateEnum.Paused;
+        //var popupPage = _popupFactory.Create<PausePopupPage>();
+
+        //var result = await this.ShowPopupAsync(popupPage);
+
+        //if (result != null)
+        //{
+        //    await Navigation.PopModalAsync();
+        //}
+
+        NotifyObservers("pause");
         var popupPage = _popupFactory.Create<PausePopupPage>();
 
         var result = await this.ShowPopupAsync(popupPage);
 
         if (result != null)
         {
+            NotifyObservers("lobby");
+
             await Navigation.PopModalAsync();
         }
+        else
+        {
+            NotifyObservers("resume");
+            _gameWindowViewModel.ResumeGame();
+        }
     }
-
-
-
 }
