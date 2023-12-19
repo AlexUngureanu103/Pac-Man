@@ -22,6 +22,7 @@ namespace Pac_Man.Business.UnitTests.Movement.GhostAlgorithms
         {
             gameCharacters = new GameCharacters();
             board = Substitute.For<Board>(gameCharacters);
+            board.ClassicBoardGneration();
             graph = Substitute.For<Graph>(board, gameCharacters);
             dijkstraAlgorithm = Substitute.For<DijkstraAlgorithm>(graph);
             ghostFleeAlgorithm = Substitute.For<GhostFleeAlgorithm>(graph);

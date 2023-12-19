@@ -51,8 +51,8 @@ namespace Pac_Man.Business.Movement
 
                 foreach (var neighbour in adjList[graph.Nodes[currentNode]])
                 {
-                    // A Ghost cannot go through another Ghost
-                    if (!visited[neighbour.SecondNode.ToString()] && !neighbour.SecondNode.IsGhost)
+                    // A Ghost cannot go through another Ghost, but it can see through a ghost
+                    if (!visited[neighbour.SecondNode.ToString()])
                     {
                         var newDistance = distances[currentNode] + 1;
                         if (newDistance < distances[neighbour.SecondNode.ToString()])

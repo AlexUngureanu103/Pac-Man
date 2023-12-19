@@ -2,14 +2,14 @@
 {
     public class Ghost : Piece
     {
-        public Ghost() : base(canMove: true)
+        public Ghost() : base(canMove: true, canMoveIn: true)
         {
         }
 
         public override string ToString()
         {
             //return " G ";
-            return " " + Icon.First() + " ";
+            return Icon.First() + "  ";
         }
     }
 }

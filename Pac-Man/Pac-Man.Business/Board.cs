@@ -16,7 +16,8 @@ namespace Pac_Man.Business
         public Board(IGameCharacters gameCharacters)
         {
             GameCharacters = gameCharacters;
-            ClassicBoardGneration();
+            //ClassicBoardGneration();
+            SmallerBoardGneration();
         }
 
         public void BoardRestart(IGameCharacters gameCharactersInitialPos)
@@ -51,14 +52,37 @@ namespace Pac_Man.Business
             SpawnPlayerBasicBoard();
         }
 
+        public void SmallerBoardGneration()
+        {
+            Rows = 15;
+            Columns = 20;
 
+            boardConfiguration = BoardGenerator.GenerateSmallerBoard(GameCharacters.Ghosts, Rows, Columns);
+            SpawnPlayerSmallerBoard();
+        }
 
+        private void SpawnPlayerSmallerBoard()
+        {
+            List<KeyValuePair<int, int>> possibleSpawnPoints = new List<KeyValuePair<int, int>>
+            {
+                new KeyValuePair<int, int>(1, 2),
+                new KeyValuePair<int, int>(1, 17),
+                new KeyValuePair<int, int>(13, 2),
+                new KeyValuePair<int, int>(13, 17)
+            };
+
+            Random random = new Random();
+            int randomIndex = random.Next(0, possibleSpawnPoints.Count);
+            this[possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value] = GameCharacters.Character.piece;
+            GameCharacters.Character.position = new KeyValuePair<int, int>(possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value);
+        }
+        
         private void SpawnPlayerBasicBoard()
         {
             List<KeyValuePair<int, int>> possibleSpawnPoints = new List<KeyValuePair<int, int>>
             {
-                new KeyValuePair<int, int>(3, 3),
-                new KeyValuePair<int, int>(3, 19),
+                new KeyValuePair<int, int>(1, 2),
+                new KeyValuePair<int, int>(1, 18),
                 new KeyValuePair<int, int>(19, 3),
                 new KeyValuePair<int, int>(19, 19)
             };
@@ -90,6 +114,30 @@ namespace Pac_Man.Business
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
+        }
+
+        public override string ToString()
+        {
+            var boardAsStruing = string.Empty + Environment.NewLine;
+
+            if (boardConfiguration.Count == 0)
+            {
+                return boardAsStruing;
+            }
+
+            for (int i = 0; i < Rows; i++)
+            {
+                boardAsStruing += Environment.NewLine;
+                for (int j = 0; j < Columns; j++)
+                {
+                    boardAsStruing += this[i, j].ToString();
+                }
+            }
+            boardAsStruing += Environment.NewLine;
+            boardAsStruing += Environment.NewLine;
+            boardAsStruing += Environment.NewLine;
+
+            return boardAsStruing;
         }
 
         public bool CheckIfGhostSeesThePlayer(string ghostName)

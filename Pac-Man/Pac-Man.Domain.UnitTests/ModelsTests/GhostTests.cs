@@ -13,7 +13,7 @@ namespace Pac_Man.Domain.UnitTests.ModelsTests
 
             ghost.canBeEaten.Should().BeFalse();
             ghost.canMove.Should().BeTrue();
-            ghost.canMoveIn.Should().BeFalse();
+            ghost.canMoveIn.Should().BeTrue();
             ghost.Icon.Should().BeEmpty();
             ghost.Should().BeAssignableTo<Piece>();
         }
