@@ -3,6 +3,7 @@ namespace Pac_Man.Pages;
 using CommunityToolkit.Maui.Views;
 using Microsoft.Maui.Controls;
 using Pac_Man.ApplicationConfiguration;
+using Pac_Man.Business.Strategy;
 using Pac_Man.Domain.ObserverInterfaces;
 using Pac_Man.ViewModels;
 using System;
@@ -92,22 +93,12 @@ public partial class GamePage : ContentPage, IObserver, ISubject
 
     private async void PauseButton_Clicked(object sender, EventArgs e)
     {
-        ////_gameWindowViewModel._gameLogic.GameState = Domain.Enums.GameStateEnum.Paused;
-        //var popupPage = _popupFactory.Create<PausePopupPage>();
-
-        //var result = await this.ShowPopupAsync(popupPage);
-
-        //if (result != null)
-        //{
-        //    await Navigation.PopModalAsync();
-        //}
-
         NotifyObservers("pause");
         var popupPage = _popupFactory.Create<PausePopupPage>();
 
         var result = await this.ShowPopupAsync(popupPage);
 
-        if (result != null)
+        if (result == null)
         {
             NotifyObservers("lobby");
 
@@ -115,6 +106,11 @@ public partial class GamePage : ContentPage, IObserver, ISubject
         }
         else
         {
+            if (result is StrategyEnum difficulty)
+            {
+                //To Change the difficulty of the game using observer pattern
+                _gameWindowViewModel._gameLogic.ChangeStrategy(difficulty);
+            }
             NotifyObservers("resume");
             _gameWindowViewModel.ResumeGame();
         }
