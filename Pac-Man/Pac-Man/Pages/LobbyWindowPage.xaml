@@ -36,7 +36,16 @@
                 FontAttributes="Bold"
                 WidthRequest="80"
                 Clicked="AboutPageButton_Clicked"/>
-                
+
+                <Button
+                x:Name="ExitButton"
+                Text="Exit"
+                BackgroundColor="Yellow"
+                TextColor="Black"
+                FontAttributes="Bold"
+                WidthRequest="80"
+                Clicked="ExitButton_Clicked"/>
+
             </HorizontalStackLayout>
 
         </VerticalStackLayout>
