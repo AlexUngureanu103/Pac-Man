@@ -42,6 +42,6 @@ public partial class PausePopupPage : Popup
 
     private void Restart_Clicked(object sender, EventArgs e)
     {
-        Close("reload");
+        Close("restart");
     }
 }

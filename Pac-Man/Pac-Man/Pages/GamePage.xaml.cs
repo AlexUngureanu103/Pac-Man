@@ -104,8 +104,8 @@ public partial class GamePage : ContentPage, IObserver, ISubject
 
             await Navigation.PopModalAsync();
         }
-        else if(result.Equals("reload")){
-            this._gameWindowViewModel = new GameWindowViewModel();
+        else if(result.Equals("restart")){
+            //
         }
         else
         {
