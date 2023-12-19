@@ -11,11 +11,11 @@ namespace Pac_Man.Business.UnitTests.Movement.GhostAlgorithms
     [TestClass]
     public class GhostPathAlgorithmsTests
     {
-        private IGameCharacters gameCharacters;
-        private IBoard board;
-        private IGraph graph;
-        private IDijkstraAlgorithm dijkstraAlgorithm;
-        private IGhostFleeAlgorithm ghostFleeAlgorithm;
+        private IGameCharacters? gameCharacters;
+        private IBoard? board;
+        private IGraph? graph;
+        private IDijkstraAlgorithm? dijkstraAlgorithm;
+        private IGhostFleeAlgorithm? ghostFleeAlgorithm;
 
         [TestInitialize]
         public void TestInitialize()
@@ -50,6 +50,9 @@ namespace Pac_Man.Business.UnitTests.Movement.GhostAlgorithms
         [DataRow(Ghosts.Clyde, 7, 10, 9, 11, 7, 9)]
         public void MainGhostMovements_ShouldReturnNextMove_WhenCalled(string ghostName, int ghostX, int gohstY, int playerX, int playerY, int expectedX, int expectedY)
         {
+            if (board is null || dijkstraAlgorithm is null || ghostFleeAlgorithm is null)
+                throw new NullReferenceException(nameof(board));
+
             var ghostPosition = new KeyValuePair<int, int>(ghostX, gohstY);
             var playerPosition = new KeyValuePair<int, int>(playerX, playerY);
             board[playerPosition.Key, playerPosition.Value] = new Character();
@@ -71,6 +74,9 @@ namespace Pac_Man.Business.UnitTests.Movement.GhostAlgorithms
         [DataRow("Random")]
         public void MainGhostMovements_ShouldThrowException_WhenCalledWithInvalidGhostName(string ghostName)
         {
+            if (board is null || dijkstraAlgorithm is null || ghostFleeAlgorithm is null)
+                throw new NullReferenceException(nameof(board));
+
             var ghostPathAlgorithms = new GhostPathAlgorithms(dijkstraAlgorithm, ghostFleeAlgorithm, board);
             Action action = () => ghostPathAlgorithms.MainGhostMovements(ghostName, board.GameCharacters.Ghosts[ghostName], board.GameCharacters.Character);
 
