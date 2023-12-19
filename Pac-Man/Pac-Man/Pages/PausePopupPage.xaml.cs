@@ -39,4 +39,9 @@ public partial class PausePopupPage : Popup
         }
         Close(selectedItem);
     }
+
+    private void Restart_Clicked(object sender, EventArgs e)
+    {
+        Close("reload");
+    }
 }
