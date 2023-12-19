@@ -17,5 +17,16 @@ namespace Pac_Man.Domain.UnitTests.ModelsTests
             ghost.Icon.Should().BeEmpty();
             ghost.Should().BeAssignableTo<Piece>();
         }
+
+        [TestMethod]
+        public void Ghost_ToString_ReturnsG()
+        {
+            var ghost = new Ghost();
+            var expected = ghost.Icon.FirstOrDefault() + "  ";
+
+            var actual = ghost.ToString();
+
+            actual.Should().Be(expected);
+        }
     }
 }

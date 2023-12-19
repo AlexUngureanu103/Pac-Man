@@ -17,5 +17,16 @@ namespace Pac_Man.Domain.UnitTests.ModelsTests
             character.Icon.Should().BeEmpty();
             character.Should().BeAssignableTo<Piece>();
         }
+
+        [TestMethod]
+        public void Character_ToString_ReturnsC()
+        {
+            var character = new Character();
+            var expected = "P  ";
+
+            var actual = character.ToString();
+
+            actual.Should().Be(expected);
+        }
     }
 }

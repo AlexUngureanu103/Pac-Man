@@ -17,5 +17,16 @@ namespace Pac_Man.Domain.UnitTests.ModelsTests
             food.Icon.Should().BeEmpty();
             food.Should().BeAssignableTo<Piece>();
         }
+
+        [TestMethod]
+        public void Food_ToString_ReturnsDot()
+        {
+            var food = new Food();
+            var expected = ".  ";
+
+            var actual = food.ToString();
+
+            actual.Should().Be(expected);
+        }
     }
 }
