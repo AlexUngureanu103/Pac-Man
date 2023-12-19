@@ -1,6 +1,5 @@
 ﻿using Pac_Man.Business.GraphRepresentation;
 using Pac_Man.Business.Movement;
-using Pac_Man.Business.Movement.Ghost_Algorithms;
 using Pac_Man.Business.Strategy;
 using Pac_Man.Domain;
 using Pac_Man.Domain.Enums;
@@ -18,10 +17,6 @@ namespace Pac_Man.Business
         private IStrategyFactory strategyFactory;
         private IStrategy strategy;
 
-        private readonly IDijkstraAlgorithm dijkstraAlgorithm;
-        private readonly IGhostFleeAlgorithm ghostFleeAlgorithm;
-        private readonly IGhostPathAlgorithms ghostPathAlgorithms;
-
         private int maxScore = 0;
         private List<IObserver> observers = new List<IObserver>();
         private IGameCharacters gameCharactersInitialPos = new GameCharacters();
@@ -35,7 +30,7 @@ namespace Pac_Man.Business
         public GameStateEnum GameState { get; private set; }
         public string PlayerName { get; set; } = "Guest";
 
-        public GameLogic(IDijkstraAlgorithm dijkstraAlgorithm, IGhostFleeAlgorithm ghostFleeAlgorithm, IGhostPathAlgorithms ghostPathAlgorithms, IBoard board, IGraph graph, IStrategyFactory strategyFactory)
+        public GameLogic(IBoard board, IGraph graph, IStrategyFactory strategyFactory)
         {
             this.strategyFactory = strategyFactory;
             var strategy = strategyFactory.GetStrategy(StrategyEnum.Normal);
@@ -50,10 +45,7 @@ namespace Pac_Man.Business
             log4net.ILog log = log4net.LogManager.GetLogger(typeof(GameLogic));
 
             logger = new Logger();
-            this.dijkstraAlgorithm = dijkstraAlgorithm;
-            this.ghostFleeAlgorithm = ghostFleeAlgorithm;
-            this.ghostFleeAlgorithm = ghostFleeAlgorithm;
-            this.ghostPathAlgorithms = ghostPathAlgorithms;
+
             this.board = board;
             this.graph = graph;
             maxScore = this.board.ToString().Count(x => x == '.');

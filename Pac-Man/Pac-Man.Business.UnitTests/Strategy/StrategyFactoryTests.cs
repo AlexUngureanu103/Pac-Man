@@ -17,10 +17,10 @@ namespace Pac_Man.Business.UnitTests.Strategy
 
             _serviceProvider = Substitute.For<IServiceProvider>();
 
-            _serviceProvider.GetService(typeof(NoobStrategy)).Returns(new NoobStrategy(ghostFleeAlgorithm, ghostPathAlgorithms));
-            _serviceProvider.GetService(typeof(EasyStrategy)).Returns(new EasyStrategy(ghostFleeAlgorithm, ghostPathAlgorithms));
-            _serviceProvider.GetService(typeof(NormalStrategy)).Returns(new NormalStrategy(ghostFleeAlgorithm, ghostPathAlgorithms));
-            _serviceProvider.GetService(typeof(ImpossibleStrategy)).Returns(new ImpossibleStrategy(ghostFleeAlgorithm, ghostPathAlgorithms));
+            _serviceProvider.GetService(typeof(NoobStrategy)).Returns(new NoobStrategy(ghostFleeAlgorithm));
+            _serviceProvider.GetService(typeof(EasyStrategy)).Returns(new EasyStrategy(ghostPathAlgorithms));
+            _serviceProvider.GetService(typeof(NormalStrategy)).Returns(new NormalStrategy(ghostPathAlgorithms));
+            _serviceProvider.GetService(typeof(ImpossibleStrategy)).Returns(new ImpossibleStrategy(ghostPathAlgorithms));
         }
 
         [DataTestMethod]

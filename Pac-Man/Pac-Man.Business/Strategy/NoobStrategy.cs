@@ -6,12 +6,10 @@ namespace Pac_Man.Business.Strategy
     public class NoobStrategy : IStrategy
     {
         private readonly IGhostFleeAlgorithm _ghostFleeAlgorithm;
-        private readonly IGhostPathAlgorithms _ghostPathAlgorithms;
 
-        public NoobStrategy(IGhostFleeAlgorithm ghostFleeAlgorithm, IGhostPathAlgorithms ghostPathAlgorithms)
+        public NoobStrategy(IGhostFleeAlgorithm ghostFleeAlgorithm)
         {
             _ghostFleeAlgorithm = ghostFleeAlgorithm;
-            _ghostPathAlgorithms = ghostPathAlgorithms;
         }
 
         public KeyValuePair<int, int> MoveGhosts(KeyValuePair<string, MoveablesContainer> ghost, MoveablesContainer character)
