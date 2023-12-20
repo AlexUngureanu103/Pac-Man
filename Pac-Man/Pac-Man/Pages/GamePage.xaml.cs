@@ -4,6 +4,7 @@ using CommunityToolkit.Maui.Views;
 using Microsoft.Maui.Controls;
 using Pac_Man.ApplicationConfiguration;
 using Pac_Man.Business.Strategy;
+using Pac_Man.Domain.Enums;
 using Pac_Man.Domain.ObserverInterfaces;
 using Pac_Man.ViewModels;
 using System;
@@ -105,7 +106,7 @@ public partial class GamePage : ContentPage, IObserver, ISubject
             await Navigation.PopModalAsync();
         }
         else if(result.Equals("restart")){
-            //
+            NotifyObservers("restart");
         }
         else
         {

@@ -125,6 +125,12 @@ namespace Pac_Man.Business
                         GameState = GameStateEnum.Stop;
                         break;
                     }
+                case "restart":
+                    {
+                        GameState = GameStateEnum.Starting;
+                        GameState = GameStateEnum.Running;
+                        break;
+                    }
                 default:
                     {
                         break;
