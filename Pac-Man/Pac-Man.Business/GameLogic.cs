@@ -127,8 +127,6 @@ namespace Pac_Man.Business
                     }
                 case "restart":
                     {
-                        GameState = GameStateEnum.Starting;
-                        GameState = GameStateEnum.Running;
                         break;
                     }
                 default:
