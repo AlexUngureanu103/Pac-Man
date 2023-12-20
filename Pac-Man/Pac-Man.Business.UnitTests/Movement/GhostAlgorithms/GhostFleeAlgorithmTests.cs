@@ -22,14 +22,13 @@ namespace Pac_Man.Business.UnitTests.Movement.GhostAlgorithms
         }
 
         [TestMethod]
-        [Ignore]
         public void Flee_ShouldReturnNothing_WhenThereIsNoPath()
         {
             var ghost = new MoveablesContainer(new Ghost());
-            ghost.position = new KeyValuePair<int, int>(5, 11);
+            ghost.position = new KeyValuePair<int, int>(11, 9);
             var player = new MoveablesContainer(new Character());
             player.position = new KeyValuePair<int, int>(1, 1);
-
+            
             var ghostFleeAlgorithm = new GhostFleeAlgorithm(graph);
 
             // Act
