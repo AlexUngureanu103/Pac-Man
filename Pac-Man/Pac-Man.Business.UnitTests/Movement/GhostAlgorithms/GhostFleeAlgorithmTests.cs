@@ -8,15 +8,16 @@ namespace Pac_Man.Business.UnitTests.Movement.GhostAlgorithms
     [TestClass]
     public class GhostFleeAlgorithmTests
     {
-        private IGameCharacters gameCharacters;
-        private IBoard board;
-        private IGraph graph;
+        private IGameCharacters? gameCharacters;
+        private IBoard? board;
+        private IGraph? graph;
 
         [TestInitialize]
         public void TestInitialize()
         {
             gameCharacters = Substitute.For<GameCharacters>();
             board = Substitute.For<Board>(gameCharacters);
+            board.ClassicBoardGneration();
             graph = Substitute.For<Graph>(board, gameCharacters);
         }
 
@@ -25,7 +26,7 @@ namespace Pac_Man.Business.UnitTests.Movement.GhostAlgorithms
         public void Flee_ShouldReturnNothing_WhenThereIsNoPath()
         {
             var ghost = new MoveablesContainer(new Ghost());
-            ghost.position = new KeyValuePair<int, int>(0, 0);
+            ghost.position = new KeyValuePair<int, int>(5, 11);
             var player = new MoveablesContainer(new Character());
             player.position = new KeyValuePair<int, int>(1, 1);
 
