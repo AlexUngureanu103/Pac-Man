@@ -34,13 +34,20 @@ public partial class GamePage : ContentPage, IObserver, ISubject
         entry.Focus();
     }
 
-    void OnEntryTextChanged(object sender, TextChangedEventArgs e)
+    private async void OnEntryTextChanged(object sender, TextChangedEventArgs e)
     {
         string newText = e.NewTextValue;
         if (!string.IsNullOrEmpty(newText))
         {
             char newChar = newText[newText.Length - 1];
-            _gameWindowViewModel.HandleKeyPress(newChar);
+            if (newChar == 'p' || newChar == 'P')
+            {
+                await PauseMenu();
+            }
+            else
+            {
+                _gameWindowViewModel.HandleKeyPress(newChar);
+            }
         }
 
         if (sender is Entry entry)
@@ -92,6 +99,11 @@ public partial class GamePage : ContentPage, IObserver, ISubject
     }
 
     private async void PauseButton_Clicked(object sender, EventArgs e)
+    {
+        await PauseMenu();
+    }
+
+    private async Task PauseMenu()
     {
         NotifyObservers("pause");
         var popupPage = _popupFactory.Create<PausePopupPage>();

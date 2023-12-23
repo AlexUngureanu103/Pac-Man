@@ -34,6 +34,11 @@
             TextColor="Yellow"
             FontAttributes="Bold"
             />
+            <Label 
+            Text="P - Pause"   
+            TextColor="Yellow"
+            FontAttributes="Bold"
+            />
         </VerticalStackLayout>
 
         <Button
