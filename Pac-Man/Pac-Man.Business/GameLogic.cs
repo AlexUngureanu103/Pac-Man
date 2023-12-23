@@ -1,6 +1,5 @@
 ﻿using Pac_Man.Business.GraphRepresentation;
 using Pac_Man.Business.Movement;
-using Pac_Man.Business.Movement.Ghost_Algorithms;
 using Pac_Man.Business.Strategy;
 using Pac_Man.Domain;
 using Pac_Man.Domain.Enums;
@@ -11,31 +10,25 @@ namespace Pac_Man.Business
 {
     public class GameLogic : IObserver, ISubject, IGameLogic
     {
-        private readonly IDataLogger logger;
+        private IGameCharacters gameCharactersInitialPos = new GameCharacters();
         private IBoard board;
         private IGraph graph;
 
+        private List<IObserver> observers = new List<IObserver>();
         private IStrategyFactory strategyFactory;
         private IStrategy strategy;
-
-        private readonly IDijkstraAlgorithm dijkstraAlgorithm;
-        private readonly IGhostFleeAlgorithm ghostFleeAlgorithm;
-        private readonly IGhostPathAlgorithms ghostPathAlgorithms;
-
-        private int maxScore = 0;
-        private List<IObserver> observers = new List<IObserver>();
-        private IGameCharacters gameCharactersInitialPos = new GameCharacters();
 
         private Empty emptySpace = new();
         private Timer ghostMoveTimer;
 
+        private int maxScore = 0;
+
         public int Lifes { get; private set; } = 3;
         public int Score { get; private set; } = 0;
-        public PlayerStateEnum playerState { get; private set; }
         public GameStateEnum GameState { get; private set; }
         public string PlayerName { get; set; } = "Guest";
 
-        public GameLogic(IDijkstraAlgorithm dijkstraAlgorithm, IGhostFleeAlgorithm ghostFleeAlgorithm, IGhostPathAlgorithms ghostPathAlgorithms, IBoard board, IGraph graph, IStrategyFactory strategyFactory)
+        public GameLogic(IBoard board, IGraph graph, IStrategyFactory strategyFactory)
         {
             this.strategyFactory = strategyFactory;
             var strategy = strategyFactory.GetStrategy(StrategyEnum.Normal);
@@ -47,19 +40,13 @@ namespace Pac_Man.Business
             gameCharactersInitialPos.Ghosts[Ghosts.Pinky].position = board.GameCharacters.Ghosts[Ghosts.Pinky].position;
             gameCharactersInitialPos.Ghosts[Ghosts.Inky].position = board.GameCharacters.Ghosts[Ghosts.Inky].position;
             gameCharactersInitialPos.Ghosts[Ghosts.Clyde].position = board.GameCharacters.Ghosts[Ghosts.Clyde].position;
-            log4net.ILog log = log4net.LogManager.GetLogger(typeof(GameLogic));
 
-            logger = new Logger();
-            this.dijkstraAlgorithm = dijkstraAlgorithm;
-            this.ghostFleeAlgorithm = ghostFleeAlgorithm;
-            this.ghostFleeAlgorithm = ghostFleeAlgorithm;
-            this.ghostPathAlgorithms = ghostPathAlgorithms;
             this.board = board;
             this.graph = graph;
+
             maxScore = this.board.ToString().Count(x => x == '.');
 
             GameState = GameStateEnum.Lobby;
-            playerState = PlayerStateEnum.Alive;
 
             ghostMoveTimer = new Timer(OnGhostMoveTimerCallback, new object(), Timeout.Infinite, 1000);
         }
@@ -132,6 +119,12 @@ namespace Pac_Man.Business
                         GameState = GameStateEnum.Running;
                         break;
                     }
+                case var expression when expression.Contains("changeDifficulty"):
+                    {
+                        var strategyEnum = (StrategyEnum)Enum.Parse(typeof(StrategyEnum), expression.Split("_")[1]);
+                        ChangeStrategy(strategyEnum);
+                        break;
+                    }
                 default:
                     {
                         break;
@@ -151,21 +144,17 @@ namespace Pac_Man.Business
             Lifes = 3;
             maxScore = board.ToString().Count(x => x == '.');
             Score = 0;
-
-            playerState = PlayerStateEnum.Alive;
-            logger.LogInfo(board.ToString());
         }
 
         public void StartGame()
         {
             GameState = GameStateEnum.Running;
-            playerState = PlayerStateEnum.Alive;
             ghostMoveTimer.Change(0, 250);
         }
+
         public void StopGame()
         {
             GameState = GameStateEnum.End;
-            playerState = PlayerStateEnum.Dead;
             ghostMoveTimer.Change(Timeout.Infinite, Timeout.Infinite);
         }
 
@@ -216,19 +205,9 @@ namespace Pac_Man.Business
                 }
                 //RandomMoveThePlayer();
                 board.PrintBoard();
-                logger.LogInfo(board.ToString());
 
             }
         }
-
-        // To delete
-        /* private void RandomMoveThePlayer()
-         {
-             var adjacentNodes = graph.AdjacencyList[graph.Nodes[PositionConverter.ConvertPositionsToString(graph.GameCharacters.Character.position)]];
-             var newPositionNode = adjacentNodes[new Random().Next(0, adjacentNodes.Count)].SecondNode;
-
-             ModifyCharacterPosition(newPositionNode.RowPosition, newPositionNode.ColumnPosition);
-         }*/
 
         private void UpdateGhostsPosition(string ghostName, int newGhostRow, int newGhostPositionColumnn)
         {

@@ -3,12 +3,11 @@ using Pac_Man.Domain.ObserverInterfaces;
 
 namespace Pac_Man.Business
 {
-    public interface IGameLogic
+    public interface IGameLogic : ISubject, IObserver
     {
         GameStateEnum GameState { get; }
         int Lifes { get; }
         string PlayerName { get; set; }
-        PlayerStateEnum playerState { get; }
         int Score { get; }
 
         void GhostCharacterInteracts();

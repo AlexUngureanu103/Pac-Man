@@ -4,12 +4,10 @@ namespace Pac_Man.Business.Strategy
 {
     public class ImpossibleStrategy : IStrategy
     {
-        private readonly IGhostFleeAlgorithm _ghostFleeAlgorithm;
         private readonly IGhostPathAlgorithms _ghostPathAlgorithms;
 
-        public ImpossibleStrategy(IGhostFleeAlgorithm ghostFleeAlgorithm, IGhostPathAlgorithms ghostPathAlgorithms)
+        public ImpossibleStrategy(IGhostPathAlgorithms ghostPathAlgorithms)
         {
-            _ghostFleeAlgorithm = ghostFleeAlgorithm;
             _ghostPathAlgorithms = ghostPathAlgorithms;
         }
 

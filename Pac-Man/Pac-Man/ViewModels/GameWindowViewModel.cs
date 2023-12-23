@@ -6,11 +6,11 @@ namespace Pac_Man.ViewModels
 {
     public partial class GameWindowViewModel : BaseVM
     {
-        public readonly GameLogic _gameLogic;
+        public readonly IGameLogic _gameLogic;
         public readonly IBoard _board;
         private Timer updateTimer;
 
-        public GameWindowViewModel(IBoard board, GameLogic gameLogic)
+        public GameWindowViewModel(IBoard board, IGameLogic gameLogic)
         {
             _board = board;
             _gameLogic = gameLogic;
@@ -21,7 +21,6 @@ namespace Pac_Man.ViewModels
             updateTimer = new Timer(UpdateBoard, new object(), 0, 1000);
             _gameLogic.StartGame();
             updateTimer.Change(0, 10);
-
         }
 
         public void ReloadBoard()

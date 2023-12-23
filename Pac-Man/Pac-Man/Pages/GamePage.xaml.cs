@@ -77,7 +77,6 @@ public partial class GamePage : ContentPage, IObserver, ISubject
                         break;
                 }
             });
-
     }
 
     public void NotifyObservers(string state)
@@ -126,8 +125,7 @@ public partial class GamePage : ContentPage, IObserver, ISubject
         {
             if (result is StrategyEnum difficulty)
             {
-                //To Change the difficulty of the game using observer pattern
-                _gameWindowViewModel._gameLogic.ChangeStrategy(difficulty);
+                _gameWindowViewModel._gameLogic.Update("changeDifficulty" + '_' + difficulty.ToString());
             }
             NotifyObservers("resume");
             _gameWindowViewModel.ResumeGame();
