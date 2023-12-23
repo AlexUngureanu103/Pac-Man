@@ -4,17 +4,14 @@ namespace Pac_Man.Business.Strategy
 {
     public class EasyStrategy : IStrategy
     {
-        private readonly IGhostFleeAlgorithm _ghostFleeAlgorithm;
         private readonly IGhostPathAlgorithms _ghostPathAlgorithms;
-
 
         private int turnCnt = 0;
         private int moveCnt = 0;
         private int moveOnTurn = 5;
 
-        public EasyStrategy(IGhostFleeAlgorithm ghostFleeAlgorithm, IGhostPathAlgorithms ghostPathAlgorithms)
+        public EasyStrategy(IGhostPathAlgorithms ghostPathAlgorithms)
         {
-            _ghostFleeAlgorithm = ghostFleeAlgorithm;
             _ghostPathAlgorithms = ghostPathAlgorithms;
         }
 
@@ -32,7 +29,6 @@ namespace Pac_Man.Business.Strategy
 
                 return newPosition;
             }
-
 
             return ghost.Value.position;
         }

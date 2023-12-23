@@ -138,6 +138,5 @@ namespace Pac_Man.Business.GraphRepresentation
                 AdjacencyList[node] = new List<NodeConnection> { nodeConnection };
             }
         }
-
     }
 }

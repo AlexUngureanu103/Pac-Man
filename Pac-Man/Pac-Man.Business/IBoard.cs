@@ -11,7 +11,6 @@ namespace Pac_Man.Business
 
         Piece this[int row, int column] { get; set; }
 
-        void PrintBoard();
         void ClassicBoardGneration();
         void BoardRestart(IGameCharacters gameCharactersInitialPos);
         bool CheckIfGhostSeesThePlayer(string ghostName);

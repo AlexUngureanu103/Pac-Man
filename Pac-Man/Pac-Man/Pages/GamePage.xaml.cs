@@ -56,8 +56,16 @@ public partial class GamePage : ContentPage, IObserver, ISubject
         }
     }
 
+    private bool canUpdate = true;
+
     public async void Update(string state)
     {
+        if (!canUpdate)
+        {
+            return;
+        }
+        canUpdate = false;
+
         await Dispatcher.DispatchAsync
             (() =>
             {
@@ -78,6 +86,8 @@ public partial class GamePage : ContentPage, IObserver, ISubject
                 }
             });
 
+        await Task.Delay(1000);
+        canUpdate = true;
     }
 
     public void NotifyObservers(string state)
@@ -126,8 +136,7 @@ public partial class GamePage : ContentPage, IObserver, ISubject
         {
             if (result is StrategyEnum difficulty)
             {
-                //To Change the difficulty of the game using observer pattern
-                _gameWindowViewModel._gameLogic.ChangeStrategy(difficulty);
+                _gameWindowViewModel._gameLogic.Update("changeDifficulty" + '_' + difficulty.ToString());
             }
             NotifyObservers("resume");
             _gameWindowViewModel.ResumeGame();
