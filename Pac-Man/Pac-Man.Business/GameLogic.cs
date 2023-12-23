@@ -8,7 +8,7 @@ using Pac_Man.Domain.ObserverInterfaces;
 
 namespace Pac_Man.Business
 {
-    public class GameLogic : IObserver, ISubject, IGameLogic
+    public class GameLogic : IGameLogic
     {
         private IGameCharacters gameCharactersInitialPos = new GameCharacters();
         private IBoard board;
@@ -26,13 +26,19 @@ namespace Pac_Man.Business
         public int Lifes { get; private set; } = 3;
         public int Score { get; private set; } = 0;
         public GameStateEnum GameState { get; private set; }
+        public PlayerStateEnum PlayerState { get; private set; }
         public string PlayerName { get; set; } = "Guest";
 
         public GameLogic(IBoard board, IGraph graph, IStrategyFactory strategyFactory)
         {
-            this.strategyFactory = strategyFactory;
-            var strategy = strategyFactory.GetStrategy(StrategyEnum.Normal);
+            GameState = GameStateEnum.Lobby;
+            PlayerState = PlayerStateEnum.SpawnProtected;
 
+            this.board = board;
+            this.graph = graph;
+            this.strategyFactory = strategyFactory;
+
+            var strategy = strategyFactory.GetStrategy(StrategyEnum.Normal);
             this.strategy = strategy;
 
             gameCharactersInitialPos.Character.position = board.GameCharacters.Character.position;
@@ -41,17 +47,11 @@ namespace Pac_Man.Business
             gameCharactersInitialPos.Ghosts[Ghosts.Inky].position = board.GameCharacters.Ghosts[Ghosts.Inky].position;
             gameCharactersInitialPos.Ghosts[Ghosts.Clyde].position = board.GameCharacters.Ghosts[Ghosts.Clyde].position;
 
-            this.board = board;
-            this.graph = graph;
-
             maxScore = this.board.ToString().Count(x => x == '.');
-
-            GameState = GameStateEnum.Lobby;
-
             ghostMoveTimer = new Timer(OnGhostMoveTimerCallback, new object(), Timeout.Infinite, 1000);
         }
 
-        public void ChangeStrategy(StrategyEnum strategyEnum)
+        private void ChangeStrategy(StrategyEnum strategyEnum)
         {
             if (strategyEnum != StrategyEnum.Back)
             {
@@ -166,11 +166,12 @@ namespace Pac_Man.Business
             }
         }
 
-        public void GhostCharacterInteracts()
+        private void GhostCharacterInteracts()
         {
             Lifes--;
             if (Lifes > 0)
             {
+                PlayerState = PlayerStateEnum.SpawnProtected;
                 board.BoardRestart(gameCharactersInitialPos);
                 graph.GraphRestart(gameCharactersInitialPos);
 
@@ -179,17 +180,20 @@ namespace Pac_Man.Business
                 board.GameCharacters.Ghosts[Ghosts.Pinky].position = gameCharactersInitialPos.Ghosts[Ghosts.Pinky].position;
                 board.GameCharacters.Ghosts[Ghosts.Inky].position = gameCharactersInitialPos.Ghosts[Ghosts.Inky].position;
                 board.GameCharacters.Ghosts[Ghosts.Clyde].position = gameCharactersInitialPos.Ghosts[Ghosts.Clyde].position;
+
+                maxScore = board.ToString().Count(x => x == '.');
             }
             else
             {
                 StopGame();
+                PlayerState = PlayerStateEnum.Dead;
                 NotifyObservers("stop");
             }
         }
 
         private void MoveGhosts()
         {
-            if (GameState == GameStateEnum.Running)
+            if (GameState == GameStateEnum.Running && PlayerState != PlayerStateEnum.SpawnProtected)
             {
                 foreach (var ghost in board.GameCharacters.Ghosts)
                 {
@@ -203,9 +207,6 @@ namespace Pac_Man.Business
                     }
                     UpdateGhostsPosition(ghost.Key, newPosition.Key, newPosition.Value);
                 }
-                //RandomMoveThePlayer();
-                board.PrintBoard();
-
             }
         }
 
@@ -282,6 +283,10 @@ namespace Pac_Man.Business
             if (GameState != GameStateEnum.Running)
             {
                 return;
+            }
+            if (PlayerState == PlayerStateEnum.SpawnProtected)
+            {
+                PlayerState = PlayerStateEnum.Alive;
             }
             if (maxScore == Score)
             {

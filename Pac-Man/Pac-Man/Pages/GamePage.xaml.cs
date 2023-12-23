@@ -56,8 +56,16 @@ public partial class GamePage : ContentPage, IObserver, ISubject
         }
     }
 
+    private bool canUpdate = true;
+
     public async void Update(string state)
     {
+        if (!canUpdate)
+        {
+            return;
+        }
+        canUpdate = false;
+
         await Dispatcher.DispatchAsync
             (() =>
             {
@@ -77,6 +85,9 @@ public partial class GamePage : ContentPage, IObserver, ISubject
                         break;
                 }
             });
+
+        await Task.Delay(1000);
+        canUpdate = true;
     }
 
     public void NotifyObservers(string state)

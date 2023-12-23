@@ -6,7 +6,7 @@ namespace Pac_Man.Business
 {
     public class Board : IBoard
     {
-        private List<Piece> boardConfiguration = new List<Piece>();
+        private List<Piece> boardConfiguration = new();
 
         public IGameCharacters GameCharacters { get; set; }
 
@@ -76,7 +76,7 @@ namespace Pac_Man.Business
             this[possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value] = GameCharacters.Character.piece;
             GameCharacters.Character.position = new KeyValuePair<int, int>(possibleSpawnPoints[randomIndex].Key, possibleSpawnPoints[randomIndex].Value);
         }
-        
+
         private void SpawnPlayerBasicBoard()
         {
             List<KeyValuePair<int, int>> possibleSpawnPoints = new List<KeyValuePair<int, int>>
@@ -101,20 +101,6 @@ namespace Pac_Man.Business
             set { boardConfiguration[row * Columns + column] = value; }
         }
 
-        public void PrintBoard()
-        {
-            for (int i = 0; i < Rows; i++)
-            {
-                Console.WriteLine();
-                for (int j = 0; j < Columns; j++)
-                {
-                    Console.Write(this[i, j].ToString());
-                }
-            }
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-        }
 
         public override string ToString()
         {
@@ -196,6 +182,5 @@ namespace Pac_Man.Business
         {
             (this[newPosition.Key, newPosition.Value], this[oldPosition.Key, oldPosition.Value]) = (this[oldPosition.Key, oldPosition.Value], this[newPosition.Key, newPosition.Value]);
         }
-
     }
 }
