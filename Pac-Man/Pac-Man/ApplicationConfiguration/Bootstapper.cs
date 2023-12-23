@@ -48,7 +48,7 @@ namespace Pac_Man.ApplicationConfiguration
             builder.Services.AddSingleton<IGhostFleeAlgorithm, GhostFleeAlgorithm>();
             builder.Services.AddSingleton<IGhostPathAlgorithms, GhostPathAlgorithms>();
 
-            builder.Services.AddSingleton<GameLogic>();
+            builder.Services.AddSingleton<IGameLogic, GameLogic>();
 
             RegisterStrategy(builder);
         }

@@ -32,7 +32,7 @@ namespace Pac_Man.Business.UnitTests.Strategy
         public void CreateStrategy_WhenStrategyTypeIsEasy_ReturnsEasyStrategy(StrategyEnum strategyEnum, Type strategyType)
         {
             if (_serviceProvider is null)
-                throw new NullReferenceException(nameof(_serviceProvider));
+                Assert.Fail();
 
             var strategyFactory = new StrategyFactory(_serviceProvider);
 
