@@ -30,6 +30,11 @@ public partial class LobbyWindowPage : ContentPage
         await Navigation.PushModalAsync(_contentPageFactory.Create<AboutPage>());
     }
 
+    private void ExitButton_Clicked(object sender, EventArgs e)
+    {
+        Application.Current?.CloseWindow(Application.Current.MainPage.Window);
+    }
+
     private void ControlsButton_Clicked(object sender, EventArgs e)
     {
         this.ShowPopup(_popupFactory.Create<ControlsPopup>());

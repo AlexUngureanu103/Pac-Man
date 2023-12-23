@@ -24,6 +24,15 @@
                 Clicked="Resume_Clicked"/>
 
             <Button
+                x:Name="Restart"
+                Text="Restart Game"
+                BackgroundColor="Yellow"
+                TextColor="Black"
+                WidthRequest="150"
+                FontAttributes="Bold"       
+                Clicked="Restart_Clicked"/>
+
+            <Button
                 x:Name="Lobby"
                 Text="Exit to Lobby"
                 BackgroundColor="Yellow"

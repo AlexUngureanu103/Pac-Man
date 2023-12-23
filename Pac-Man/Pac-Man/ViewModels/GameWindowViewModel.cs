@@ -94,7 +94,7 @@ namespace Pac_Man.ViewModels
             }
         }
 
-        private void PopulateBoardImages()
+        public void PopulateBoardImages()
         {
             for (int row = 0; row < _board.Rows; row++)
             {
