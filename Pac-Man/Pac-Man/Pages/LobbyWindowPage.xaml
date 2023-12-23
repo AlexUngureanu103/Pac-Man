@@ -25,8 +25,17 @@
                 BackgroundColor="Yellow"
                 TextColor="Black"
                 FontAttributes="Bold"
-                WidthRequest="80"
+                WidthRequest="100"
                 Clicked="GamePageButton_Clicked"/>
+
+                <Button
+                x:Name="ControlsButton"
+                Text="Controls"
+                BackgroundColor="Yellow"
+                TextColor="Black"
+                FontAttributes="Bold"
+                WidthRequest="100"
+                Clicked="ControlsButton_Clicked"/>
 
                 <Button
                 x:Name="AboutPageButton"
@@ -34,7 +43,7 @@
                 BackgroundColor="Yellow"
                 TextColor="Black"
                 FontAttributes="Bold"
-                WidthRequest="80"
+                WidthRequest="100"
                 Clicked="AboutPageButton_Clicked"/>
                 
             </HorizontalStackLayout>
