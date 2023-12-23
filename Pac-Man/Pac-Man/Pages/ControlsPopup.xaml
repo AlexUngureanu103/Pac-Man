@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+         xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             x:Class="Pac_Man.Pages.ControlsPopup"
+           CanBeDismissedByTappingOutsideOfPopup="False">
+    <VerticalStackLayout Margin="20,0,20,0" BackgroundColor="Black">
+        <Label 
+        Text="CONTROLS"
+        TextColor="Yellow"
+        FontAttributes="Bold"
+        FontSize="Header"
+        VerticalOptions="Center" 
+        HorizontalOptions="Center" />
+
+        <VerticalStackLayout Margin="0, 30, 0, 30" VerticalOptions="Center" HorizontalOptions="Center">
+            <Label 
+            Text="W - Up"
+            TextColor="Yellow"
+            FontAttributes="Bold"
+            />
+            <Label 
+            Text="A - Down"
+            TextColor="Yellow"
+            FontAttributes="Bold"
+            />
+            <Label 
+            Text="S - Left"
+            TextColor="Yellow"
+            FontAttributes="Bold"
+            />
+            <Label 
+            Text="D - Down"   
+            TextColor="Yellow"
+            FontAttributes="Bold"
+            />
+            <Label 
+            Text="P - Pause"   
+            TextColor="Yellow"
+            FontAttributes="Bold"
+            />
+        </VerticalStackLayout>
+
+        <Button
+        x:Name="Close"
+        Text="Close"
+        BackgroundColor="Yellow"
+        TextColor="Black"
+        WidthRequest="80"
+        FontAttributes="Bold"       
+        Clicked="Close_Clicked"/>
+    </VerticalStackLayout>
+</mct:Popup>

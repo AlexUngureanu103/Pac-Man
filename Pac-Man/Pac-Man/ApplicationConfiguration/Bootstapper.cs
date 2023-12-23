@@ -30,6 +30,7 @@ namespace Pac_Man.ApplicationConfiguration
         private static void RegisterPopup(MauiAppBuilder builder)
         {
             builder.Services.AddScoped<PausePopupPage>();
+            builder.Services.AddScoped<ControlsPopup>();
         }
 
         private static void RegisterViewModels(MauiAppBuilder builder)

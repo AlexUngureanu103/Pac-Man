@@ -51,7 +51,7 @@ namespace Pac_Man.Business.UnitTests.Movement.GhostAlgorithms
         public void MainGhostMovements_ShouldReturnNextMove_WhenCalled(string ghostName, int ghostX, int gohstY, int playerX, int playerY, int expectedX, int expectedY)
         {
             if (board is null || dijkstraAlgorithm is null || ghostFleeAlgorithm is null)
-                throw new NullReferenceException(nameof(board));
+                Assert.Fail();
 
             var ghostPosition = new KeyValuePair<int, int>(ghostX, gohstY);
             var playerPosition = new KeyValuePair<int, int>(playerX, playerY);
@@ -75,7 +75,7 @@ namespace Pac_Man.Business.UnitTests.Movement.GhostAlgorithms
         public void MainGhostMovements_ShouldThrowException_WhenCalledWithInvalidGhostName(string ghostName)
         {
             if (board is null || dijkstraAlgorithm is null || ghostFleeAlgorithm is null)
-                throw new NullReferenceException(nameof(board));
+                Assert.Fail();
 
             var ghostPathAlgorithms = new GhostPathAlgorithms(dijkstraAlgorithm, ghostFleeAlgorithm, board);
             Action action = () => ghostPathAlgorithms.MainGhostMovements(ghostName, board.GameCharacters.Ghosts[ghostName], board.GameCharacters.Character);
