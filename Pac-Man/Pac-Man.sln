@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pac-Man.API", "Pac-Man.API\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pac-Man.Domain", "Pac-Man.Domain\Pac-Man.Domain.csproj", "{E0F179F5-BA9A-4669-9F7C-B78428289B12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pac-Man.Domain.UnitTests", "Pac-Man.Domain.UnitTests\Pac-Man.Domain.UnitTests.csproj", "{0384B739-D231-4C5C-81C6-BB90B97192A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pac-Man.Domain.UnitTests", "Pac-Man.Domain.UnitTests\Pac-Man.Domain.UnitTests.csproj", "{0384B739-D231-4C5C-81C6-BB90B97192A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pac-Man.Business.UnitTests", "Pac-Man.Business.UnitTests\Pac-Man.Business.UnitTests.csproj", "{42CF9525-79F2-404C-A2F3-D9A38963850E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pac-Man.Business.UnitTests", "Pac-Man.Business.UnitTests\Pac-Man.Business.UnitTests.csproj", "{42CF9525-79F2-404C-A2F3-D9A38963850E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

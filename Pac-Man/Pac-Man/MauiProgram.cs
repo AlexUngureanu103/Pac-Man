@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 using Pac_Man.ApplicationConfiguration;
-using CommunityToolkit.Maui;
 
 namespace Pac_Man
 {
@@ -10,7 +10,7 @@ namespace Pac_Man
         {
             var builder = MauiApp.CreateBuilder();
 
-            Bootstapper.BuildApp(builder);
+            Bootstrapper.BuildApp(builder.Services);
 
             builder
                 .UseMauiApp<App>()
