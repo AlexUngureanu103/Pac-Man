@@ -11,9 +11,41 @@
         <Image
             Source="about_logo.png"
             HeightRequest="50"
-            HorizontalOptions="Start"
+            HorizontalOptions="Center"
             VerticalOptions="Start"
             Margin="0,0,0,0"/>
+
+        <Label 
+            Text="Team members:"
+            TextColor="Yellow"
+            FontAttributes="Bold"
+            />
+        <Label 
+            Text="Stroescu Victor-Cristian"
+            TextColor="Yellow"
+            FontAttributes="Bold"
+            />
+        <Label 
+            Text="Ungureanu Alexandru"
+            TextColor="Yellow"
+            FontAttributes="Bold"
+        />
+        <Label 
+            Text="Vulcănean Ionel"   
+            TextColor="Yellow"
+            FontAttributes="Bold"
+
+            />
+        <Label 
+            Text="Group: 10LF213"   
+            TextColor="Yellow"
+            FontAttributes="Bold"
+            />
+        <Label 
+            Text="2023 - 2024"   
+            TextColor="Yellow"
+            FontAttributes="Bold"
+            />
 
         <Button
             x:Name="BackButton"
@@ -22,7 +54,7 @@
             TextColor="Black"
             FontAttributes="Bold"
             WidthRequest="80"
-            HorizontalOptions="End"
+            HorizontalOptions="Center"
             VerticalOptions="End"
             Clicked="BackButton_Clicked"/>
 
