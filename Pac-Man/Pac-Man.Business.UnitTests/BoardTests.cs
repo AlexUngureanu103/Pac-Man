@@ -1,5 +1,4 @@
 ﻿using NSubstitute;
-using Pac_Man.Business.GraphRepresentation;
 
 namespace Pac_Man.Business.UnitTests
 {
@@ -10,7 +9,7 @@ namespace Pac_Man.Business.UnitTests
         [TestInitialize]
         public void TestInitialize()
         {
-            gameCharacters = Substitute.For<IGameCharacters>();
+            gameCharacters = Substitute.For<GameCharacters>().As<IGameCharacters>();
         }
 
         [DataTestMethod]

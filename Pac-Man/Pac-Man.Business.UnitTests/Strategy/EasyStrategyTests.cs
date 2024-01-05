@@ -2,7 +2,6 @@
 using Pac_Man.Business.Movement.Ghost_Algorithms;
 using Pac_Man.Business.Strategy;
 using Pac_Man.Domain.Models;
-using System.Runtime.Intrinsics.Arm;
 
 namespace Pac_Man.Business.UnitTests.Strategy
 {
