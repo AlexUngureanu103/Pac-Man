@@ -6,14 +6,11 @@ namespace Pac_Man.Business.UnitTests
     [TestClass]
     public class BoardTests
     {
-        private IBoard? board;
-
+        private IGameCharacters? gameCharacters;
         [TestInitialize]
         public void TestInitialize()
         {
-            var gameCharacters = new GameCharacters();
-            board = Substitute.For<Board>(gameCharacters);
-            board.SmallerBoardGneration();
+            gameCharacters = Substitute.For<IGameCharacters>();
         }
 
         [DataTestMethod]
@@ -23,6 +20,13 @@ namespace Pac_Man.Business.UnitTests
         [DataRow("Blinky")]
         public void Board_CheckIfGhostSeesThePlayer_ReturnFalseWhenGameStarts(string ghostName)
         {
+            if(gameCharacters == null)
+            {
+                Assert.Fail();
+            }
+
+            var board = new Board(gameCharacters);
+
             if (board is null)
             {
                 Assert.Fail();
@@ -36,7 +40,7 @@ namespace Pac_Man.Business.UnitTests
         [TestCleanup]
         public void TestCleanup()
         {
-            board = null;
+            gameCharacters = null;
         }
     }
 }

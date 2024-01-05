@@ -9,20 +9,20 @@ namespace Pac_Man.Business.UnitTests.Strategy
     [TestClass]
     public class EasyStrategyTests
     {
-        private IStrategy? easyStrategy;
         private IGhostPathAlgorithms? ghostPathAlgorithms;
 
         [TestInitialize]
         public void TestInitialize()
         {
             ghostPathAlgorithms = Substitute.For<IGhostPathAlgorithms>();
-            easyStrategy = Substitute.For<EasyStrategy>(ghostPathAlgorithms);
         }
 
         [TestMethod]
         public void EasyStrategy_MoveGhosts_ReturnsSamePosition()
         {
             Random random = new Random();
+
+            var easyStrategy = new EasyStrategy(ghostPathAlgorithms);
 
             if (ghostPathAlgorithms == null || easyStrategy == null)
                 Assert.Fail();
@@ -68,6 +68,8 @@ namespace Pac_Man.Business.UnitTests.Strategy
         {
             Random random = new Random();
 
+            var easyStrategy = new EasyStrategy(ghostPathAlgorithms);
+
             if (ghostPathAlgorithms == null || easyStrategy == null)
                 Assert.Fail();
 
@@ -112,7 +114,6 @@ namespace Pac_Man.Business.UnitTests.Strategy
         [TestCleanup]
         public void TestCleanup()
         {
-            easyStrategy = null;
             ghostPathAlgorithms = null;
         }
     }

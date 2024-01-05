@@ -8,19 +8,19 @@ namespace Pac_Man.Business.UnitTests.Strategy
     [TestClass]
     public class NormalStrategyTests
     {
-        private IStrategy? normalStrategy;
         private IGhostPathAlgorithms? ghostPathAlgorithms;
 
         [TestInitialize]
         public void TestInitialize()
         {
             ghostPathAlgorithms = Substitute.For<IGhostPathAlgorithms>();
-            normalStrategy = Substitute.For<NormalStrategy>(ghostPathAlgorithms);
         }
 
         [TestMethod]
         public void NormalStrategy_MoveGhosts_ReturnsSamePosition()
         {
+            var normalStrategy = new NormalStrategy(ghostPathAlgorithms);
+
             Random random = new Random();
 
             if (ghostPathAlgorithms == null || normalStrategy == null)
@@ -66,6 +66,8 @@ namespace Pac_Man.Business.UnitTests.Strategy
         [TestMethod]
         public void NormalStrategy_MoveGhosts_ReturnsNewPosition()
         {
+            var normalStrategy = new NormalStrategy(ghostPathAlgorithms);
+
             Random random = new Random();
 
             if (ghostPathAlgorithms == null || normalStrategy == null)
@@ -112,7 +114,6 @@ namespace Pac_Man.Business.UnitTests.Strategy
         [TestCleanup]
         public void TestCleanup()
         {
-            normalStrategy = null;
             ghostPathAlgorithms = null;
         }
     }

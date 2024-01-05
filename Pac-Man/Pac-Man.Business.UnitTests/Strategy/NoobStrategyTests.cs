@@ -9,19 +9,19 @@ namespace Pac_Man.Business.UnitTests.Strategy
     [TestClass]
     public class NoobStrategyTests
     {
-        private IStrategy? noobStrategy;
         private IGhostFleeAlgorithm? ghostFleeAlgorithm;
 
         [TestInitialize]
         public void TestInitialize()
         {
             ghostFleeAlgorithm = Substitute.For<IGhostFleeAlgorithm>();
-            noobStrategy = Substitute.For<NoobStrategy>(ghostFleeAlgorithm);
         }
 
         [TestMethod]
         public void NoobStrategy_MoveGhosts_ReturnsSamePosition()
         {
+            var noobStrategy = new NoobStrategy(ghostFleeAlgorithm);
+
             if (ghostFleeAlgorithm == null || noobStrategy == null)
                 Assert.Fail();
 
@@ -45,6 +45,8 @@ namespace Pac_Man.Business.UnitTests.Strategy
         [TestMethod]
         public void NoobStrategy_MoveGhosts_ReturnsNewPosition()
         {
+            var noobStrategy = new NoobStrategy(ghostFleeAlgorithm);
+
             if (ghostFleeAlgorithm == null || noobStrategy == null)
                 Assert.Fail();
 
@@ -68,7 +70,6 @@ namespace Pac_Man.Business.UnitTests.Strategy
         [TestCleanup]
         public void TestCleanup()
         {
-            noobStrategy = null;
             ghostFleeAlgorithm = null;
         }
     }

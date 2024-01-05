@@ -9,19 +9,19 @@ namespace Pac_Man.Business.UnitTests.Strategy
     [TestClass]
     public class ImpossibleStrategyTests
     {
-        private IStrategy? impossibleStrategy;
         private IGhostPathAlgorithms? ghostPathAlgorithms;
 
         [TestInitialize]
         public void TestInitialize()
         {
             ghostPathAlgorithms = Substitute.For<IGhostPathAlgorithms>();
-            impossibleStrategy = Substitute.For<ImpossibleStrategy>(ghostPathAlgorithms);
         }
 
         [TestMethod]
         public void ImpossibleStrategy_MoveGhosts_ReturnsNewPosition()
         {
+            var impossibleStrategy = new ImpossibleStrategy(ghostPathAlgorithms);
+
             Random random = new Random();
 
             if (ghostPathAlgorithms == null || impossibleStrategy == null)
@@ -58,7 +58,6 @@ namespace Pac_Man.Business.UnitTests.Strategy
         [TestCleanup]
         public void TestCleanup()
         {
-            impossibleStrategy = null;
             ghostPathAlgorithms = null;
         }
     }
