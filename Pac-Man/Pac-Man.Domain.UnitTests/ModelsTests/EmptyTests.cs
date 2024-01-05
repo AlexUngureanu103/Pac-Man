@@ -17,5 +17,16 @@ namespace Pac_Man.Domain.UnitTests.ModelsTests
             emptySpace.Icon.Should().BeEmpty();
             emptySpace.Should().BeAssignableTo<Piece>();
         }
+
+        [TestMethod]
+        public void Empty_ToString_ReturnsEmpty()
+        {
+            var emptySpace = new Empty();
+            var expected = "   ";
+
+            var actual = emptySpace.ToString();
+
+            actual.Should().Be(expected);
+        }
     }
 }

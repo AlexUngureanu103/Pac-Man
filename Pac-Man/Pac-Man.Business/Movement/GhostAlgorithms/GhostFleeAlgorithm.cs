@@ -1,6 +1,7 @@
 ﻿using Pac_Man.Business.GraphRepresentation;
+using Pac_Man.Business.Movement.Ghost_Algorithms;
 
-namespace Pac_Man.Business.Movement.Ghost_Algorithms
+namespace Pac_Man.Business.Movement.GhostAlgorithms
 {
     public class GhostFleeAlgorithm : IGhostFleeAlgorithm
     {

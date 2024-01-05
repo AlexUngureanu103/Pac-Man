@@ -140,6 +140,7 @@ public partial class GamePage : ContentPage, IObserver, ISubject
             }
             NotifyObservers("resume");
             _gameWindowViewModel.ResumeGame();
+            entry.Focus();
         }
     }
 }

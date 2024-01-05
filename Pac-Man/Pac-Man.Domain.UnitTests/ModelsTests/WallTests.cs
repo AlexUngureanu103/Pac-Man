@@ -17,5 +17,16 @@ namespace Pac_Man.Domain.UnitTests.ModelsTests
             wall.Icon.Should().BeEmpty();
             wall.Should().BeAssignableTo<Piece>();
         }
+
+        [TestMethod]
+        public void Wall_ToString_ReturnsW()
+        {
+            var wall = new Wall();
+            var expected = "W  ";
+
+            var actual = wall.ToString();
+
+            actual.Should().Be(expected);
+        }
     }
 }
