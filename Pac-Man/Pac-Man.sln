@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pac-Man", "Pac-Man\Pac-Man.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pac-Man.Business", "Pac-Man.Business\Pac-Man.Business.csproj", "{380835D5-FC8E-469E-89AD-2172BB56AC9D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pac-Man.API", "Pac-Man.API\Pac-Man.API.csproj", "{D5D53C7C-30ED-48FD-BBCA-7C61AFCD5C7F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pac-Man.Domain", "Pac-Man.Domain\Pac-Man.Domain.csproj", "{E0F179F5-BA9A-4669-9F7C-B78428289B12}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pac-Man.Domain.UnitTests", "Pac-Man.Domain.UnitTests\Pac-Man.Domain.UnitTests.csproj", "{0384B739-D231-4C5C-81C6-BB90B97192A4}"
@@ -33,10 +31,6 @@ Global
 		{380835D5-FC8E-469E-89AD-2172BB56AC9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{380835D5-FC8E-469E-89AD-2172BB56AC9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{380835D5-FC8E-469E-89AD-2172BB56AC9D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D5D53C7C-30ED-48FD-BBCA-7C61AFCD5C7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D5D53C7C-30ED-48FD-BBCA-7C61AFCD5C7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D5D53C7C-30ED-48FD-BBCA-7C61AFCD5C7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D5D53C7C-30ED-48FD-BBCA-7C61AFCD5C7F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E0F179F5-BA9A-4669-9F7C-B78428289B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E0F179F5-BA9A-4669-9F7C-B78428289B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0F179F5-BA9A-4669-9F7C-B78428289B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
