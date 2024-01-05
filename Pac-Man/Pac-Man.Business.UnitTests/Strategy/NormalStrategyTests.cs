@@ -21,6 +21,8 @@ namespace Pac_Man.Business.UnitTests.Strategy
         [TestMethod]
         public void NormalStrategy_MoveGhosts_ReturnsSamePosition()
         {
+            Random random = new Random();
+
             if (ghostPathAlgorithms == null || normalStrategy == null)
                 Assert.Fail();
 
@@ -33,11 +35,29 @@ namespace Pac_Man.Business.UnitTests.Strategy
                 position = new KeyValuePair<int, int>(1, 1)
             };
 
-            normalStrategy.MoveGhosts(new KeyValuePair<string, MoveablesContainer>("Blinky", ghost), character);
-            normalStrategy.MoveGhosts(new KeyValuePair<string, MoveablesContainer>("Blinky", ghost), character);
-            normalStrategy.MoveGhosts(new KeyValuePair<string, MoveablesContainer>("Blinky", ghost), character);
-            var result = normalStrategy.MoveGhosts(new KeyValuePair<string, MoveablesContainer>("Blinky", ghost), character);
+            int min = 1;
+            int max = 26;
+            int multipleOfFour, verifier;
 
+            do
+            {
+                int randomNumber = random.Next(min, max);
+                multipleOfFour = randomNumber + (4 - randomNumber % 4);
+                verifier = multipleOfFour / 4;
+            } while (verifier % 2 == 0);
+
+            for (int i = 0; i < multipleOfFour; i++)
+            {
+                int randomNumber1 = random.Next(1, 20);
+                int randomNumber2 = random.Next(1, 20);
+
+                ghostPathAlgorithms.MainGhostMovements("Blinky", ghost, character).Returns(new KeyValuePair<int, int>(randomNumber1, randomNumber2));
+                normalStrategy.MoveGhosts(new KeyValuePair<string, MoveablesContainer>("Blinky", ghost), character);
+            }
+
+            ghostPathAlgorithms.MainGhostMovements("Blinky", ghost, character).Returns(new KeyValuePair<int, int>(11, 8));
+
+            var result = normalStrategy.MoveGhosts(new KeyValuePair<string, MoveablesContainer>("Blinky", ghost), character);
 
             result.Key.Should().Be(ghost.position.Key);
             result.Value.Should().Be(ghost.position.Value);
@@ -46,6 +66,8 @@ namespace Pac_Man.Business.UnitTests.Strategy
         [TestMethod]
         public void NormalStrategy_MoveGhosts_ReturnsNewPosition()
         {
+            Random random = new Random();
+
             if (ghostPathAlgorithms == null || normalStrategy == null)
                 Assert.Fail();
 
@@ -57,6 +79,27 @@ namespace Pac_Man.Business.UnitTests.Strategy
             {
                 position = new KeyValuePair<int, int>(1, 1)
             };
+
+            int min = 1;
+            int max = 26; 
+            int randomNumber = random.Next(min, max);
+
+            int multipleOfFour = randomNumber + (4 - randomNumber % 4);
+
+            int times = 0;
+
+            while (times < 2)
+            {
+                for (int i = 0; i < multipleOfFour; i++)
+                {
+                    int randomNumber1 = random.Next(1, 20);
+                    int randomNumber2 = random.Next(1, 20);
+
+                    ghostPathAlgorithms.MainGhostMovements("Blinky", ghost, character).Returns(new KeyValuePair<int, int>(randomNumber1, randomNumber2));
+                    normalStrategy.MoveGhosts(new KeyValuePair<string, MoveablesContainer>("Blinky", ghost), character);
+                }
+                times++;
+            }
 
             ghostPathAlgorithms.MainGhostMovements("Blinky", ghost, character).Returns(new KeyValuePair<int, int>(11, 8));
 
